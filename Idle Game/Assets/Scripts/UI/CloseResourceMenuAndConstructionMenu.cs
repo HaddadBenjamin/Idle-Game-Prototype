@@ -6,10 +6,22 @@ public class CloseResourceMenuAndConstructionMenu : AResourceMenu
 {
     void Start()
     {
+        base.BaseStart();
+
         base.button.onClick.AddListener(() =>
         {
-            if (base.playerMenu.CurrentMenu == EPlayerMenu.Construction)
-                base.OpenConstructionMenu();
+            switch (base.playerMenuAnimation.CurrentMenuAnimation)
+            {
+                case EPlayerMenuAnimation.ResourceConstruction :
+                   base.CloseResourceConstructionMenu();
+                break;
+
+                case EPlayerMenuAnimation.Construction:
+                    base.CloseConstructionMenu();
+                break;
+
+                default : break;
+            }
         });
     }
 }

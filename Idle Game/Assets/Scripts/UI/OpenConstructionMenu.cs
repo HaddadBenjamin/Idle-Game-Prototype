@@ -6,6 +6,8 @@ public class OpenConstructionMenu : AResourceMenu
 {
 	void Start ()
     {
+        base.BaseStart();
+
         this.button.onClick.AddListener(() =>
         {
             base.OpenConstructionMenu();
