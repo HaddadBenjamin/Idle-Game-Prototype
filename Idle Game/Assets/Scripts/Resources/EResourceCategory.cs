@@ -5,5 +5,7 @@ public enum EResourceCategory
 {
     Stone,
     ManaStone,
-    Wood
+    Wood,
+    Gold,
+    Size,
 }
