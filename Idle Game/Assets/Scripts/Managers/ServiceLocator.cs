@@ -7,8 +7,9 @@ using System.Collections;
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
-    public SpriteManager SpriteManager { get; protected set; }
+    public TextureManager TextureManager { get; protected set; }
     public MaterialManager MaterialManager { get; protected set; }
+    public SpriteManager SpriteManager { get; protected set; }
     public GameObjectManager GameObjectManager { get; protected set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; protected set; }
     #endregion
@@ -28,6 +29,7 @@ public class ServiceLocator : MonoBehaviour
     {
         AServiceComponent[] servicesComponent =
         {
+            (TextureManager = gameObject.GetComponent<TextureManager>()),
             (SpriteManager = gameObject.GetComponent<SpriteManager>()),
             (MaterialManager = gameObject.GetComponent<MaterialManager>()),
             (GameObjectManager = gameObject.GetComponent<GameObjectManager>()),

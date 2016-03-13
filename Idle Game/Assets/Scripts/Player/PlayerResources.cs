@@ -3,14 +3,21 @@ using System.Collections;
 
 public class PlayerResources : MonoBehaviour
 {
-    [SerializeField]
     private ResourcePrerequisite[] resources;
 
     void Awake()
     {
         this.resources = new  ResourcePrerequisite[(int)EResourceCategory.Size];
 
-        this.resources[(int)EResourceCategory.Gold].ResourceNumber = 5000;
+        for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
+            this.resources[resourceIndex] = new ResourcePrerequisite();
+
+        this.resources[(int)(EResourceCategory.Gold)].ResourceNumber = 5000;
+    }
+
+    public int GetResourceNumber(EResourceCategory resourceCategory)
+    {
+        return this.resources[(int)resourceCategory].ResourceNumber;
     }
 
     public void AddResource(EResourceCategory resourceCategory, int numberOfResource)

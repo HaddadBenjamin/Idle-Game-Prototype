@@ -11,7 +11,7 @@ public class SpriteManager : AServiceComponent
     public override void InitializeByServiceLocator()
     {
         ObjectContainerHelper.InitializeHashIds(
-            Array.ConvertAll(this.sprites, sprite => sprite.name), 
+            Array.ConvertAll(this.sprites, texture => texture.name), 
             ref this.hashIds);
     }
 
