@@ -7,10 +7,6 @@ public class ResourceDisplay : MonoBehaviour
     private Image resourceImage;
     private Text resourceText;
 
-    public void Awake()
-    {
-
-    }
     public void Initialize()
     {
         this.resourceImage = transform.Find("Resource Image").GetComponent<Image>();

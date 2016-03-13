@@ -22,6 +22,8 @@ public class CloseResourceMenuAndConstructionMenu : AResourceMenu
 
                 default : break;
             }
+
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildingCreation>().DestroyBuildingToBuild();
         });
     }
 }

@@ -5,16 +5,15 @@ public static class TransformExtension
 {
     public static void ResetTransform(this Transform transform)
     {
-        transform.position = Vector3.zero;
+        transform.position = Camera.main.transform.position;
         transform.localRotation = Quaternion.identity;
         transform.localScale = new Vector3(1, 1, 1);
     }
 
-    public static void FollowCusorPosition(this Transform transform)
+    public static void FollowCursorPosition(this Transform transform, float distanceFromMainCamera)
     {
         Vector3 position = Input.mousePosition;
-
-        position.z = transform.position.z - Camera.main.transform.position.z;
+        position.z = distanceFromMainCamera;
         transform.position = Camera.main.ScreenToWorldPoint(position);
     }
 }

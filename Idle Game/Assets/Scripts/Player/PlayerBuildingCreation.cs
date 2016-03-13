@@ -16,12 +16,23 @@ public class PlayerBuildingCreation : MonoBehaviour
     public string BuildingToCreateName
     {
         get { return buildingToCreateName; }
-        set { buildingToCreateName = value; }
+        private set { buildingToCreateName = value; }
     }
 
     void Awake()
     {
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
+    }
+
+    void Update()
+    {
+        //Raycast MainCamera foward
+        // if tag =
+    }
+
+    public void DestroyBuildingToBuild()
+    {
+        Destroy(this.buildingToCreateGameObject);
     }
 
     public void ActiveBuildingToCreate()
@@ -34,12 +45,15 @@ public class PlayerBuildingCreation : MonoBehaviour
         this.buildingToCreateGameObject.SetActive(false);
     }
 
-    public void InstantiateBuilding()
+    public void InstantiateBuilding(string buildingName)
     {
+        this.buildingToCreateName = buildingName;
+
         if (null != this.buildingToCreateGameObject)
             Destroy(buildingToCreateGameObject);
 
         this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(this.buildingToCreateName);
+        this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
 
         this.buildingToCreateGameObject.AddComponent<FollowCursorPosition>();
     }

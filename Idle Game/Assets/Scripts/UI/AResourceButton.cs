@@ -81,6 +81,7 @@ public class AResourceMenu : MonoBehaviour
         this.animator.SetBool("resourceConstructionMenu", false);
     }
 
+    // Se lance normalement avec StartCoroutine ou pas forcément ?
     // Désactiver les intéractions sur le canvas actuel pendant que le temps de l'anmation "currentAnimationName" se joue et défini la vitesse que l'animation joue.
     private IEnumerator DisableCanvasInteractionWhenAnimationOccur(string currentAnimationName, float animationSpeedMultiplicator)
     {

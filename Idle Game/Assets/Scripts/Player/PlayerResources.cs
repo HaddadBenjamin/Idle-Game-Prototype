@@ -12,7 +12,7 @@ public class PlayerResources : MonoBehaviour
         for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
             this.resources[resourceIndex] = new ResourcePrerequisite();
 
-        this.resources[(int)(EResourceCategory.Gold)].ResourceNumber = 5000;
+        this.resources[(int)(EResourceCategory.Gold)].ResourceNumber = 12500;
     }
 
     public int GetResourceNumber(EResourceCategory resourceCategory)
@@ -30,11 +30,11 @@ public class PlayerResources : MonoBehaviour
         this.resources[(int)resourceCategory].ResourceNumber -= numberOfResource;
     }
 
-    private bool HaveEnoughtResource(ResourcePrerequisite[] resourcesNeed)
+    public bool HaveEnoughtResource(ResourcePrerequisite[] resourcesNeed)
     {
         for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
         {
-            if (this.resources[(int)(resourcesNeed[resourceIndex].ResourceCategory)].ResourceNumber >= resourcesNeed[resourceIndex].ResourceNumber)
+            if (this.resources[(int)(resourcesNeed[resourceIndex].ResourceCategory)].ResourceNumber <= resourcesNeed[resourceIndex].ResourceNumber)
                 return false;
         }
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FollowCursorPosition : MonoBehaviour
 {
-    Transform myTransform;
+    private Transform myTransform;
 
     void Awake()
     {
@@ -12,6 +12,6 @@ public class FollowCursorPosition : MonoBehaviour
 
 	void Update ()
     {
-        this.myTransform.FollowCusorPosition();
+        this.myTransform.FollowCursorPosition(10.0f);
 	}
 }
