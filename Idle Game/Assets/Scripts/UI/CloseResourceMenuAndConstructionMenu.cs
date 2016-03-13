@@ -13,15 +13,18 @@ public class CloseResourceMenuAndConstructionMenu : AResourceMenu
             switch (base.playerMenuAnimation.CurrentMenuAnimation)
             {
                 case EPlayerMenuAnimation.ResourceConstruction :
+                    Debug.Log("fuck this hsit0");
                    base.CloseResourceConstructionMenu();
                 break;
 
                 case EPlayerMenuAnimation.Construction:
-                    base.CloseConstructionMenu();
+                  base.CloseConstructionMenu();
                 break;
 
                 default : break;
             }
+
+            Debug.Log(base.playerMenuAnimation.CurrentMenuAnimation);
         });
     }
 }

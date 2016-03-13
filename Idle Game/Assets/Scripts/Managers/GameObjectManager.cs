@@ -15,9 +15,19 @@ public class GameObjectManager : AServiceComponent
             ref this.hashIds);
     }
 
-    public GameObject Get(string GameObjectName)
+    public GameObject Get(string gameobjectName)
     {
-        return this.gameObjects[ObjectContainerHelper.GetHashCodeIndex(GameObjectName, ref hashIds)];
+        return this.gameObjects[ObjectContainerHelper.GetHashCodeIndex(gameobjectName, ref hashIds)];
+    }
+
+    public GameObject Instantiate(string gameobjectName)
+    {
+        return GameObject.Instantiate(this.Get(gameobjectName));
+    }
+
+    public GameObject Instantiate(string gameobjectName, Vector3 position, Vector3 eulerAngles)
+    {
+        return GameObject.Instantiate(this.Get(gameobjectName), position, Quaternion.Euler(eulerAngles)) as GameObject;
     }
 }
 
