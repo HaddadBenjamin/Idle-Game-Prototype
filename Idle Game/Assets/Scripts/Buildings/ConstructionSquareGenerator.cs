@@ -45,6 +45,10 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     public bool CanBuildHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
     {
+        Debug.LogWarningFormat("Crash here ! width {0}, height {1}",
+            constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1,
+            constructionSquare.CellVertical + 1);
+
         for (int boardVerticalIndex = constructionSquare.CellVertical;
             boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
             boardVerticalIndex--)

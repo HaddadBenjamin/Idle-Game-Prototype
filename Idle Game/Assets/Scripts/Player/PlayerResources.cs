@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerResources : MonoBehaviour
 {
     private ResourcePrerequisite[] resources;
+    public Action PayDelegate;
 
     void Awake()
     {
@@ -49,6 +51,9 @@ public class PlayerResources : MonoBehaviour
         {
              for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
                 this.resources[(int)(resourcesNeed[resourceIndex].ResourceCategory)].ResourceNumber -= resourcesNeed[resourceIndex].ResourceNumber;
+
+             if (null != this.PayDelegate)
+                 this.PayDelegate();
         }
 
         return haveEnoughResource;

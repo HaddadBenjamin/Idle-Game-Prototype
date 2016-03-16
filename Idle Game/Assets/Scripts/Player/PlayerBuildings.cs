@@ -19,6 +19,8 @@ public class PlayerBuildings : MonoBehaviour
     private ConstructionSquare constructionSquare;
     private bool canPlaceTheBuildingOnGrid;
 
+    private PlayerBuildingsAnalytic analytics;
+
     public GameObject BuildingToCreateGameObject
     {
         get { return buildingToCreateGameObject; }
@@ -33,6 +35,8 @@ public class PlayerBuildings : MonoBehaviour
 
     void Start()
     {
+        this.analytics = new PlayerBuildingsAnalytic();
+
         this.playerResources = GetComponent<PlayerResources>();
 
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();

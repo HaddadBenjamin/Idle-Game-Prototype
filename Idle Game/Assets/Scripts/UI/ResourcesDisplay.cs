@@ -5,12 +5,21 @@ using System;
 
 public class ResourcesDisplay : MonoBehaviour
 {
+    private ResourceDisplay[] resources;
+    private PlayerResources playerResources;
+    void Awake()
+    {
+        this.resources = new ResourceDisplay[(int)EResourceCategory.Size];
+    }
+
     void Start()
     {
         GameObject UIPrefab = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>().GameObjectManager.Get("Resource UI");
         SpriteManager spriteManager = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>().SpriteManager;
-        PlayerResources playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
         Transform myTransform = transform;
+
+        this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
+        this.playerResources.PayDelegate += this.UpdateResourceNumber;
 
         for (int resourceCategoryIndex = 0; resourceCategoryIndex < (int)EResourceCategory.Size; resourceCategoryIndex++)
         {
@@ -22,12 +31,25 @@ public class ResourcesDisplay : MonoBehaviour
             Sprite resourceImage = spriteManager.Get(resourceCategory.ToString());
             int resourceNumber = playerResources.GetResourceNumber(resourceCategory);
 
+            this.resources[resourceCategoryIndex] = resourceDisplay;
+
             UIGameObject.transform.SetParent(myTransform);
             rectTransform.SetPosition(new Vector3(0.0f, 64.0f * resourceCategoryIndex, 0.0f));
 
             resourceDisplay.Initialize();
             resourceDisplay.SetResourceImage(resourceImage);
             resourceDisplay.SetResourceText(resourceNumber);
+        }
+    }
+
+    private void UpdateResourceNumber()
+    {
+        for (int resourceCategoryIndex = 0; resourceCategoryIndex < (int)EResourceCategory.Size; resourceCategoryIndex++)
+        {
+            EResourceCategory resourceCategory = (EResourceCategory)resourceCategoryIndex;
+            int resourceNumber = playerResources.GetResourceNumber(resourceCategory);
+
+            this.resources[resourceCategoryIndex].SetResourceText(resourceNumber);
         }
     }
 }
