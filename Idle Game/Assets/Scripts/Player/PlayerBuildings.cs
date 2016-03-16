@@ -15,6 +15,9 @@ public class PlayerBuildings : MonoBehaviour
     private float objectDistanceFromCenterOfScreen = 7.5f;
     private LayerMask raycastLayer;
     private ConstructionSquareGenerator constructionSquareGenerator;
+    private PlayerResources playerResources;
+    private ConstructionSquare constructionSquare;
+    private bool canPlaceTheBuildingOnGrid;
 
     public GameObject BuildingToCreateGameObject
     {
@@ -30,9 +33,11 @@ public class PlayerBuildings : MonoBehaviour
 
     void Start()
     {
+        this.playerResources = GetComponent<PlayerResources>();
+
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
 
-       this.raycastLayer = LayerMask.GetMask("ConstructionSquare");
+        this.raycastLayer = LayerMask.GetMask("ConstructionSquare");
 
         this.constructionSquareGenerator =
                 GameObject.FindGameObjectWithTag("ServiceLocator").
@@ -44,7 +49,39 @@ public class PlayerBuildings : MonoBehaviour
     void Update()
     {
         if (null != this.buildingToCreateGameObject)
+        {
             this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
+            
+            if (Input.GetMouseButtonDown(0) && this.CanAddBuilding())
+                this.AddBuilding();
+        }
+    }
+
+    private bool CanAddBuilding()
+    {
+        if (this.canPlaceTheBuildingOnGrid)
+        {
+            if (this.constructionSquareGenerator.CanBuildHere(this.constructionSquare, this.constructionBuildingParameters))
+            {
+                Debug.Log("cant build here because there is already a building");
+                if (this.playerResources.Pay(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding))
+                {
+                    Debug.Log("A new building have been created");
+                    this.AddBuilding();
+
+                    return true;
+                }
+                else
+                    Debug.Log("cant pay the building");
+            }
+            else
+                Debug.Log("There is already a building here");
+        }
+        else
+            Debug.Log("Cant Add Building on the grid because you are not over it ");
+
+
+        return false;
     }
 
     public void DestroyBuildingToBuild()
@@ -76,34 +113,14 @@ public class PlayerBuildings : MonoBehaviour
         this.constructionBuildingParameters = buildingToCreateGameObject.GetComponent<ConstructionBuildingParameters>();
     }
 
-    public void AddBuilding()
+    private void AddBuilding()
     {
-        if (null != this.buildingToCreateGameObject)
-        {
-            // if (PlayerBuildingContainer.PlaceBuilding(this.buildingToCreateGameObject))
-            //  Destroy(this.buildingToCreateGameObject);
+        this.buildingToCreateGameObject = null;
 
-            // PlayerBuildingContainer.PlayerBuilding(GameObject objectToCreate)
-            // bool objectExit = null != objectToCreate;
-            // bool canPayObject= false;
-            // if (objectExit)
-            // {
-            //  PlayerResource = GetComponent<PlayerResource>();
-            //  BuildingDataParameter = objectToCreate.GetComponent<DataClass>();
-          
-            // Sous Méthode : Pay appele canPay et retourne si il a pu payé
-            //  if (GetPlayerResource.CanPay(buildingDataParameter)
-            //  {
-            //      GetPlayerResource.Pay(buildingDataParameter);
-            //      canPayObject = true;
-            //  }
-            //      
-            // return objectExit && canPayObjct && canPlaceObject;
-            // Communiquer avec if (PlayerBuildingContainer.PlaceBuilding(this.buildingToCreateGameObject);
-            // Ce dernier va placer le bâtiment si il 
-        }
+        this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
+
+        this.constructionSquareGenerator.AddBuilding(this.constructionSquare, this.constructionBuildingParameters);
     }
-        //Follow cursor
 
     /// <summary>
     /// Permet de positionner un bâtiment sur la grille de cases de constructions et active / désactive le outline sur ces cases.
@@ -115,7 +132,7 @@ public class PlayerBuildings : MonoBehaviour
         if (Physics.Raycast(this.ray, out this.hit, this.raycastLayer))
         {
             Transform colliderTransform = this.hit.collider.transform;
-            ConstructionSquare constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
+            this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
             int buildingVertical = this.constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
             int buildingHorizontal = this.constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);
             Vector3 newBuildingPosition = this.GetNewBuildingPosition(colliderTransform, buildingHorizontal, buildingVertical);
@@ -124,6 +141,8 @@ public class PlayerBuildings : MonoBehaviour
             this.constructionSquareGenerator.ShowBuildingOutline(
                 this.constructionSquareGenerator.GetSquare(buildingHorizontal, buildingVertical),
                 this.constructionBuildingParameters);
+
+            this.canPlaceTheBuildingOnGrid = true;
             // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
         }
         else
@@ -131,6 +150,7 @@ public class PlayerBuildings : MonoBehaviour
             this.buildingTransform.position = this.ray.origin + this.ray.direction * this.objectDistanceFromCenterOfScreen;
 
             this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
+            this.canPlaceTheBuildingOnGrid = false;
         }
     }
 
