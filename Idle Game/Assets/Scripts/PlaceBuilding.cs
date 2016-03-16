@@ -28,41 +28,43 @@ public class PlaceBuilding : MonoBehaviour
 
 	void Update ()
     {
+        this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
+	}
+
+    private void PlaceBuildingAndAffectOutlineOfConstructionSquares()
+    {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(this.ray, out this.hit, this.raycastLayer))
         {
             Transform colliderTransform = this.hit.collider.transform;
             ConstructionSquare constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
-
-            int squareVertical = constructionSquare.CellVertical;
-            int squareHorizontal = constructionSquare.CellHorizontal;
-
-            int vertical = squareVertical;
-            int horizontal = squareHorizontal;
-
-            if (horizontal < this.constructionBuildingParameters.HorizontalLenght - 1)
-                horizontal = this.constructionBuildingParameters.HorizontalLenght - 1;
-            if (vertical < this.constructionBuildingParameters.VerticalLenght - 1)
-                vertical = this.constructionBuildingParameters.VerticalLenght - 1;
-
-            // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
-
-            Vector3 newBuildingPosition = constructionSquareGenerator.GetSquare(horizontal, vertical).transform.position;
-
-            newBuildingPosition.y += colliderTransform.lossyScale.y;
-            newBuildingPosition.x += colliderTransform.lossyScale.x * this.constructionBuildingParameters.HorizontalOffsetNormalized;
-            newBuildingPosition.z -= colliderTransform.lossyScale.z * this.constructionBuildingParameters.VerticalOffsetNormalized;
+            int buildingVertical = this.constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
+            int buildingHorizontal = this.constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);
+            Vector3 newBuildingPosition = this.GetNewBuildingPosition(colliderTransform, buildingHorizontal, buildingVertical);
 
             this.myTransform.position = newBuildingPosition;
-
-            constructionSquareGenerator.ShowBuildingOutline(
-                constructionSquareGenerator.GetSquare(horizontal, vertical), constructionBuildingParameters);
+            this.constructionSquareGenerator.ShowBuildingOutline(
+                this.constructionSquareGenerator.GetSquare(buildingHorizontal, buildingVertical), 
+                this.constructionBuildingParameters);
+            // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
         }
         else
         {
             this.myTransform.position = this.ray.origin + this.ray.direction * this.objectDistanceFromCenterOfScreen;
-            constructionSquareGenerator.UnshowConstructionSquaresOutline();
+
+            this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
         }
-	}
+    }
+
+    private Vector3 GetNewBuildingPosition(Transform colliderTransform, int horizontal, int vertical)
+    {
+        Vector3 newBuildingPosition = this.constructionSquareGenerator.GetSquare(horizontal, vertical).transform.position;
+
+        newBuildingPosition.y += colliderTransform.lossyScale.y;
+        newBuildingPosition.x += colliderTransform.lossyScale.x * this.constructionBuildingParameters.HorizontalOffsetNormalized;
+        newBuildingPosition.z -= colliderTransform.lossyScale.z * this.constructionBuildingParameters.VerticalOffsetNormalized;
+
+        return newBuildingPosition;
+    }
 }

@@ -67,4 +67,25 @@ public abstract class ABuildingParameters : MonoBehaviour
         private set { resourcesPrerequisiteToBuildThisBuilding = value; }
     }
     #endregion
+
+    /// <summary>
+    /// Permet de placer le bâtiment de façon qu'il ne dépasse pas sur les côté.
+    /// </summary>
+    /// <param name="horizontal"></param>
+    /// <returns></returns>
+    public int GetBuildingHorizontal(int horizontal)
+    {
+        if (horizontal < this.HorizontalLenght - 1)
+            horizontal = this.HorizontalLenght - 1;
+
+        return horizontal;
+    }
+
+    public int GetBuildingVertical(int vertical)
+    {
+        if (vertical < this.VerticalLenght - 1)
+            vertical = this.VerticalLenght - 1;
+
+        return vertical;
+    }
 }
