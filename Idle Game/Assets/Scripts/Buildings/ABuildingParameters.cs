@@ -10,9 +10,9 @@ public abstract class ABuildingParameters : MonoBehaviour
     [SerializeField]
     private byte verticalLength;
     [SerializeField]
-    private float horizontalPercentageLength;
+    private float horizontalOffsetNormalized;
     [SerializeField]
-    private float verticalPercentageLength;
+    private float verticalOffsetNormalized;
     [SerializeField]
     private string buildingName;
     // PriceEquivalent
@@ -35,15 +35,15 @@ public abstract class ABuildingParameters : MonoBehaviour
         get { return verticalLength; }
         private set { verticalLength = value; } 
     }
-    public float HorizontalPercentageLength
+    public float HorizontalOffsetNormalized
     {
-        get { return horizontalPercentageLength; }
-        private set { horizontalPercentageLength = value; }
+        get { return horizontalOffsetNormalized; }
+        private set { horizontalOffsetNormalized = value; }
     }
-    public float VerticalPercentageLength
+    public float VerticalOffsetNormalized
     {
-        get { return verticalPercentageLength; }
-        private set { verticalPercentageLength = value; }
+        get { return verticalOffsetNormalized; }
+        private set { verticalOffsetNormalized = value; }
     }
     public string BuildingName
     {

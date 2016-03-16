@@ -4,6 +4,7 @@ using System;
 
 public class TextureManager : AReferenceContainer<Texture2D>
 {
+
 }
 
 

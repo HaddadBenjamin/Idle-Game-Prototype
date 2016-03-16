@@ -4,6 +4,7 @@ using System;
 
 public class MaterialManager : AReferenceContainer<Material>
 {
+
 }
 
 

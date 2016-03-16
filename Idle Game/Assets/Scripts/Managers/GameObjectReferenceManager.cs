@@ -4,4 +4,5 @@ using System;
 
 public class GameObjectReferenceManager : AReferenceContainer<GameObject>
 {
+
 }

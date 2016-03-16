@@ -55,14 +55,14 @@ public class PlayerBuildingCreation : MonoBehaviour
         this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(this.buildingToCreateName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
 
-        this.buildingToCreateGameObject.AddComponent<FollowCursorPosition>();
+        this.buildingToCreateGameObject.AddComponent<PlaceBuilding>();
     }
 
     public void AddBuilding()
     {
         if (null != this.buildingToCreateGameObject)
         {
-            Destroy(this.buildingToCreateGameObject.GetComponent<FollowCursorPosition>());
+            Destroy(this.buildingToCreateGameObject.GetComponent<PlaceBuilding>());
             // if (PlayerBuildingContainer.PlaceBuilding(this.buildingToCreateGameObject))
             //  Destroy(this.buildingToCreateGameObject);
 

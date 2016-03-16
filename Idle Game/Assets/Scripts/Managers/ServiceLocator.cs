@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/// <summary>
-/// Abstract Service Locator, contains all the services and creates the services that are the same for each platform.
-/// </summary>
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
