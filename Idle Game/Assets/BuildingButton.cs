@@ -7,7 +7,7 @@ public class BuildingButton : MonoBehaviour
     void Start()
     {
         PlayerResources playerResource = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
-        PlayerBuildingCreation playerBuildingCreation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildingCreation>();
+        PlayerBuildings playerBuildingCreation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildings>();
         BuildingParameters buildingParameters = GetComponent<BuildingParameters>();
 
         GetComponent<Button>().onClick.AddListener(() =>
@@ -16,7 +16,6 @@ public class BuildingButton : MonoBehaviour
             {
                 playerBuildingCreation.InstantiateBuilding(buildingParameters.PrefabName);
             }
-
         });
     }
 }

@@ -30,12 +30,6 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     public void ShowBuildingOutline(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
     {
-       // Debug.LogFormat("Start : [{0} - {1}], End : [{2} - {3}]",
-       //constructionSquare.CellHorizontal,
-       //constructionSquare.CellVertical,
-       //constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght,
-       //constructionSquare.CellVertical + constructionBuildingParameters.VerticalLenght); 
-        
         this.UnshowConstructionSquaresOutline();
 
         for (int boardVerticalIndex = constructionSquare.CellVertical;
@@ -46,6 +40,47 @@ public class ConstructionSquareGenerator : MonoBehaviour
                 boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
                 boardHorizontalIndex--)
                 this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ShowOutline = true;
+        }
+    }
+
+    public bool CanBuildHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
+    {
+        for (int boardVerticalIndex = constructionSquare.CellVertical;
+            boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
+            boardVerticalIndex--)
+        {
+            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
+                boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
+                boardHorizontalIndex--)
+            {
+                if (!this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ShowOutline)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void DestroyBuilding(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
+    {
+        this.ModifyThereIsABuildingHere(constructionSquare, constructionBuildingParameters, false);
+    }
+
+    public void AddBuilding(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
+    {
+        this.ModifyThereIsABuildingHere(constructionSquare, constructionBuildingParameters, true);
+    }
+
+    private void ModifyThereIsABuildingHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters, bool thereIsABuildingHere)
+    {
+        for (int boardVerticalIndex = constructionSquare.CellVertical;
+           boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
+           boardVerticalIndex--)
+        {
+            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
+                boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
+                boardHorizontalIndex--)
+                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere = thereIsABuildingHere;
         }
     }
 
