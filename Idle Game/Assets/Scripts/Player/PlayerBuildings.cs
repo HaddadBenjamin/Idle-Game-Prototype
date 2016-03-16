@@ -52,9 +52,10 @@ public class PlayerBuildings : MonoBehaviour
         {
             this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
             
-            if (Input.GetMouseButtonDown(0) && this.CanAddBuilding())
+            if (Input.GetMouseButtonDown(0))
                 this.AddBuilding();
         }
+
     }
 
     private bool CanAddBuilding()
@@ -63,11 +64,9 @@ public class PlayerBuildings : MonoBehaviour
         {
             if (this.constructionSquareGenerator.CanBuildHere(this.constructionSquare, this.constructionBuildingParameters))
             {
-                Debug.Log("cant build here because there is already a building");
                 if (this.playerResources.Pay(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding))
                 {
                     Debug.Log("A new building have been created");
-                    this.AddBuilding();
 
                     return true;
                 }
@@ -113,13 +112,20 @@ public class PlayerBuildings : MonoBehaviour
         this.constructionBuildingParameters = buildingToCreateGameObject.GetComponent<ConstructionBuildingParameters>();
     }
 
-    private void AddBuilding()
+    private bool AddBuilding()
     {
-        this.buildingToCreateGameObject = null;
+        bool canAddBuilding = this.CanAddBuilding();
 
-        this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
+        if (canAddBuilding)
+        {
+            this.buildingToCreateGameObject = null;
 
-        this.constructionSquareGenerator.AddBuilding(this.constructionSquare, this.constructionBuildingParameters);
+            this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
+
+            this.constructionSquareGenerator.AddBuilding(this.constructionSquare, this.constructionBuildingParameters);
+        }
+
+        return canAddBuilding;
     }
 
     /// <summary>

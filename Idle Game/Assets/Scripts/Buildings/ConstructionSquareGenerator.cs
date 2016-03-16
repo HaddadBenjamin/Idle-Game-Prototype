@@ -53,7 +53,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
                 boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
                 boardHorizontalIndex--)
             {
-                if (!this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ShowOutline)
+                if (this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere)
                     return false;
             }
         }
@@ -106,6 +106,11 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
         this.constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
 
+        this.GenerateConstructionSquares();
+	}
+
+    private void GenerateConstructionSquares()
+    {
         // Parcour vertical
         for (int boardVerticalIndex = 0; boardVerticalIndex < this.boardVertical; boardVerticalIndex++)
         {
@@ -129,5 +134,5 @@ public class ConstructionSquareGenerator : MonoBehaviour
                 constructionSquareScript.CellVertical = boardVerticalIndex;
             }
         }
-	}
+    }
 }
