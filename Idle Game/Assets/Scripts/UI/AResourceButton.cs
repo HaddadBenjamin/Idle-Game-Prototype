@@ -11,6 +11,7 @@ public class AResourceMenu : MonoBehaviour
     protected CanvasGroup canvasGroup;
     protected ServiceLocator serviceLocator;
     protected ScrollRect buildingContainerScrollRectMask;
+    protected RTSCamera RTSCamera;
     
     protected void BaseStart()
     {
@@ -19,6 +20,7 @@ public class AResourceMenu : MonoBehaviour
         this.canvasGroup = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
         this.animator = GameObject.Find("Canvas").GetComponent<Animator>();
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
+        this.RTSCamera = Camera.main.GetComponent<RTSCamera>();
 
         this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
         this.buildingContainerScrollRectMask = this.serviceLocator.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
@@ -30,6 +32,7 @@ public class AResourceMenu : MonoBehaviour
 
         this.DisableMenus();
         this.animator.SetBool("constructionMenu", true);
+        this.RTSCamera.enabled = false;
 
         this.playerMenuAnimation.CurrentMenuAnimation = EPlayerMenuAnimation.Construction;
     }
@@ -54,6 +57,7 @@ public class AResourceMenu : MonoBehaviour
 
         this.DisableMenus();
         this.animator.SetBool("defaultMenu", true);
+        this.RTSCamera.enabled = true;
 
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
