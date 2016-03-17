@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ConstructionSquareGenerator : MonoBehaviour
 {
+    #region Fields
     [SerializeField]
     private int boardHorizontal = 8; // largeur, vertical, colonne
     [SerializeField]
@@ -10,7 +11,9 @@ public class ConstructionSquareGenerator : MonoBehaviour
     private GameObject constructionSquareGameObject;
     private Transform myTransform;
     private ConstructionSquare[] constructionSquares;
+    #endregion
 
+    #region Properties
     public int BoardHorizontal
     {
         get { return boardHorizontal; }
@@ -22,10 +25,36 @@ public class ConstructionSquareGenerator : MonoBehaviour
         get { return boardVertical; }
         private set { boardVertical = value; }
     }
+    #endregion
 
+    #region Unity Methods
+    void Start()
+    {
+        this.constructionSquareGameObject =
+            GameObject.FindGameObjectWithTag("ServiceLocator").
+            GetComponent<ServiceLocator>().
+            GameObjectManager.Get("ConstructionSquare");
+
+        this.myTransform = transform;
+
+        this.constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
+
+        this.GenerateConstructionSquares();
+    }
+    #endregion
+
+    #region Behaviour
     public ConstructionSquare GetSquare(int horizontal, int vertical)
     {
         return this.constructionSquares[horizontal + vertical * this.boardVertical];
+    }
+
+    private ConstructionSquare GetProcessedConstructionSquare(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
+    {
+        int buildingVertical = constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
+        int buildingHorizontal = constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);
+
+        return this.GetSquare(buildingHorizontal, buildingVertical);
     }
 
     public void ShowBuildingOutline(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
@@ -45,16 +74,14 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     public bool CanBuildHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
     {
-        Debug.LogWarningFormat("Crash here ! width {0}, height {1}",
-            constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1,
-            constructionSquare.CellVertical + 1);
+        ConstructionSquare processedConstructionSquare = this.GetProcessedConstructionSquare(constructionSquare, constructionBuildingParameters);
 
-        for (int boardVerticalIndex = constructionSquare.CellVertical;
-            boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
+        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
+            boardVerticalIndex >= processedConstructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
             boardVerticalIndex--)
         {
-            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
-                boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
+            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
+                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
                 boardHorizontalIndex--)
             {
                 if (this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere)
@@ -77,12 +104,14 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     private void ModifyThereIsABuildingHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters, bool thereIsABuildingHere)
     {
-        for (int boardVerticalIndex = constructionSquare.CellVertical;
-           boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
+        ConstructionSquare processedConstructionSquare = this.GetProcessedConstructionSquare(constructionSquare, constructionBuildingParameters);
+
+        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
+           boardVerticalIndex >= processedConstructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
            boardVerticalIndex--)
         {
-            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
-                boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
+            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
+                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
                 boardHorizontalIndex--)
                 this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere = thereIsABuildingHere;
         }
@@ -98,20 +127,6 @@ public class ConstructionSquareGenerator : MonoBehaviour
     {
         return horizontal + vertical * this.boardHorizontal;
     }
-
-	void Start ()
-    {
-        this.constructionSquareGameObject = 
-            GameObject.FindGameObjectWithTag("ServiceLocator").
-            GetComponent<ServiceLocator>().
-            GameObjectManager.Get("ConstructionSquare");
-
-        this.myTransform = transform;
-
-        this.constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
-
-        this.GenerateConstructionSquares();
-	}
 
     private void GenerateConstructionSquares()
     {
@@ -139,4 +154,5 @@ public class ConstructionSquareGenerator : MonoBehaviour
             }
         }
     }
+    #endregion
 }
