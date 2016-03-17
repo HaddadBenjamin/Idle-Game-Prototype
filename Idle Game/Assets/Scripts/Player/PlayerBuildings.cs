@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerBuildings : MonoBehaviour
 {
+    #region Fields
     private GameObject buildingToCreateGameObject;
     private string buildingToCreateName;
     private ServiceLocator serviceLocator;
@@ -20,7 +21,9 @@ public class PlayerBuildings : MonoBehaviour
     private bool canPlaceTheBuildingOnGrid;
 
     private PlayerBuildingsAnalytic buildingsAnalytic = null;
+    #endregion
 
+    #region Properties
     public GameObject BuildingToCreateGameObject
     {
         get { return buildingToCreateGameObject; }
@@ -38,7 +41,9 @@ public class PlayerBuildings : MonoBehaviour
         get { return buildingsAnalytic; }
         private set { buildingsAnalytic = value; }
     }
+    #endregion
 
+    #region Unity Methods
     void Awake()
     {
         this.buildingsAnalytic = new PlayerBuildingsAnalytic();
@@ -71,9 +76,10 @@ public class PlayerBuildings : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
                 this.AddBuilding();
         }
-
     }
+    #endregion
 
+    #region Behaviour
     private bool CanAddBuilding()
     {
         if (this.canPlaceTheBuildingOnGrid)
@@ -211,4 +217,5 @@ public class PlayerBuildings : MonoBehaviour
 
         return newBuildingPosition;
     }
+    #endregion
 }

@@ -49,7 +49,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
         return this.constructionSquares[horizontal + vertical * this.boardVertical];
     }
 
-    private ConstructionSquare GetProcessedConstructionSquare(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
+    public ConstructionSquare GetProcessedConstructionSquare(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
     {
         int buildingVertical = constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
         int buildingHorizontal = constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);

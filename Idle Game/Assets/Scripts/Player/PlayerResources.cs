@@ -6,16 +6,27 @@ public class PlayerResources : MonoBehaviour
 {
     private ResourcePrerequisite[] resources;
     public Action PayDelegate;
-
-    void Awake()
+    
+    public PlayerResources()
     {
-        this.resources = new  ResourcePrerequisite[(int)EResourceCategory.Size];
+        this.resources = new ResourcePrerequisite[(int)EResourceCategory.Size];
 
         for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
             this.resources[resourceIndex] = new ResourcePrerequisite();
 
         this.resources[(int)(EResourceCategory.Gold)].ResourceNumber = 12500;
     }
+
+    //void Start()
+    //{
+    //    this.InitializeSubscribedEntitiesToDelegate();
+    //}
+
+    //private void InitializeSubscribedEntitiesToDelegate()
+    //{
+    //    for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
+    //        this.resources[resourceIndex].CallDelegate();
+    //}
 
     public int GetResourceNumber(EResourceCategory resourceCategory)
     {
@@ -57,5 +68,12 @@ public class PlayerResources : MonoBehaviour
         }
 
         return haveEnoughResource;
+    }
+
+    public void SubscribeToResourcesModificationDelegate(EResourceCategory resourceCategory, Action action)
+    {
+        this.resources[(int)resourceCategory].UpdateResourceNumberDelegate += action;
+
+        this.resources[(int)resourceCategory].CallDelegate();
     }
 }
