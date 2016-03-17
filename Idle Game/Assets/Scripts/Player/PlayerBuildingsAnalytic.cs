@@ -3,36 +3,43 @@ using System.Collections;
 
 public class PlayerBuildingsAnalytic
 {
-    private int[] constructionBuildingsThatHaveBeenBuild;
-    public Event ConstructionBuildingsThatHaveBeenBuildDelegate;
+    #region Fields
+    private MinimumMaximumBuilding[] constructionBuildingsThatHaveBeenBuild;
+    private MinimumMaximumBuilding piecesOfFurniture; // meubles
+    #endregion
 
+    #region Properties
+    public MinimumMaximumBuilding PiecesOfFurniture
+    {
+        get { return piecesOfFurniture; }
+        private set { piecesOfFurniture = value; }
+    }
+    #endregion
+
+    #region Constructor
     public PlayerBuildingsAnalytic()
     {
-        this.constructionBuildingsThatHaveBeenBuild = new int[(int)EConstructionBuildingCategory.Size];
+        this.constructionBuildingsThatHaveBeenBuild = new MinimumMaximumBuilding[(int)EConstructionBuildingCategory.Size];
+
+        for (int index = 0; index < (int)EConstructionBuildingCategory.Size; index++)
+            this.constructionBuildingsThatHaveBeenBuild[index] = new MinimumMaximumBuilding();
+
+        this.piecesOfFurniture = new MinimumMaximumBuilding(10);
     }
+    #endregion
 
-    public void AddConstructionBuilding(EConstructionBuildingCategory constructionCategory)
-    {
-        ++this.constructionBuildingsThatHaveBeenBuild[(int)constructionCategory];
-       
-        this.CallConstructionBuildingsThatHaveBeenBuildDelegate();
-    }
-
-    public void RemoveConstructionBuilding(EConstructionBuildingCategory constructionCategory)
-    {
-        --this.constructionBuildingsThatHaveBeenBuild[(int)constructionCategory];
-
-        this.CallConstructionBuildingsThatHaveBeenBuildDelegate();
-    }
-
-    public int GetNumberOfConstructionBuilding(EConstructionBuildingCategory constructionCategory)
+    #region Behaviour
+    public MinimumMaximumBuilding GetConstructionBuildings(EConstructionBuildingCategory constructionCategory)
     {
         return this.constructionBuildingsThatHaveBeenBuild[(int)constructionCategory];
     }
 
-    private void CallConstructionBuildingsThatHaveBeenBuildDelegate()
+    public void FirstUpdateAllMembersSubscribeToDelegateAfterInitialization()
     {
-        if (null != this.ConstructionBuildingsThatHaveBeenBuildDelegate)
-            this.CallConstructionBuildingsThatHaveBeenBuildDelegate();
+        for (int index = 0; index < (int)EConstructionBuildingCategory.Size; index++)
+            this.constructionBuildingsThatHaveBeenBuild[index].CallDelegate();
+
+        this.piecesOfFurniture.CallDelegate();
     }
+    #endregion
 }

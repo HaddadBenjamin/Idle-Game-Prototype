@@ -3,5 +3,12 @@ using System.Collections;
 
 public class ConstructionBuildingParameters : ABuildingParameters
 {
+    [SerializeField]
+    private EConstructionBuildingCategory constructionBuildingCategory;
 
+    public EConstructionBuildingCategory ConstructionBuildingCategory
+    {
+        get { return constructionBuildingCategory; }
+        private set { constructionBuildingCategory = value; }
+    }
 }

@@ -11,7 +11,7 @@ public class PlayerBuildings : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     private ConstructionBuildingParameters constructionBuildingParameters;
-    private float movementInterpolationSpeed = 1.0f;
+    //private float movementInterpolationSpeed = 1.0f;
     private float objectDistanceFromCenterOfScreen = 7.5f;
     private LayerMask raycastLayer;
     private ConstructionSquareGenerator constructionSquareGenerator;
@@ -19,7 +19,7 @@ public class PlayerBuildings : MonoBehaviour
     private ConstructionSquare constructionSquare;
     private bool canPlaceTheBuildingOnGrid;
 
-    private PlayerBuildingsAnalytic analytics;
+    private PlayerBuildingsAnalytic buildingsAnalytic = null;
 
     public GameObject BuildingToCreateGameObject
     {
@@ -33,10 +33,20 @@ public class PlayerBuildings : MonoBehaviour
         private set { buildingToCreateName = value; }
     }
 
+    public PlayerBuildingsAnalytic BuildingsAnalytic
+    {
+        get { return buildingsAnalytic; }
+        private set { buildingsAnalytic = value; }
+    }
+
+    void Awake()
+    {
+        this.buildingsAnalytic = new PlayerBuildingsAnalytic();
+
+    }
+
     void Start()
     {
-        this.analytics = new PlayerBuildingsAnalytic();
-
         this.playerResources = GetComponent<PlayerResources>();
 
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
@@ -48,6 +58,8 @@ public class PlayerBuildings : MonoBehaviour
                 GetComponent<ServiceLocator>().
                 GameObjectReferenceManager.Get("Construction Square Generator").
                 GetComponent<ConstructionSquareGenerator>();
+
+        this.buildingsAnalytic.FirstUpdateAllMembersSubscribeToDelegateAfterInitialization();
     }
 
     void Update()
@@ -68,14 +80,28 @@ public class PlayerBuildings : MonoBehaviour
         {
             if (this.constructionSquareGenerator.CanBuildHere(this.constructionSquare, this.constructionBuildingParameters))
             {
-                if (this.playerResources.Pay(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding))
-                {
-                    Debug.Log("A new building have been created");
+                var minimumMaximumBuilding = this.BuildingsAnalytic.GetConstructionBuildings(this.constructionBuildingParameters.ConstructionBuildingCategory);
 
-                    return true;
+                if (minimumMaximumBuilding.CanAdd())
+                {
+                    var piecesOfFurniture = this.buildingsAnalytic.PiecesOfFurniture;
+
+                    if (piecesOfFurniture.CanAdd())
+                    {
+                        if (this.playerResources.HaveEnoughtResource(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding))
+                        {
+                            Debug.Log("A new building have been created");
+
+                            return true;
+                        }
+                        else
+                            Debug.Log("cant pay the building");
+                    }
+                    else
+                        Debug.Log("You already build " + piecesOfFurniture.CurrentValue + " / " + piecesOfFurniture.MaximumValue + " of pieces of furniture");
                 }
                 else
-                    Debug.Log("cant pay the building");
+                    Debug.Log("You already build " + minimumMaximumBuilding.CurrentValue + " / " + minimumMaximumBuilding.MaximumValue + " of this type of building");
             }
             else
                 Debug.Log("There is already a building here");
@@ -125,8 +151,12 @@ public class PlayerBuildings : MonoBehaviour
             this.buildingToCreateGameObject = null;
 
             this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
-
             this.constructionSquareGenerator.AddBuilding(this.constructionSquare, this.constructionBuildingParameters);
+
+            this.buildingsAnalytic.GetConstructionBuildings(this.constructionBuildingParameters.ConstructionBuildingCategory).Add();
+            this.buildingsAnalytic.PiecesOfFurniture.Add();
+
+            this.playerResources.Pay(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding);
         }
 
         return canAddBuilding;
