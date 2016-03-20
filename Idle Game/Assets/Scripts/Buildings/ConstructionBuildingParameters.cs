@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ConstructionBuildingParameters : ABuildingParameters
+public class ConstructionBuildingParameters : BuildingPlacement
 {
     [SerializeField]
     private EConstructionBuildingCategory constructionBuildingCategory;

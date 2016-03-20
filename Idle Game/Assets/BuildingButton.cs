@@ -8,13 +8,13 @@ public class BuildingButton : MonoBehaviour
     {
         PlayerResources playerResource = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
         PlayerBuildings playerBuildingCreation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildings>();
-        BuildingParameters buildingParameters = GetComponent<BuildingParameters>();
+        BuildingPriceAndPrefabName buildingPriceAndPrefabName = GetComponent<BuildingPriceAndPrefabName>();
 
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            if (playerResource.HaveEnoughtResource(buildingParameters.ResourcesPrerequisite))
+            if (playerResource.HaveEnoughtResource(buildingPriceAndPrefabName.ResourcesPrerequisite))
             {
-                playerBuildingCreation.InstantiateBuilding(buildingParameters.PrefabName);
+                playerBuildingCreation.InstantiateBuilding(buildingPriceAndPrefabName.PrefabName, buildingPriceAndPrefabName);
             }
         });
     }

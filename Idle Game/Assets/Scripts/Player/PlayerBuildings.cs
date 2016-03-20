@@ -12,7 +12,7 @@ public class PlayerBuildings : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     private ConstructionBuildingParameters constructionBuildingParameters;
-    //private float movementInterpolationSpeed = 1.0f;
+    private BuildingPriceAndPrefabName buildingPriceAndPrefabName;
     private float objectDistanceFromCenterOfScreen = 7.5f;
     private LayerMask raycastLayer;
     private ConstructionSquareGenerator constructionSquareGenerator;
@@ -134,9 +134,10 @@ public class PlayerBuildings : MonoBehaviour
         this.buildingToCreateGameObject.SetActive(false);
     }
 
-    public void InstantiateBuilding(string buildingName)
+    public void InstantiateBuilding(string buildingName, BuildingPriceAndPrefabName buildingPriceAndPrefabName)
     {
         this.buildingToCreateName = buildingName;
+        this.buildingPriceAndPrefabName = buildingPriceAndPrefabName;
 
         if (null != this.buildingToCreateGameObject)
             Destroy(buildingToCreateGameObject);
@@ -179,8 +180,8 @@ public class PlayerBuildings : MonoBehaviour
         {
             Transform colliderTransform = this.hit.collider.transform;
             this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
-            int buildingVertical = this.constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
-            int buildingHorizontal = this.constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);
+            int buildingVertical = this.constructionBuildingParameters.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
+            int buildingHorizontal = this.constructionBuildingParameters.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
             Vector3 newBuildingPosition = this.GetNewBuildingPosition(colliderTransform, buildingHorizontal, buildingVertical);
 
             this.buildingTransform.position = newBuildingPosition;

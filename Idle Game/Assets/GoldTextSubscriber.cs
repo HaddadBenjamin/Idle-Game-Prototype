@@ -13,7 +13,7 @@ public class GoldTextSubscriber : MonoBehaviour
     {
         this.text = GetComponent<Text>();
 
-        this.goldPrice = transform.parent.GetComponent<BuildingParameters>().ResourcesPrerequisite[0].ResourceNumber;
+        this.goldPrice = transform.parent.GetComponent<BuildingPriceAndPrefabName>().ResourcesPrerequisite[0].ResourceNumber;
         this.text.text = this.goldPrice.ToString("N", new CultureInfo("en-US"));
         this.text.text = this.text.text.Remove(this.text.text.IndexOf('.'));
         

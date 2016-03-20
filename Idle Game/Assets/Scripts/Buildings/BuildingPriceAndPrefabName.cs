@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BuildingParameters : MonoBehaviour
+public class BuildingPriceAndPrefabName : MonoBehaviour
 {
     [SerializeField]
     private ResourcePrerequisite[] resourcesPrerequisite;

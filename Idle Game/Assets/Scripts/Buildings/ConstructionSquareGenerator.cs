@@ -51,8 +51,8 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     public ConstructionSquare GetProcessedConstructionSquare(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
     {
-        int buildingVertical = constructionBuildingParameters.GetBuildingVertical(constructionSquare.CellVertical);
-        int buildingHorizontal = constructionBuildingParameters.GetBuildingHorizontal(constructionSquare.CellHorizontal);
+        int buildingVertical = constructionBuildingParameters.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
+        int buildingHorizontal = constructionBuildingParameters.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
 
         return this.GetSquare(buildingHorizontal, buildingVertical);
     }

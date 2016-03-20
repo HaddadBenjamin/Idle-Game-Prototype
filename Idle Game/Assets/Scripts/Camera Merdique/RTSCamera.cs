@@ -51,10 +51,10 @@ public class RTSCamera : MonoBehaviour
         {
             if (Input.GetKey("d") || Input.GetKey("right") || Input.mousePosition.x >= Screen.width * (1 - ScrollEdge))
                 transform.Translate(Vector3.right * Time.deltaTime * ScrollSpeed, Space.World);
-            else if (Input.GetKey("a") || Input.GetKey("up") || Input.mousePosition.x <= Screen.width * ScrollEdge)
+            else if (Input.GetKey("a") || Input.GetKey("left") || Input.mousePosition.x <= Screen.width * ScrollEdge)
                 transform.Translate(Vector3.right * Time.deltaTime * -ScrollSpeed, Space.World);
 
-            if (Input.GetKey("w") || Input.GetKey("left") || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
+            if (Input.GetKey("w") || Input.GetKey("up") || Input.mousePosition.y >= Screen.height * (1 - ScrollEdge))
                 transform.Translate(Vector3.forward * Time.deltaTime * ScrollSpeed, Space.World);
             else if (Input.GetKey("s") || Input.GetKey("down") || Input.mousePosition.y <= Screen.height * ScrollEdge)
                 transform.Translate(Vector3.forward * Time.deltaTime * -ScrollSpeed, Space.World);
