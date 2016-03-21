@@ -4,27 +4,27 @@ using System.Collections;
 public class GridPosition
 {
     #region Fields
-    private int positionX;
-    private int positionY;
+    private int horizontalGridPosition;
+    private int verticalGridPosition;
     #endregion
 
     public GridPosition(int x, int y)
     {
-        this.positionX = x;
-        this.positionY = y;
+        this.horizontalGridPosition = x;
+        this.verticalGridPosition = y;
     }
 
     #region Properties
-    public int PositionX
+    public int HorizontalGridPosition
     {
-        get { return positionX; }
-        set { positionX = value; }
+        get { return horizontalGridPosition; }
+        private set { horizontalGridPosition = value; }
     }
 
-    public int PositionY
+    public int VerticalGridPosition
     {
-        get { return positionY; }
-        set { positionY = value; }
+        get { return verticalGridPosition; }
+        private set { verticalGridPosition = value; }
     }
     #endregion
 }

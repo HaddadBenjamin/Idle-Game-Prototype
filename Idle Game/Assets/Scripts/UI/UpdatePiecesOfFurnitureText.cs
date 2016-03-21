@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class UpdatePiecesOfFurnitureText : MonoBehaviour
 {
     [SerializeField]
-    private PlayerBuildingsAnalytic playerBuildingsAnalytic;
+    private BuildingsAnalytic playerBuildingsAnalytic;
     private Text text;
 
     void Start()

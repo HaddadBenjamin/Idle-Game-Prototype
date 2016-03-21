@@ -3,6 +3,9 @@ using System.Collections;
 
 public class IndustryBuilding : ABuilding
 {
+    /// <summary>
+    /// Type d'industrie.
+    /// </summary>
     [SerializeField]
     private EIndustryBuildingCategory constructionBuildingCategory;
 

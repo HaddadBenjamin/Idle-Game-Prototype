@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Intéractions sur les cases de constructions.
+/// </summary>
 public abstract class ABuildingManager : MonoBehaviour
 {
     #region Fields
@@ -65,10 +68,10 @@ public abstract class ABuildingManager : MonoBehaviour
     /// <param name="constructionSquare"></param>
     /// <param name="constructionBuildingParameters"></param>
     /// <returns></returns>
-    public ConstructionSquare GetConstructionSquareWithoutOverflow(ConstructionSquare constructionSquare, BuildingConfiguration buildingConfiguration)
+    public ConstructionSquare GetConstructionSquareWithoutGridOverflow(ConstructionSquare constructionSquare, BuildingConfiguration buildingConfiguration)
     {
-        int buildingVertical = buildingConfiguration.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
-        int buildingHorizontal = buildingConfiguration.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
+        int buildingVertical = buildingConfiguration.GetGridVerticalPositionWithoutOverflow(constructionSquare.VerticalPositionInGrid);
+        int buildingHorizontal = buildingConfiguration.GetGridHorizontalPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid);
 
         return this.GetSquare(buildingHorizontal, buildingVertical);
     }
@@ -85,12 +88,12 @@ public abstract class ABuildingManager : MonoBehaviour
     {
         this.DisableAllConstructionSquaresOutline();
 
-        for (int boardVerticalIndex = constructionSquare.CellVertical;
-            boardVerticalIndex >= constructionSquare.CellVertical - buildingConfiguration.VerticalLenght + 1;
+        for (int boardVerticalIndex = constructionSquare.VerticalPositionInGrid;
+            boardVerticalIndex >= constructionSquare.VerticalPositionInGrid - buildingConfiguration.VerticalLenght + 1;
             boardVerticalIndex--)
         {
-            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
-                boardHorizontalIndex >= constructionSquare.CellHorizontal - buildingConfiguration.HorizontalLenght + 1;
+            for (int boardHorizontalIndex = constructionSquare.HorizontalPositionInGrid;
+                boardHorizontalIndex >= constructionSquare.HorizontalPositionInGrid - buildingConfiguration.HorizontalLenght + 1;
                 boardHorizontalIndex--)
                 this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ShowOutline = true;
         }
@@ -115,17 +118,17 @@ public abstract class ABuildingManager : MonoBehaviour
     /// <returns></returns>
     public bool DoesItIsPossibleToBuildABuildingOnThisArea(ConstructionSquare constructionSquare, BuildingConfiguration buildingConfiguration)
     {
-        ConstructionSquare processedConstructionSquare = this.GetConstructionSquareWithoutOverflow(constructionSquare, buildingConfiguration);
+        ConstructionSquare processedConstructionSquare = this.GetConstructionSquareWithoutGridOverflow(constructionSquare, buildingConfiguration);
 
-        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
-            boardVerticalIndex >= processedConstructionSquare.CellVertical - buildingConfiguration.VerticalLenght + 1;
+        for (int boardVerticalIndex = processedConstructionSquare.VerticalPositionInGrid;
+            boardVerticalIndex >= processedConstructionSquare.VerticalPositionInGrid - buildingConfiguration.VerticalLenght + 1;
             boardVerticalIndex--)
         {
-            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
-                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - buildingConfiguration.HorizontalLenght + 1;
+            for (int boardHorizontalIndex = processedConstructionSquare.HorizontalPositionInGrid;
+                boardHorizontalIndex >= processedConstructionSquare.HorizontalPositionInGrid - buildingConfiguration.HorizontalLenght + 1;
                 boardHorizontalIndex--)
             {
-                if (this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere)
+                if (this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].DoesThereIsABuilding)
                     return false;
             }
         }
@@ -161,17 +164,36 @@ public abstract class ABuildingManager : MonoBehaviour
     /// <param name="thereIsABuildingHere"></param>
     private void ModifyTheConstructibilityOfAnArea(ConstructionSquare constructionSquare, BuildingConfiguration buildingConfiguration, bool thereIsABuildingHere)
     {
-        ConstructionSquare processedConstructionSquare = this.GetConstructionSquareWithoutOverflow(constructionSquare, buildingConfiguration);
+        ConstructionSquare processedConstructionSquare = this.GetConstructionSquareWithoutGridOverflow(constructionSquare, buildingConfiguration);
 
-        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
-           boardVerticalIndex >= processedConstructionSquare.CellVertical - buildingConfiguration.VerticalLenght + 1;
+        for (int boardVerticalIndex = processedConstructionSquare.VerticalPositionInGrid;
+           boardVerticalIndex >= processedConstructionSquare.VerticalPositionInGrid - buildingConfiguration.VerticalLenght + 1;
            boardVerticalIndex--)
         {
-            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
-                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - buildingConfiguration.HorizontalLenght + 1;
+            for (int boardHorizontalIndex = processedConstructionSquare.HorizontalPositionInGrid;
+                boardHorizontalIndex >= processedConstructionSquare.HorizontalPositionInGrid - buildingConfiguration.HorizontalLenght + 1;
                 boardHorizontalIndex--)
-                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere = thereIsABuildingHere;
+                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].DoesThereIsABuilding = thereIsABuildingHere;
         }
+    }
+
+    /// <summary>
+    ///  Permet de connaître la position du bâtiment en fonction de la grille de sorte qu'elle ne déborde pas sur cette dernière.
+    /// </summary>
+    /// <param name="colliderTransform"></param>
+    /// <param name="horizontal"></param>
+    /// <param name="vertical"></param>
+    /// <returns></returns>
+    public Vector3 GetNewBuildingPosition(int horizontal, int vertical, BuildingConfiguration buildingConfiguration)
+    {
+        Transform squareTransform = this.GetSquare(horizontal, vertical).transform;
+        Vector3 newBuildingPosition = squareTransform.position;
+
+        newBuildingPosition.y += squareTransform.lossyScale.y;
+        newBuildingPosition.x += squareTransform.lossyScale.x * buildingConfiguration.HorizontalOffsetNormalized;
+        newBuildingPosition.z -= squareTransform.lossyScale.z * buildingConfiguration.VerticalOffsetNormalized;
+
+        return newBuildingPosition;
     }
     #endregion
 

@@ -4,29 +4,44 @@ using System.Collections;
 public class PlayerBuildingsManager : ABuildingManager
 {
     #region Fields
+    /// <summary>
+    /// Permet d'accéder aux services GameObjectManager & BuildingsConfiguration.
+    /// </summary>
     private ServiceLocator serviceLocator;
+    /// <summary>
+    /// Lorsque l'on pose le bâtiment on doit déterminer si le joueur peut le payer et si cest le cas, alors le payer.
+    /// </summary>
     private PlayerResources playerResources;
 
+    /// <summary>
+    /// Donne accès à pleins d'information spécifique à chaque bâtiment tels que sa position, son prix, son nom etc...
+    /// </summary>
     private BuildingConfiguration buildingConfiguration;
+    /// <summary>
+    /// Permet de déterminer où l'on souhaite placer un bâtiment.
+    /// </summary>
     private ConstructionSquare constructionSquare;
+    /// <summary>
+    /// Correspond au bâtiment que l'on souhaite construire.
+    /// </summary>
     private GameObject buildingToCreateGameObject;
 
+    /// <summary>
+    /// Nous permet de placer le bâtiment sur les cases.
+    /// </summary>
     private Ray ray;
     private RaycastHit hit;
 
+    /// <summary>
+    /// Si notre rayon ne trouve pas de cases cette condition sinon elle est fausse.
+    /// </summary>
     private bool canPlaceTheBuildingOnGrid;
 
-    private PlayerBuildingsAnalytic buildingsAnalytic;
+    private BuildingsAnalytic buildingsAnalytic;
     #endregion
 
     #region Properties
-    public GameObject BuildingToCreateGameObject
-    {
-        get { return buildingToCreateGameObject; }
-        private set { buildingToCreateGameObject = value; }
-    }
-
-    public PlayerBuildingsAnalytic BuildingsAnalytic
+    public BuildingsAnalytic BuildingsAnalytic
     {
         get { return buildingsAnalytic; }
         private set { buildingsAnalytic = value; }
@@ -37,7 +52,7 @@ public class PlayerBuildingsManager : ABuildingManager
     void Awake()
     {
         this.MyAwake();
-        this.buildingsAnalytic = new PlayerBuildingsAnalytic();
+        this.buildingsAnalytic = new BuildingsAnalytic();
     }
 
     void Start()
@@ -46,7 +61,7 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
 
-        this.buildingsAnalytic.FirstUpdateAllMembersSubscribeToDelegateAfterInitialization();
+        this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
     }
 
     void Update()
@@ -62,6 +77,10 @@ public class PlayerBuildingsManager : ABuildingManager
     #endregion
 
     #region Behaviour
+    /// <summary>
+    /// Détermine si il est possible de placer un bâtiment, il y a environ 10 conditions pour que cela soit possible dans mon gameplay.
+    /// </summary>
+    /// <returns></returns>
     private bool CanAddBuilding()
     {
         if (this.canPlaceTheBuildingOnGrid)
@@ -101,32 +120,10 @@ public class PlayerBuildingsManager : ABuildingManager
         return false;
     }
 
-    public void DestroyBuildingToBuild()
-    {
-        Destroy(this.buildingToCreateGameObject);
-    }
-
-    public void ActiveBuildingToCreate()
-    {
-        this.buildingToCreateGameObject.SetActive(true);
-    }
-
-    public void UnactiveBuildingToCreate()
-    {
-        this.buildingToCreateGameObject.SetActive(false);
-    }
-
-    public void InstantiateBuilding(string buildingName)
-    {
-        this.buildingConfiguration = this.serviceLocator.BuildingsConfiguration.GetConfiguration(buildingName);
-
-        if (null != this.buildingToCreateGameObject)
-            Destroy(buildingToCreateGameObject);
-
-        this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(buildingName);
-        this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
-    }
-
+    /// <summary>
+    /// Ajoute le bâtiment si cela est possible.
+    /// </summary>
+    /// <returns></returns>
     private bool AddBuilding()
     {
         bool canAddBuilding = this.CanAddBuilding();
@@ -157,16 +154,16 @@ public class PlayerBuildingsManager : ABuildingManager
         if (Physics.Raycast(this.ray, out this.hit, LayerMask.GetMask("ConstructionSquare")))
         {
             Transform colliderTransform = this.hit.collider.transform;
+
             this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
-            int buildingVertical = this.buildingConfiguration.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
-            int buildingHorizontal = this.buildingConfiguration.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
-            Vector3 newBuildingPosition = this.GetNewBuildingPosition(buildingHorizontal, buildingVertical);
-
-            this.buildingToCreateGameObject.transform.position = newBuildingPosition;
-
-            base.EnableBuildingOutline(base.GetSquare(buildingHorizontal, buildingVertical), this.buildingConfiguration);
-
             this.canPlaceTheBuildingOnGrid = true;
+
+            GridPosition buildingGridPosition = this.buildingConfiguration.GetGridPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid, constructionSquare.VerticalPositionInGrid);
+
+            this.buildingToCreateGameObject.transform.position = base.GetNewBuildingPosition(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition, this.buildingConfiguration); ;
+
+            base.EnableBuildingOutline(base.GetSquare(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition), this.buildingConfiguration);
+
             // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
         }
         else
@@ -179,22 +176,22 @@ public class PlayerBuildingsManager : ABuildingManager
     }
 
     /// <summary>
-    ///  Permet de connaître la position du bâtiment en fonction de la grille de sorte qu'elle ne déborde pas sur cette dernière.
+    /// Détruire le bâtiment que l'on souhaité placé puis construire.
     /// </summary>
-    /// <param name="colliderTransform"></param>
-    /// <param name="horizontal"></param>
-    /// <param name="vertical"></param>
-    /// <returns></returns>
-    private Vector3 GetNewBuildingPosition(int horizontal, int vertical)
+    public void DestroyBuildingToBuild()
     {
-        Transform squareTransform = base.GetSquare(horizontal, vertical).transform;
-        Vector3 newBuildingPosition = squareTransform.position;
+        Destroy(this.buildingToCreateGameObject);
+    }
 
-        newBuildingPosition.y += squareTransform.lossyScale.y;
-        newBuildingPosition.x += squareTransform.lossyScale.x * this.buildingConfiguration.HorizontalOffsetNormalized;
-        newBuildingPosition.z -= squareTransform.lossyScale.z * this.buildingConfiguration.VerticalOffsetNormalized;
+    public void InstantiateBuilding(string buildingName)
+    {
+        this.buildingConfiguration = this.serviceLocator.BuildingsConfiguration.GetConfiguration(buildingName);
 
-        return newBuildingPosition;
+        if (null != this.buildingToCreateGameObject)
+            Destroy(buildingToCreateGameObject);
+
+        this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(buildingName);
+        this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
     }
     #endregion
 }

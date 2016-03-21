@@ -6,7 +6,7 @@ public class UpdateResourcesQuantityText : MonoBehaviour
 {
     [SerializeField]
     private EIndustryBuildingCategory constructionBuildingCategory;
-    private PlayerBuildingsAnalytic playerBuildingsAnalytic;
+    private BuildingsAnalytic playerBuildingsAnalytic;
     private Text text;
 
 	void Start ()
