@@ -23,7 +23,7 @@ public class CloseResourceMenuAndConstructionMenu : AResourceMenu
                 default : break;
             }
 
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildings>().DestroyBuildingToBuild();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildingsManager>().DestroyBuildingToBuild();
         });
     }
 }

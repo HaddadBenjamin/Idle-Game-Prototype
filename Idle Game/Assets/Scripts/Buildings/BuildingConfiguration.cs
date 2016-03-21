@@ -1,13 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 /// <summary>
-/// Paramètre de placement du bâtiment.
+/// Cette classe contiend essentiellement ce qui doit être unique à chaque type de bâtiment tel que le nom de la préfab d'ûn bâtiment ou bien son prix.
 /// </summary>
-public abstract class BuildingPlacement : MonoBehaviour
+[System.Serializable]
+public class BuildingConfiguration
 {
     #region Fields
+    /// <summary>
+    /// Prix du bâtiment, on peut spécifier plusieurs type de resources.
+    /// </summary>
+    [SerializeField]
+    private ResourcePrerequisite[] resourcesPrerequisite;
+    /// <summary>
+    /// Nom de la préfab du bâtiment.
+    /// </summary>
+    [SerializeField]
+    private string prefabName;
+    /// <summary>
+    /// Type d'industrie de la préfab. 
+    /// </summary>
+    [SerializeField]
+    private EIndustryBuildingCategory industryCategory;
     /// <summary>
     /// Nombre de cases horizontales que prend le bâtiment.
     /// </summary>
@@ -29,28 +44,40 @@ public abstract class BuildingPlacement : MonoBehaviour
     [SerializeField]
     private float verticalOffsetNormalized;
     /// <summary>
-    /// Prix de ce bâtiment, permet de spécifier une valeur sur chaque type de resource.
-    /// </summary>
-    [SerializeField]
-    private ResourcePrerequisite[] resourcesPrerequisiteToBuildThisBuilding;
-    /// <summary>
     /// Type de bâtiment : construction, décors, autre ??e
     /// </summary>
-    [SerializeField]
-    private EBuildingCategory buildingCategory;
+
     #endregion
 
     #region Properties
+    public ResourcePrerequisite[] ResourcesPrerequisite
+    {
+        get { return resourcesPrerequisite; }
+        private set { resourcesPrerequisite = value; }
+    }
+
+    public string PrefabName
+    {
+        get { return prefabName; }
+        private set { prefabName = value; }
+    }
+
+    public EIndustryBuildingCategory IndustryCategory
+    {
+        get { return industryCategory; }
+        private set { industryCategory = value; }
+    }
+
     public byte HorizontalLenght
-    { 
+    {
         get { return horizontalLength; }
-        private set { horizontalLength = value; } 
+        private set { horizontalLength = value; }
     }
 
     public byte VerticalLenght
     {
         get { return verticalLength; }
-        private set { verticalLength = value; } 
+        private set { verticalLength = value; }
     }
 
     public float HorizontalOffsetNormalized
@@ -64,19 +91,24 @@ public abstract class BuildingPlacement : MonoBehaviour
         get { return verticalOffsetNormalized; }
         private set { verticalOffsetNormalized = value; }
     }
-
-    public EBuildingCategory BuildingCategory
-    {
-        get { return buildingCategory; }
-        private set { buildingCategory = value; }
-    }
-
-    public ResourcePrerequisite[] ResourcesPrerequisiteToBuildThisBuilding
-    {
-        get { return resourcesPrerequisiteToBuildThisBuilding; }
-        private set { resourcesPrerequisiteToBuildThisBuilding = value; }
-    }
     #endregion
+
+    #region Behaviour
+    /// <summary>
+    /// Obtneir le prix d'une resource en fonction de son type de resource.
+    /// </summary>
+    /// <param name="resourceCategory"></param>
+    /// <returns></returns>
+    public int GetResourcePrice(EResourceCategory resourceCategory)
+    {
+        for (int resourceIndex = 0; resourceIndex < this.resourcesPrerequisite.Length; resourceIndex++)
+        {
+            if (this.resourcesPrerequisite[resourceIndex].ResourceCategory == resourceCategory)
+                return this.resourcesPrerequisite[resourceIndex].ResourceNumber;
+        }
+
+        return 0;
+    }
 
     /// <summary>
     /// Position horizontale du bâtiment sur la grille qui ne dépasse pas sur la grille de construction.
@@ -85,10 +117,9 @@ public abstract class BuildingPlacement : MonoBehaviour
     /// <returns></returns>
     public int GetGridHorizontalPositionWithoutOverflow(int horizontal)
     {
-        if (horizontal < this.HorizontalLenght - 1)
-            horizontal = this.HorizontalLenght - 1;
-
-        return horizontal;
+        return horizontal < this.HorizontalLenght - 1 ?
+                this.HorizontalLenght - 1 :
+                horizontal;
     }
 
     /// <summary>
@@ -98,14 +129,13 @@ public abstract class BuildingPlacement : MonoBehaviour
     /// <returns></returns>
     public int GetGridVerticalPositionWithoutOverflow(int vertical)
     {
-        if (vertical < this.VerticalLenght - 1)
-            vertical = this.VerticalLenght - 1;
-
-        return vertical;
+        return vertical < this.VerticalLenght - 1 ?
+                this.VerticalLenght - 1 :
+                vertical;
     }
 
     /// <summary>
-    /// 
+    /// Position verticale et horizontale sur la grille de sorte qu'elle ne dépasse pas sur la grille de construction.
     /// </summary>
     /// <param name="horizontal"></param>
     /// <param name="vertical"></param>
@@ -114,4 +144,5 @@ public abstract class BuildingPlacement : MonoBehaviour
     {
         return new GridPosition(this.GetGridHorizontalPositionWithoutOverflow(horizontal), this.GetGridVerticalPositionWithoutOverflow(vertical));
     }
+    #endregion
 }

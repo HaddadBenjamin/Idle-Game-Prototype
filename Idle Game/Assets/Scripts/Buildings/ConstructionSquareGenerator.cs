@@ -10,7 +10,9 @@ public class ConstructionSquareGenerator : MonoBehaviour
     private int boardVertical = 8; // longueur, horizontal, line
     private GameObject constructionSquareGameObject;
     private Transform myTransform;
-    private ConstructionSquare[] constructionSquares;
+
+    public delegate void Delegate(ConstructionSquare[] constructionSquares, int boardHorizontal);
+    public Delegate FinishToGenerateDelegate;
     #endregion
 
     #region Properties
@@ -37,99 +39,14 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
         this.myTransform = transform;
 
-        this.constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
-
         this.GenerateConstructionSquares();
     }
     #endregion
 
-    #region Behaviour
-    public ConstructionSquare GetSquare(int horizontal, int vertical)
-    {
-        return this.constructionSquares[horizontal + vertical * this.boardVertical];
-    }
-
-    public ConstructionSquare GetProcessedConstructionSquare(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
-    {
-        int buildingVertical = constructionBuildingParameters.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
-        int buildingHorizontal = constructionBuildingParameters.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
-
-        return this.GetSquare(buildingHorizontal, buildingVertical);
-    }
-
-    public void ShowBuildingOutline(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
-    {
-        this.UnshowConstructionSquaresOutline();
-
-        for (int boardVerticalIndex = constructionSquare.CellVertical;
-            boardVerticalIndex >= constructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
-            boardVerticalIndex--)
-        {
-            for (int boardHorizontalIndex = constructionSquare.CellHorizontal;
-                boardHorizontalIndex >= constructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
-                boardHorizontalIndex--)
-                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ShowOutline = true;
-        }
-    }
-
-    public bool CanBuildHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
-    {
-        ConstructionSquare processedConstructionSquare = this.GetProcessedConstructionSquare(constructionSquare, constructionBuildingParameters);
-
-        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
-            boardVerticalIndex >= processedConstructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
-            boardVerticalIndex--)
-        {
-            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
-                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
-                boardHorizontalIndex--)
-            {
-                if (this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere)
-                    return false;
-            }
-        }
-
-        return true;
-    }
-
-    public void DestroyBuilding(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
-    {
-        this.ModifyThereIsABuildingHere(constructionSquare, constructionBuildingParameters, false);
-    }
-
-    public void AddBuilding(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters)
-    {
-        this.ModifyThereIsABuildingHere(constructionSquare, constructionBuildingParameters, true);
-    }
-
-    private void ModifyThereIsABuildingHere(ConstructionSquare constructionSquare, ConstructionBuildingParameters constructionBuildingParameters, bool thereIsABuildingHere)
-    {
-        ConstructionSquare processedConstructionSquare = this.GetProcessedConstructionSquare(constructionSquare, constructionBuildingParameters);
-
-        for (int boardVerticalIndex = processedConstructionSquare.CellVertical;
-           boardVerticalIndex >= processedConstructionSquare.CellVertical - constructionBuildingParameters.VerticalLenght + 1;
-           boardVerticalIndex--)
-        {
-            for (int boardHorizontalIndex = processedConstructionSquare.CellHorizontal;
-                boardHorizontalIndex >= processedConstructionSquare.CellHorizontal - constructionBuildingParameters.HorizontalLenght + 1;
-                boardHorizontalIndex--)
-                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)].ThereIsABuildingHere = thereIsABuildingHere;
-        }
-    }
-
-    public void UnshowConstructionSquaresOutline()
-    {
-        for (int constructionSqareIndex = 0; constructionSqareIndex < this.constructionSquares.Length; constructionSqareIndex++)
-            this.constructionSquares[constructionSqareIndex].ShowOutline = false;
-    }
-
-    private int GetPosition(int horizontal, int vertical)
-    {
-        return horizontal + vertical * this.boardHorizontal;
-    }
-
     private void GenerateConstructionSquares()
     {
+        ConstructionSquare[] constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
+
         // Parcour vertical
         for (int boardVerticalIndex = 0; boardVerticalIndex < this.boardVertical; boardVerticalIndex++)
         {
@@ -140,7 +57,8 @@ public class ConstructionSquareGenerator : MonoBehaviour
                 Transform constructionSquareTransform = constructionSquare.transform;
                 ConstructionSquare constructionSquareScript = constructionSquare.GetComponent<ConstructionSquare>();
 
-                this.constructionSquares[this.GetPosition(boardHorizontalIndex, boardVerticalIndex)] = constructionSquareScript;
+                // DANGEREUX : Correspond à ABuildManager.GetPosition
+                constructionSquares[boardHorizontalIndex + boardVerticalIndex * this.boardHorizontal] = constructionSquareScript;
 
                 constructionSquareTransform.parent = myTransform;
                 constructionSquareTransform.localPosition =
@@ -153,6 +71,8 @@ public class ConstructionSquareGenerator : MonoBehaviour
                 constructionSquareScript.CellVertical = boardVerticalIndex;
             }
         }
+
+        if (null != this.FinishToGenerateDelegate)
+            this.FinishToGenerateDelegate(constructionSquares, this.boardHorizontal);
     }
-    #endregion
 }

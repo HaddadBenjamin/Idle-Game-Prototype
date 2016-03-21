@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum EConstructionBuildingCategory
+public enum EIndustryBuildingCategory
 {
     StoneMine,
     PaperMine,

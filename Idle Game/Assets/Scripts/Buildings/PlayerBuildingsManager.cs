@@ -1,26 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerBuildings : MonoBehaviour
+public class PlayerBuildingsManager : ABuildingManager
 {
     #region Fields
-    private GameObject buildingToCreateGameObject;
-    private string buildingToCreateName;
     private ServiceLocator serviceLocator;
+    private PlayerResources playerResources;
 
-    private Transform buildingTransform;
+    private BuildingConfiguration buildingConfiguration;
+    private ConstructionSquare constructionSquare;
+    private GameObject buildingToCreateGameObject;
+
     private Ray ray;
     private RaycastHit hit;
-    private ConstructionBuildingParameters constructionBuildingParameters;
-    private BuildingPriceAndPrefabName buildingPriceAndPrefabName;
-    private float objectDistanceFromCenterOfScreen = 7.5f;
-    private LayerMask raycastLayer;
-    private ConstructionSquareGenerator constructionSquareGenerator;
-    private PlayerResources playerResources;
-    private ConstructionSquare constructionSquare;
+
     private bool canPlaceTheBuildingOnGrid;
 
-    private PlayerBuildingsAnalytic buildingsAnalytic = null;
+    private PlayerBuildingsAnalytic buildingsAnalytic;
     #endregion
 
     #region Properties
@@ -28,12 +24,6 @@ public class PlayerBuildings : MonoBehaviour
     {
         get { return buildingToCreateGameObject; }
         private set { buildingToCreateGameObject = value; }
-    }
-
-    public string BuildingToCreateName
-    {
-        get { return buildingToCreateName; }
-        private set { buildingToCreateName = value; }
     }
 
     public PlayerBuildingsAnalytic BuildingsAnalytic
@@ -46,8 +36,8 @@ public class PlayerBuildings : MonoBehaviour
     #region Unity Methods
     void Awake()
     {
+        this.MyAwake();
         this.buildingsAnalytic = new PlayerBuildingsAnalytic();
-
     }
 
     void Start()
@@ -55,14 +45,6 @@ public class PlayerBuildings : MonoBehaviour
         this.playerResources = GetComponent<PlayerResources>();
 
         this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
-
-        this.raycastLayer = LayerMask.GetMask("ConstructionSquare");
-
-        this.constructionSquareGenerator =
-                GameObject.FindGameObjectWithTag("ServiceLocator").
-                GetComponent<ServiceLocator>().
-                GameObjectReferenceManager.Get("Construction Square Generator").
-                GetComponent<ConstructionSquareGenerator>();
 
         this.buildingsAnalytic.FirstUpdateAllMembersSubscribeToDelegateAfterInitialization();
     }
@@ -84,9 +66,9 @@ public class PlayerBuildings : MonoBehaviour
     {
         if (this.canPlaceTheBuildingOnGrid)
         {
-            if (this.constructionSquareGenerator.CanBuildHere(this.constructionSquare, this.constructionBuildingParameters))
+            if (base.DoesItIsPossibleToBuildABuildingOnThisArea(this.constructionSquare, this.buildingConfiguration))
             {
-                var minimumMaximumBuilding = this.BuildingsAnalytic.GetConstructionBuildings(this.constructionBuildingParameters.ConstructionBuildingCategory);
+                var minimumMaximumBuilding = this.BuildingsAnalytic.GetConstructionBuildings(this.buildingConfiguration.IndustryCategory);
 
                 if (minimumMaximumBuilding.CanAdd())
                 {
@@ -94,7 +76,7 @@ public class PlayerBuildings : MonoBehaviour
 
                     if (piecesOfFurniture.CanAdd())
                     {
-                        if (this.playerResources.HaveEnoughtResource(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding))
+                        if (this.playerResources.HaveEnoughtResource(this.buildingConfiguration.ResourcesPrerequisite))
                         {
                             Debug.Log("A new building have been created");
 
@@ -134,19 +116,15 @@ public class PlayerBuildings : MonoBehaviour
         this.buildingToCreateGameObject.SetActive(false);
     }
 
-    public void InstantiateBuilding(string buildingName, BuildingPriceAndPrefabName buildingPriceAndPrefabName)
+    public void InstantiateBuilding(string buildingName)
     {
-        this.buildingToCreateName = buildingName;
-        this.buildingPriceAndPrefabName = buildingPriceAndPrefabName;
+        this.buildingConfiguration = this.serviceLocator.BuildingsConfiguration.GetConfiguration(buildingName);
 
         if (null != this.buildingToCreateGameObject)
             Destroy(buildingToCreateGameObject);
 
-        this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(this.buildingToCreateName);
+        this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(buildingName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
-
-        this.buildingTransform = buildingToCreateGameObject.transform;
-        this.constructionBuildingParameters = buildingToCreateGameObject.GetComponent<ConstructionBuildingParameters>();
     }
 
     private bool AddBuilding()
@@ -157,13 +135,13 @@ public class PlayerBuildings : MonoBehaviour
         {
             this.buildingToCreateGameObject = null;
 
-            this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
-            this.constructionSquareGenerator.AddBuilding(this.constructionSquare, this.constructionBuildingParameters);
+            base.DisableAllConstructionSquaresOutline();
+            base.PutThisAreaAsUnconstructible(this.constructionSquare, this.buildingConfiguration);
 
-            this.buildingsAnalytic.GetConstructionBuildings(this.constructionBuildingParameters.ConstructionBuildingCategory).Add();
+            this.buildingsAnalytic.GetConstructionBuildings(this.buildingConfiguration.IndustryCategory).Add();
             this.buildingsAnalytic.PiecesOfFurniture.Add();
 
-            this.playerResources.Pay(this.constructionBuildingParameters.ResourcesPrerequisiteToBuildThisBuilding);
+            this.playerResources.Pay(this.buildingConfiguration.ResourcesPrerequisite);
         }
 
         return canAddBuilding;
@@ -176,27 +154,26 @@ public class PlayerBuildings : MonoBehaviour
     {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(this.ray, out this.hit, this.raycastLayer))
+        if (Physics.Raycast(this.ray, out this.hit, LayerMask.GetMask("ConstructionSquare")))
         {
             Transform colliderTransform = this.hit.collider.transform;
             this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
-            int buildingVertical = this.constructionBuildingParameters.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
-            int buildingHorizontal = this.constructionBuildingParameters.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
-            Vector3 newBuildingPosition = this.GetNewBuildingPosition(colliderTransform, buildingHorizontal, buildingVertical);
+            int buildingVertical = this.buildingConfiguration.GetGridVerticalPositionWithoutOverflow(constructionSquare.CellVertical);
+            int buildingHorizontal = this.buildingConfiguration.GetGridHorizontalPositionWithoutOverflow(constructionSquare.CellHorizontal);
+            Vector3 newBuildingPosition = this.GetNewBuildingPosition(buildingHorizontal, buildingVertical);
 
-            this.buildingTransform.position = newBuildingPosition;
-            this.constructionSquareGenerator.ShowBuildingOutline(
-                this.constructionSquareGenerator.GetSquare(buildingHorizontal, buildingVertical),
-                this.constructionBuildingParameters);
+            this.buildingToCreateGameObject.transform.position = newBuildingPosition;
+
+            base.EnableBuildingOutline(base.GetSquare(buildingHorizontal, buildingVertical), this.buildingConfiguration);
 
             this.canPlaceTheBuildingOnGrid = true;
             // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
         }
         else
         {
-            this.buildingTransform.position = this.ray.origin + this.ray.direction * this.objectDistanceFromCenterOfScreen;
+            this.buildingToCreateGameObject.transform.position = this.ray.origin + this.ray.direction * 7.5f;
 
-            this.constructionSquareGenerator.UnshowConstructionSquaresOutline();
+            base.DisableAllConstructionSquaresOutline();
             this.canPlaceTheBuildingOnGrid = false;
         }
     }
@@ -208,13 +185,14 @@ public class PlayerBuildings : MonoBehaviour
     /// <param name="horizontal"></param>
     /// <param name="vertical"></param>
     /// <returns></returns>
-    private Vector3 GetNewBuildingPosition(Transform colliderTransform, int horizontal, int vertical)
+    private Vector3 GetNewBuildingPosition(int horizontal, int vertical)
     {
-        Vector3 newBuildingPosition = this.constructionSquareGenerator.GetSquare(horizontal, vertical).transform.position;
+        Transform squareTransform = base.GetSquare(horizontal, vertical).transform;
+        Vector3 newBuildingPosition = squareTransform.position;
 
-        newBuildingPosition.y += colliderTransform.lossyScale.y;
-        newBuildingPosition.x += colliderTransform.lossyScale.x * this.constructionBuildingParameters.HorizontalOffsetNormalized;
-        newBuildingPosition.z -= colliderTransform.lossyScale.z * this.constructionBuildingParameters.VerticalOffsetNormalized;
+        newBuildingPosition.y += squareTransform.lossyScale.y;
+        newBuildingPosition.x += squareTransform.lossyScale.x * this.buildingConfiguration.HorizontalOffsetNormalized;
+        newBuildingPosition.z -= squareTransform.lossyScale.z * this.buildingConfiguration.VerticalOffsetNormalized;
 
         return newBuildingPosition;
     }

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class UpdateResourcesQuantityText : MonoBehaviour
 {
     [SerializeField]
-    private EConstructionBuildingCategory constructionBuildingCategory;
+    private EIndustryBuildingCategory constructionBuildingCategory;
     private PlayerBuildingsAnalytic playerBuildingsAnalytic;
     private Text text;
 
 	void Start ()
     {
-        this.playerBuildingsAnalytic = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildings>().BuildingsAnalytic;
+        this.playerBuildingsAnalytic = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildingsManager>().BuildingsAnalytic;
 
         this.text = GetComponent<Text>();
 

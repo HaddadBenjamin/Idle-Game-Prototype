@@ -9,6 +9,7 @@ public class ServiceLocator : MonoBehaviour
     public SpriteManager SpriteManager { get; protected set; }
     public GameObjectManager GameObjectManager { get; protected set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; protected set; }
+    public BuildingsConfiguration BuildingsConfiguration { get; protected set; }
     #endregion
 
     void Awake()
@@ -24,13 +25,15 @@ public class ServiceLocator : MonoBehaviour
 
     private void CommuneInitializationForEachPlatforms(GameObject gameObject)
     {
+        this.BuildingsConfiguration = gameObject.GetComponent<BuildingsConfiguration>();
+
         AServiceComponent[] servicesComponent =
         {
-            (TextureManager = gameObject.GetComponent<TextureManager>()),
-            (SpriteManager = gameObject.GetComponent<SpriteManager>()),
-            (MaterialManager = gameObject.GetComponent<MaterialManager>()),
-            (GameObjectManager = gameObject.GetComponent<GameObjectManager>()),
-            (GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
+            (this.TextureManager = gameObject.GetComponent<TextureManager>()),
+            (this.SpriteManager = gameObject.GetComponent<SpriteManager>()),
+            (this.MaterialManager = gameObject.GetComponent<MaterialManager>()),
+            (this.GameObjectManager = gameObject.GetComponent<GameObjectManager>()),
+            (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
         };
 
         foreach (AServiceComponent serviceComponent in servicesComponent)

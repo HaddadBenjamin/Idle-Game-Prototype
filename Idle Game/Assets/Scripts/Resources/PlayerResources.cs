@@ -11,22 +11,12 @@ public class PlayerResources : MonoBehaviour
     {
         this.resources = new ResourcePrerequisite[(int)EResourceCategory.Size];
 
-        for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
-            this.resources[resourceIndex] = new ResourcePrerequisite();
-
-        this.resources[(int)(EResourceCategory.Gold)].ResourceNumber = 12500;
+        for (int resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
+            this.resources[resourceIndex]  = 
+                (EResourceCategory.Gold == (EResourceCategory)resourceIndex) ?
+                this.resources[resourceIndex] = new ResourcePrerequisite(12500, EResourceCategory.Gold) :
+                this.resources[resourceIndex] = new ResourcePrerequisite(0, (EResourceCategory)resourceIndex);
     }
-
-    //void Start()
-    //{
-    //    this.InitializeSubscribedEntitiesToDelegate();
-    //}
-
-    //private void InitializeSubscribedEntitiesToDelegate()
-    //{
-    //    for (byte resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
-    //        this.resources[resourceIndex].CallDelegate();
-    //}
 
     public int GetResourceNumber(EResourceCategory resourceCategory)
     {

@@ -19,9 +19,9 @@ public class PlayerBuildingsAnalytic
     #region Constructor
     public PlayerBuildingsAnalytic()
     {
-        this.constructionBuildingsThatHaveBeenBuild = new MinimumMaximumBuilding[(int)EConstructionBuildingCategory.Size];
+        this.constructionBuildingsThatHaveBeenBuild = new MinimumMaximumBuilding[(int)EIndustryBuildingCategory.Size];
 
-        for (int index = 0; index < (int)EConstructionBuildingCategory.Size; index++)
+        for (int index = 0; index < (int)EIndustryBuildingCategory.Size; index++)
             this.constructionBuildingsThatHaveBeenBuild[index] = new MinimumMaximumBuilding();
 
         this.piecesOfFurniture = new MinimumMaximumBuilding(10);
@@ -29,14 +29,14 @@ public class PlayerBuildingsAnalytic
     #endregion
 
     #region Behaviour
-    public MinimumMaximumBuilding GetConstructionBuildings(EConstructionBuildingCategory constructionCategory)
+    public MinimumMaximumBuilding GetConstructionBuildings(EIndustryBuildingCategory constructionCategory)
     {
         return this.constructionBuildingsThatHaveBeenBuild[(int)constructionCategory];
     }
 
     public void FirstUpdateAllMembersSubscribeToDelegateAfterInitialization()
     {
-        for (int index = 0; index < (int)EConstructionBuildingCategory.Size; index++)
+        for (int index = 0; index < (int)EIndustryBuildingCategory.Size; index++)
             this.constructionBuildingsThatHaveBeenBuild[index].CallDelegate();
 
         this.piecesOfFurniture.CallDelegate();
