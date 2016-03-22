@@ -6,5 +6,4 @@ public enum EIndustryBuildingCategory
     StoneMine,
     PaperMine,
     SilverMine,
-    Size,
 }

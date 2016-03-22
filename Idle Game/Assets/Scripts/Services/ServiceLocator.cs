@@ -10,22 +10,21 @@ public class ServiceLocator : MonoBehaviour
     public GameObjectManager GameObjectManager { get; protected set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; protected set; }
     public BuildingsConfiguration BuildingsConfiguration { get; protected set; }
+    public EventManager<EEvent> EventManager { get; protected set; }
     #endregion
 
+    #region Unity Methods
     void Awake()
     {
-        Initialize(gameObject);
+        Initialize();
     }
+    #endregion
 
     #region Initialisation
-    public void Initialize(GameObject gameObject)
-    {
-        CommuneInitializationForEachPlatforms(gameObject);
-    }
-
-    private void CommuneInitializationForEachPlatforms(GameObject gameObject)
+    private void Initialize()
     {
         this.BuildingsConfiguration = gameObject.GetComponent<BuildingsConfiguration>();
+        this.EventManager = new EventManager<EEvent>();
 
         AServiceComponent[] servicesComponent =
         {

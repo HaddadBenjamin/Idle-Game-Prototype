@@ -6,5 +6,4 @@ public enum EResourceCategory
     Stone,
     Wood,
     Gold,
-    Size,
 }

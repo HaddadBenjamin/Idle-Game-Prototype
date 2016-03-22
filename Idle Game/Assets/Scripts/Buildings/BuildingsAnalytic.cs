@@ -25,9 +25,11 @@ public class BuildingsAnalytic
     #region Constructor
     public BuildingsAnalytic()
     {
-        this.constructionBuildingsThatHaveBeenBuild = new BuildingAnalytic[(int)EIndustryBuildingCategory.Size];
+        int enumLength = EnumHelper.Count<EIndustryBuildingCategory>();
 
-        for (int index = 0; index < (int)EIndustryBuildingCategory.Size; index++)
+        this.constructionBuildingsThatHaveBeenBuild = new BuildingAnalytic[enumLength];
+
+        for (int index = 0; index < enumLength; index++)
             this.constructionBuildingsThatHaveBeenBuild[index] = new BuildingAnalytic();
 
         this.piecesOfFurniture = new BuildingAnalytic(10);
@@ -42,13 +44,15 @@ public class BuildingsAnalytic
     /// <returns></returns>
     public BuildingAnalytic GetConstructionBuildings(EIndustryBuildingCategory constructionCategory)
     {
-        return this.constructionBuildingsThatHaveBeenBuild[(int)constructionCategory];
+        return this.constructionBuildingsThatHaveBeenBuild[EnumHelper.GetIndex<EIndustryBuildingCategory>(constructionCategory)];
     }
 
-    // Permet de mettre à jour les valeurs des buildingAnalytic.
+    /// <summary>
+    /// Permet de mettre à jour les valeurs des buildingAnalytic.
+    /// </summary>
     public void AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization()
     {
-        for (int index = 0; index < (int)EIndustryBuildingCategory.Size; index++)
+        for (int index = 0; index < EnumHelper.Count<EIndustryBuildingCategory>(); index++)
             this.constructionBuildingsThatHaveBeenBuild[index].CallDelegate();
 
         this.piecesOfFurniture.CallDelegate();

@@ -7,9 +7,10 @@ public class ResourcesDisplay : MonoBehaviour
 {
     private ResourceDisplay[] resources;
     private PlayerResources playerResources;
+
     void Awake()
     {
-        this.resources = new ResourceDisplay[(int)EResourceCategory.Size];
+        this.resources = new ResourceDisplay[EnumHelper.Count<EResourceCategory>()];
     }
 
     void Start()
@@ -21,7 +22,7 @@ public class ResourcesDisplay : MonoBehaviour
         this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
         this.playerResources.PayDelegate += this.UpdateResourceNumber;
 
-        for (int resourceCategoryIndex = 0; resourceCategoryIndex < (int)EResourceCategory.Size; resourceCategoryIndex++)
+        for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)
         {
             GameObject UIGameObject = Instantiate(UIPrefab);
             RectTransform rectTransform = (RectTransform)UIGameObject.transform;
@@ -44,7 +45,7 @@ public class ResourcesDisplay : MonoBehaviour
 
     private void UpdateResourceNumber()
     {
-        for (int resourceCategoryIndex = 0; resourceCategoryIndex < (int)EResourceCategory.Size; resourceCategoryIndex++)
+        for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)
         {
             EResourceCategory resourceCategory = (EResourceCategory)resourceCategoryIndex;
             int resourceNumber = playerResources.GetResourceNumber(resourceCategory);
