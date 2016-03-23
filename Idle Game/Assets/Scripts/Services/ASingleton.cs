@@ -1,11 +1,17 @@
-﻿//using UnityEngine;
-//using System.Collections;
+﻿public abstract class ASingleton<TypeThatWillBeSingletoned> where TypeThatWillBeSingletoned : class, new()
+{
+    private static TypeThatWillBeSingletoned instance = null;
 
-//public abstract class Singleton<T> where T : class, new()
-//{
-//    Singleton() { }
+    private ASingleton() { }
 
-//    private static readonly Singleton<T> instance = new Singleton<T>(() => new T());
+    public static TypeThatWillBeSingletoned Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = new TypeThatWillBeSingletoned();
 
-//    public static T Instance { get { return instance.Value; } }
-//}
+            return instance;
+        }
+    }
+}

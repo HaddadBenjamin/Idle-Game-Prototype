@@ -4,13 +4,13 @@ using System.Collections;
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
-    public TextureManager TextureManager { get; protected set; }
-    public MaterialManager MaterialManager { get; protected set; }
-    public SpriteManager SpriteManager { get; protected set; }
-    public GameObjectManager GameObjectManager { get; protected set; }
-    public GameObjectReferenceManager GameObjectReferenceManager { get; protected set; }
-    public BuildingsConfiguration BuildingsConfiguration { get; protected set; }
-    public EventManager<EEvent> EventManager { get; protected set; }
+    public TextureManager TextureManager { get; private set; }
+    public MaterialManager MaterialManager { get; private set; }
+    public SpriteManager SpriteManager { get; private set; }
+    public GameObjectManager GameObjectManager { get; private set; }
+    public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
+    public BuildingsConfiguration BuildingsConfiguration { get; private set; }
+    public EventManager<EEvent> EventManager { get; private set; }
 
     private static ServiceLocator instance = null;
     
