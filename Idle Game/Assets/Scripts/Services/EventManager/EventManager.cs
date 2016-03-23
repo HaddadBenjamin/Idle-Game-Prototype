@@ -28,7 +28,7 @@ public class EventManager<EnumType> where EnumType : struct, IConvertible
     /// <returns></returns>
     protected Action GetEvent(EnumType enumeration)
     {
-        return this.events[EnumHelper.Count<EnumType>()];
+        return this.events[EnumHelper.GetIndex<EnumType>(enumeration)];
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class EventManager<EnumType> where EnumType : struct, IConvertible
     /// <param name="action"></param>
     public void SubcribeToEvent(EnumType enumeration, Action action)
     {
-        this.events[EnumHelper.Count<EnumType>()] += action;
+        this.events[EnumHelper.GetIndex<EnumType>(enumeration)] += action;
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class EventManager<EnumType> where EnumType : struct, IConvertible
     /// <param name="action"></param>
     public void UnsubcribeToEvent(EnumType enumeration, Action action)
     {
-        this.events[EnumHelper.Count<EnumType>()] -= action;
+        this.events[EnumHelper.GetIndex<EnumType>(enumeration)] -= action;
     }
 
     /// <summary>

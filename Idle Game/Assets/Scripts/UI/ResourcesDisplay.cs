@@ -20,7 +20,7 @@ public class ResourcesDisplay : MonoBehaviour
         Transform myTransform = transform;
 
         this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
-        this.playerResources.PayDelegate += this.UpdateResourceNumber;
+        ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.PlayerPayResources, this.UpdateResourceNumber);
 
         for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)
         {

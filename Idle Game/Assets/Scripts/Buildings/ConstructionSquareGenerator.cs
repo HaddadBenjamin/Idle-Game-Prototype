@@ -8,9 +8,6 @@ public class ConstructionSquareGenerator : MonoBehaviour
     private int boardHorizontal = 8; // largeur, vertical, colonne
     [SerializeField]
     private int boardVertical = 8; // longueur, horizontal, line
-
-    public delegate void Delegate(ConstructionSquare[] constructionSquares, int boardHorizontal);
-    public Delegate FinishToGenerateDelegate;
     #endregion
 
     #region Properties
@@ -63,7 +60,9 @@ public class ConstructionSquareGenerator : MonoBehaviour
             }
         }
 
-        if (null != this.FinishToGenerateDelegate)
-            this.FinishToGenerateDelegate(constructionSquares, this.boardHorizontal);
+        ServiceLocator.Instance.EventManagerParamsConstructionSquareArrayAndInt.CallEvent(
+            EEventParamsConstructionSquareArrayAndInt.FinishToGenerateConstructionSquare,
+            constructionSquares, 
+            this.boardHorizontal);
     }
 }

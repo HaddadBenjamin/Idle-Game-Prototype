@@ -30,7 +30,7 @@ public class UpdateResourcePriceText : MonoBehaviour
         
         this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
 
-        this.playerResources.SubscribeToResourcesModificationDelegate(EResourceCategory.Gold, this.UpdateText);
+        ServiceLocator.Instance.EventManagerEResourceCategory.SubcribeToEvent(EResourceCategory.Gold, this.UpdateText);
     }
     #endregion
 

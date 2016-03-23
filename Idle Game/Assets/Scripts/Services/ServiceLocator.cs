@@ -11,6 +11,8 @@ public class ServiceLocator : MonoBehaviour
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
     public EventManager<EEvent> EventManager { get; private set; }
+    public EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt> EventManagerParamsConstructionSquareArrayAndInt { get; private set; }
+    public EventManager<EResourceCategory> EventManagerEResourceCategory { get; private set; }
     public ObjectsPoolManager ObjectsPoolManager { get; private set; }
 
     private static ServiceLocator instance = null;
@@ -42,6 +44,8 @@ public class ServiceLocator : MonoBehaviour
     private void Initialize()
     {
         this.BuildingsConfiguration = gameObject.GetComponent<BuildingsConfiguration>();
+        this.EventManagerParamsConstructionSquareArrayAndInt = new EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt>();
+        this.EventManagerEResourceCategory = new EventManager<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
 
         AServiceComponent[] servicesComponent =

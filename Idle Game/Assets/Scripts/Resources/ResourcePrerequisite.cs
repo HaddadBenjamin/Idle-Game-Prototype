@@ -10,8 +10,6 @@ public class ResourcePrerequisite
     private int resourceNumber;
     [SerializeField]
     private EResourceCategory resourceCategory;
-
-    public Action UpdateResourceNumberDelegate;
     #endregion
 
     #region Constructor
@@ -30,7 +28,7 @@ public class ResourcePrerequisite
         { 
             resourceNumber = value;
 
-            CallDelegate();
+            ServiceLocator.Instance.EventManagerEResourceCategory.CallEvent(this.resourceCategory);
         }
     }
 
@@ -42,12 +40,6 @@ public class ResourcePrerequisite
     #endregion
 
     #region Behaviour Methods
-    public void CallDelegate()
-    {
-        if (null != this.UpdateResourceNumberDelegate)
-            this.UpdateResourceNumberDelegate(); 
-        // C'est dégeulasse, normalement on devrait utiliser une delegate qui prend en paramètre le nombre de resource.
-    }
     #endregion
 
 }

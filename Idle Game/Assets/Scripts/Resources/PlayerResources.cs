@@ -6,7 +6,6 @@ public class PlayerResources : MonoBehaviour
 {
     #region Fields
     private ResourcePrerequisite[] resources;
-    public Action PayDelegate;
     #endregion
 
     #region Constructor
@@ -85,23 +84,10 @@ public class PlayerResources : MonoBehaviour
                 this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].ResourceNumber 
                     -= resourcesNeed[resourceIndex].ResourceNumber;
 
-             if (null != this.PayDelegate)
-                 this.PayDelegate();
+             ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
         }
 
         return haveEnoughResource;
-    }
-
-    /// <summary>
-    /// S'abonne à la delegate ayant pour identifiant resourceCategory.
-    /// </summary>
-    /// <param name="resourceCategory"></param>
-    /// <param name="action"></param>
-    public void SubscribeToResourcesModificationDelegate(EResourceCategory resourceCategory, Action action)
-    {
-        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].UpdateResourceNumberDelegate += action;
-
-        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].CallDelegate();
     }
     #endregion
 }

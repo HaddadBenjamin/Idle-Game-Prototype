@@ -17,10 +17,10 @@ public abstract class ABuildingManager : MonoBehaviour
     #region Unity Functions
     protected void MyAwake()
     {
-        ServiceLocator.Instance.
-            GameObjectReferenceManager.Get("Construction Square Generator").
-            GetComponent<ConstructionSquareGenerator>().
-            FinishToGenerateDelegate += this.SetConstructionSquaresAndBoardHorizontal;
+        ServiceLocator.Instance.EventManagerParamsConstructionSquareArrayAndInt.
+            SubcribeToEvent(
+                EEventParamsConstructionSquareArrayAndInt.FinishToGenerateConstructionSquare, 
+                this.SetConstructionSquaresAndBoardHorizontal);
     }
     #endregion
 
