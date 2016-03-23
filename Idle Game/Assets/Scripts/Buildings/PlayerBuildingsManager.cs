@@ -5,10 +5,6 @@ public class PlayerBuildingsManager : ABuildingManager
 {
     #region Fields
     /// <summary>
-    /// Permet d'accéder aux services GameObjectManager & BuildingsConfiguration.
-    /// </summary>
-    private ServiceLocator serviceLocator;
-    /// <summary>
     /// Lorsque l'on pose le bâtiment on doit déterminer si le joueur peut le payer et si cest le cas, alors le payer.
     /// </summary>
     private PlayerResources playerResources;
@@ -58,8 +54,6 @@ public class PlayerBuildingsManager : ABuildingManager
     void Start()
     {
         this.playerResources = GetComponent<PlayerResources>();
-
-        this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
 
         this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
     }
@@ -185,12 +179,12 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public void InstantiateBuilding(string buildingName)
     {
-        this.buildingConfiguration = this.serviceLocator.BuildingsConfiguration.GetConfiguration(buildingName);
+        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(buildingName);
 
         if (null != this.buildingToCreateGameObject)
             Destroy(buildingToCreateGameObject);
 
-        this.buildingToCreateGameObject = this.serviceLocator.GameObjectManager.Instantiate(buildingName);
+        this.buildingToCreateGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(buildingName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
     }
     #endregion

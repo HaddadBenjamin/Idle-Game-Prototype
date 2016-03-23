@@ -9,10 +9,6 @@ public class ConstructionSquare : MonoBehaviour
     /// </summary>
     private Material beginMaterial = null;
     /// <summary>
-    /// Une référence sur le material manager, de sorte à changer le material en fonction du outline.
-    /// </summary>
-    private MaterialManager materialManager = null;
-    /// <summary>
     /// Détermine si il y a un bâtiment à cette emplacement.
     /// </summary>
     private bool doesThereIsABuilding = false;
@@ -59,8 +55,8 @@ public class ConstructionSquare : MonoBehaviour
             if (true == showOutline)
             {
                 GetComponent<Renderer>().material = this.doesThereIsABuilding ?
-                                                    this.materialManager.Get("RedOutline") :
-                                                    this.materialManager.Get("GreenOutline");
+                                                    ServiceLocator.Instance.MaterialManager.Get("RedOutline") :
+                                                    ServiceLocator.Instance.MaterialManager.Get("GreenOutline");
             }
             else
                 GetComponent<Renderer>().material = this.beginMaterial;
@@ -74,13 +70,6 @@ public class ConstructionSquare : MonoBehaviour
     {
         this.beginMaterial = GetComponent<Renderer>().material;
 	}
-
-    void Start()
-    {
-        this.materialManager =  GameObject.FindGameObjectWithTag("ServiceLocator").
-                                GetComponent<ServiceLocator>().
-                                MaterialManager;
-    }
     #endregion 
 
     #region Behaviour Methods

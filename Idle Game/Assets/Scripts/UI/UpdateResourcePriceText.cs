@@ -21,8 +21,7 @@ public class UpdateResourcePriceText : MonoBehaviour
     {
         this.text = GetComponent<Text>();
 
-        this.price = GameObject.FindGameObjectWithTag("ServiceLocator").
-            GetComponent<ServiceLocator>().
+        this.price = ServiceLocator.Instance.
             BuildingsConfiguration.
             GetConfiguration(this.prefabName).
             GetResourcePrice(this.resourceCategory);

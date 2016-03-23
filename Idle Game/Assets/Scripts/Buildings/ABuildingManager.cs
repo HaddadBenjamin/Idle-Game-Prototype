@@ -17,8 +17,7 @@ public abstract class ABuildingManager : MonoBehaviour
     #region Unity Functions
     protected void MyAwake()
     {
-        GameObject.FindGameObjectWithTag("ServiceLocator").
-            GetComponent<ServiceLocator>().
+        ServiceLocator.Instance.
             GameObjectReferenceManager.Get("Construction Square Generator").
             GetComponent<ConstructionSquareGenerator>().
             FinishToGenerateDelegate += this.SetConstructionSquaresAndBoardHorizontal;

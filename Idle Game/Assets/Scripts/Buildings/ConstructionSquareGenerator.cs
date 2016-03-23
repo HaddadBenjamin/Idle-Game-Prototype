@@ -38,10 +38,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
     {
         Transform myTransform = transform;
         ConstructionSquare[] constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
-        GameObject  constructionSquareGameObject =
-                    GameObject.FindGameObjectWithTag("ServiceLocator").
-                    GetComponent<ServiceLocator>().
-                    GameObjectManager.Get("ConstructionSquare");
+        GameObject  constructionSquareGameObject = ServiceLocator.Instance.GameObjectManager.Get("ConstructionSquare");
 
         // Parcour vertical
         for (int boardVerticalIndex = 0; boardVerticalIndex < this.boardVertical; boardVerticalIndex++)

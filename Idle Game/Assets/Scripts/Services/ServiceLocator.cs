@@ -11,12 +11,29 @@ public class ServiceLocator : MonoBehaviour
     public GameObjectReferenceManager GameObjectReferenceManager { get; protected set; }
     public BuildingsConfiguration BuildingsConfiguration { get; protected set; }
     public EventManager<EEvent> EventManager { get; protected set; }
-    #endregion
 
-    #region Unity Methods
-    void Awake()
+    private static ServiceLocator instance = null;
+    
+    public static ServiceLocator Instance
     {
-        Initialize();
+        get
+        {
+            if (null == instance)
+            {
+                instance = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
+
+                instance.Initialize();
+
+                DontDestroyOnLoad(instance);
+            }
+
+            return instance;
+        }
+
+        private set
+        { 
+            instance = value; 
+        }
     }
     #endregion
 

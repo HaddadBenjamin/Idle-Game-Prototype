@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
 
 /// <summary>
-/// Permet de s'abonner à des delegate avec ce prototype : delegate void function().
+/// Permet de s'abonner à des delegate ayant pour prototype : delegate void function().
 /// </summary>
 /// <typeparam name="EnumType"></typeparam>
 public class EventManager<EnumType> where EnumType : struct, IConvertible
@@ -65,37 +64,3 @@ public class EventManager<EnumType> where EnumType : struct, IConvertible
     }
     #endregion
 }
-
-//public abstract class AEventManager<EventType, EnumType> 
-//    where EnumType : struct, IConvertible
-//    where EventType : class, Action<int>
-//{
-//    protected EventType[] events;
-
-//    public AEventManager()
-//    {
-//        if (!typeof(EnumType).IsEnum)
-//            throw new ArgumentException("EnumType must be an enumerated type");
-
-//        this.events = new EventType[EnumHelper.Count<EnumType>()];
-//    }
-
-//    protected EventType GetEvent(EnumType enumeration)
-//    {
-//        return this.events[EnumHelper.Count<EnumType>()];
-//    }
-    
-//    public void SubcribeToEvent(EnumType enumeration, EventType action)
-//    {
-//        this.GetEvent(enumeration) += action;
-//    }
-
-//    //Unsubscribe, abstract callDelegate(EnumType enumeration, ... templateVarags)..
-//}
-
-
-//public class EventManager : AEventManager<Action<int>, EEvent>
-//{
-//}
-
-

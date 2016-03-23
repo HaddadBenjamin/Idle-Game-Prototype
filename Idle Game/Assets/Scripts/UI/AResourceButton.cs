@@ -19,7 +19,7 @@ public class AResourceMenu : MonoBehaviour
         this.playerMenuAnimation = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMenuAnimation>();
         this.canvasGroup = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
         this.animator = GameObject.Find("Canvas").GetComponent<Animator>();
-        this.serviceLocator = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
+        this.serviceLocator = ServiceLocator.Instance;
         this.RTSCamera = Camera.main.GetComponent<RTSCamera>();
 
         this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
