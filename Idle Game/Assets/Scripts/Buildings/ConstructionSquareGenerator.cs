@@ -38,7 +38,6 @@ public class ConstructionSquareGenerator : MonoBehaviour
     {
         Transform myTransform = transform;
         ConstructionSquare[] constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
-        GameObject  constructionSquareGameObject = ServiceLocator.Instance.GameObjectManager.Get("ConstructionSquare");
 
         // Parcour vertical
         for (int boardVerticalIndex = 0; boardVerticalIndex < this.boardVertical; boardVerticalIndex++)
@@ -46,12 +45,13 @@ public class ConstructionSquareGenerator : MonoBehaviour
             // Parcour horizontal
             for (int boardHorizontalIndex = 0; boardHorizontalIndex < this.boardHorizontal; boardHorizontalIndex++)
             {
-                GameObject constructionSquare = GameObject.Instantiate(constructionSquareGameObject);
+                GameObject constructionSquare = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
+
                 Transform constructionSquareTransform = constructionSquare.transform;
                 ConstructionSquare constructionSquareScript = constructionSquare.AddComponent<ConstructionSquare>();
 
                 // Défini un numéro de ligne et de colonne à chaque case de construction, ceci permettra de mieu placer les bâtiments dessus.
-                constructionSquareScript.Initialize(boardHorizontalIndex, boardHorizontalIndex);
+                constructionSquareScript.Initialize(boardHorizontalIndex, boardVerticalIndex);
                 // DANGEREUX : Correspond à ABuildManager.GetPosition
                 constructionSquares[boardHorizontalIndex + boardVerticalIndex * this.boardHorizontal] = constructionSquareScript;
 

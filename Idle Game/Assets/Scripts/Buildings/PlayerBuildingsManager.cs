@@ -21,6 +21,10 @@ public class PlayerBuildingsManager : ABuildingManager
     /// Correspond au bâtiment que l'on souhaite construire.
     /// </summary>
     private GameObject buildingToCreateGameObject;
+    /// <summary>
+    /// Le nom de la prefab du bâtiment à instancier / détruire (utilisation de l'object pool).
+    /// </summary>
+    private string buildingName;
 
     /// <summary>
     /// Nous permet de placer le bâtiment sur les cases.
@@ -174,17 +178,39 @@ public class PlayerBuildingsManager : ABuildingManager
     /// </summary>
     public void DestroyBuildingToBuild()
     {
-        Destroy(this.buildingToCreateGameObject);
+        ServiceLocator.Instance.ObjectsPoolManager.RemoveObjectInPool(this.buildingName, buildingToCreateGameObject);
+    }
+    
+    /// <summary>
+    /// Détermine si il est possible de détruire le bâtiment que l'on souhaité construire.
+    /// </summary>
+    /// <returns></returns>
+    public bool CanDestroyBuildingToBuild()
+    {
+        return null != this.buildingToCreateGameObject;
     }
 
+    /// <summary>
+    /// Détruit le bâtiment que l'on souhaité construire si cela est possible.
+    /// </summary>
+    public void DesotryBuildingToBuildingIfPossible()
+    {
+        if (this.CanDestroyBuildingToBuild())
+            this.DestroyBuildingToBuild();
+    }
+
+    /// <summary>
+    /// Instancie le bâtiment en donnant son nom à l'object pool manageur et initialize les données que l'on a besoin pour pouvoir le traiter.
+    /// </summary>
+    /// <param name="buildingName"></param>
     public void InstantiateBuilding(string buildingName)
     {
-        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(buildingName);
+        this.buildingName = buildingName;
+        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
 
-        if (null != this.buildingToCreateGameObject)
-            Destroy(buildingToCreateGameObject);
+        this.DesotryBuildingToBuildingIfPossible();
 
-        this.buildingToCreateGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(buildingName);
+        this.buildingToCreateGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
     }
     #endregion

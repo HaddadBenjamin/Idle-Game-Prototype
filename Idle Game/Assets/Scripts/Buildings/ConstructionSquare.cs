@@ -78,7 +78,7 @@ public class ConstructionSquare : MonoBehaviour
     /// </summary>
     /// <param name="verticalPositionInGrid"></param>
     /// <param name="horizontalPositionInGrid"></param>
-    public void Initialize(int verticalPositionInGrid, int horizontalPositionInGrid)
+    public void Initialize(int horizontalPositionInGrid, int verticalPositionInGrid)
     {
         this.verticalPositionInGrid = verticalPositionInGrid;
         this.horizontalPositionInGrid = horizontalPositionInGrid;

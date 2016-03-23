@@ -11,6 +11,7 @@ public class ServiceLocator : MonoBehaviour
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
     public EventManager<EEvent> EventManager { get; private set; }
+    public ObjectsPoolManager ObjectsPoolManager { get; private set; }
 
     private static ServiceLocator instance = null;
     
@@ -45,6 +46,7 @@ public class ServiceLocator : MonoBehaviour
 
         AServiceComponent[] servicesComponent =
         {
+            (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
             (this.TextureManager = gameObject.GetComponent<TextureManager>()),
             (this.SpriteManager = gameObject.GetComponent<SpriteManager>()),
             (this.MaterialManager = gameObject.GetComponent<MaterialManager>()),
@@ -54,6 +56,16 @@ public class ServiceLocator : MonoBehaviour
 
         foreach (AServiceComponent serviceComponent in servicesComponent)
             serviceComponent.InitializeByServiceLocator();
+
+        //GameObject[] pool = new GameObject[150];
+
+        //for (int i = 0; i < 150; i++)
+        //    pool[i] = this.ObjectsPoolManager.AddObjectInPool("Stone Mine");
+
+        //this.ObjectsPoolManager.RemoveObjectInPool("Stone Mine", pool[3]);
+        //this.ObjectsPoolManager.RemoveObjectInPool("Stone Mine", pool[1], 3.0f);
+        ////this.ObjectsPoolManager.AddObjectInPool("Stone Mine");
+        ////this.ObjectsPoolManager.AddObjectInPool("Stone Mine");
     }
     #endregion
 }
