@@ -73,9 +73,11 @@ public class ObjectsPool
 
             for (int objectToInstantiatedIndex = 0; objectToInstantiatedIndex < this.InitializationSize; objectToInstantiatedIndex++)
             {
-                this.extandablePool[objectToInstantiatedIndex] = GameObject.Instantiate(this.Prefab);
+                GameObject newGameObject = GameObject.Instantiate(this.Prefab);
 
-                this.extandablePool[objectToInstantiatedIndex].SetActive(false);
+                newGameObject.SetActive(false);
+
+                this.extandablePool.Add(newGameObject);
             }
         }
         else
@@ -113,7 +115,7 @@ public class ObjectsPool
         GameObject gameObjectAtIndex = this.GetGameObjectAtPoolIndex();
 
         // Si l'objet est à l'index poolIndex.
-        if (!gameObjectAtIndex.activeSelf)
+        if (null != gameObjectAtIndex)
         {
             this.UpdatePoolIndex();
 
@@ -126,7 +128,7 @@ public class ObjectsPool
             GameObject firstDisableGameObject = this.GetTheFirstDisableGameObject();
 
             // Si il y a un objet désactiver dans la pool.
-            if (firstDisableGameObject)
+            if (null != firstDisableGameObject)
             {
                 this.poolIndex = this.SetAndGetPoolIndexAtGameObjectIndex(firstDisableGameObject) + 1;
 
@@ -141,7 +143,6 @@ public class ObjectsPool
                 if (this.Extandable)
                 {
                     GameObject newGameObject = GameObject.Instantiate(this.prefab);
-
                     this.extandablePool.Add(newGameObject);
                     ++this.initializationSize;
                     this.UpdatePoolIndex();
@@ -238,9 +239,11 @@ public class ObjectsPool
     /// <returns></returns>
     private GameObject GetGameObjectAtPoolIndex()
     {
-        return (this.Extandable) ?
-            this.extandablePool[this.poolIndex] :
-            this.notExtandablePool[this.poolIndex];
+        return this.poolIndex >= this.initializationSize ? 
+                null :
+                    this.Extandable ?
+                    this.extandablePool[this.poolIndex] :
+                    this.notExtandablePool[this.poolIndex];
     }
 
     /// <summary>
