@@ -53,8 +53,10 @@ public sealed class ObjectsPoolManager : AServiceComponent
     /// <param name="gameObject"></param>
     public void RemoveObjectInPool(string poolName, GameObject gameObject)
     {
-        this.GetPool(poolName).RemoveObjectInPool(gameObject);
+        if (null != gameObject)
+            this.GetPool(poolName).RemoveObjectInPool(gameObject);
     }
+
 
     /// <summary>
     /// Desactive un objet de la pool correspondant à poolName après timeToWait secondes.

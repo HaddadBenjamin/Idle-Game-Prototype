@@ -128,6 +128,8 @@ public class PlayerBuildingsManager : ABuildingManager
 
         if (canAddBuilding)
         {
+            // Pas besoin ici de faire un objectPool.RemoveInPool
+            // Parcontre on devrait ici rajouter dans une List<APlayerBuilding>(buildingToCreateGameObject, cellData, priceData, etc..);            
             this.buildingToCreateGameObject = null;
 
             base.DisableAllConstructionSquaresOutline();
@@ -193,7 +195,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// <summary>
     /// Détruit le bâtiment que l'on souhaité construire si cela est possible.
     /// </summary>
-    public void DesotryBuildingToBuildingIfPossible()
+    public void DestroyBuildingToBuildingIfPossible()
     {
         if (this.CanDestroyBuildingToBuild())
             this.DestroyBuildingToBuild();
@@ -208,7 +210,7 @@ public class PlayerBuildingsManager : ABuildingManager
         this.buildingName = buildingName;
         this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
 
-        this.DesotryBuildingToBuildingIfPossible();
+        this.DestroyBuildingToBuildingIfPossible();
 
         this.buildingToCreateGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;

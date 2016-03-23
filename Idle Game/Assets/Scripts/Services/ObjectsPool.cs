@@ -103,7 +103,8 @@ public class ObjectsPool
     {
         this.SetAndGetPoolIndexAtGameObjectIndex(gameObject);
 
-        gameObject.SetActive(false);
+        //if (null != gameObject)
+            gameObject.SetActive(false);
     }
 
     /// <summary>
