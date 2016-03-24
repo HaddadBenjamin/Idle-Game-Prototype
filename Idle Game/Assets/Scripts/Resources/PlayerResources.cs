@@ -5,19 +5,45 @@ using System;
 public class PlayerResources : MonoBehaviour
 {
     #region Fields
-    private ResourcePrerequisite[] resources;
+    private PlayerResourcePrerequisite[] resources;
+    private PlayerResourcesGeneration[] resourcesGeneration;
+    private Alarm generationResourceTimer = new Alarm(1.0f, false);
     #endregion
 
     #region Constructor
     public PlayerResources()
     {
-        this.resources = new ResourcePrerequisite[EnumHelper.Count<EResourceCategory>()];
+        int enumerationResourceCategorySize = EnumHelper.Count<EResourceCategory>();
+
+        this.resources = new PlayerResourcePrerequisite[enumerationResourceCategorySize];
+        this.resourcesGeneration = new PlayerResourcesGeneration[enumerationResourceCategorySize];
 
         for (int resourceIndex = 0; resourceIndex < this.resources.Length; resourceIndex++)
-            this.resources[resourceIndex]  = 
-                (EResourceCategory.Gold == (EResourceCategory)resourceIndex) ?
-                this.resources[resourceIndex] = new ResourcePrerequisite(12500, EResourceCategory.Gold) :
-                this.resources[resourceIndex] = new ResourcePrerequisite(0, (EResourceCategory)resourceIndex);
+        {
+            if (EResourceCategory.Gold == (EResourceCategory)resourceIndex)
+            {
+                this.resources[resourceIndex] = new PlayerResourcePrerequisite(12500, (EResourceCategory)resourceIndex);
+                this.resourcesGeneration[resourceIndex] = new PlayerResourcesGeneration((EResourceCategory)resourceIndex, 75.0f);
+            }
+            else
+            {
+                this.resources[resourceIndex] = new PlayerResourcePrerequisite(0, (EResourceCategory)resourceIndex);
+                this.resourcesGeneration[resourceIndex] = new PlayerResourcesGeneration((EResourceCategory)resourceIndex);
+            }
+        }
+    }
+    #endregion
+
+    #region Unity Methods
+    void Start()
+    {
+        Array.ForEach(this.resources, resource => resource.InitializeAtStart());
+    }
+
+    void Update()
+    {
+        if (this.generationResourceTimer.IsRingingUpdated())
+            Array.ForEach(this.resourcesGeneration, resourceGeneration => resourceGeneration.GenerateResources());
     }
     #endregion
 
@@ -39,7 +65,7 @@ public class PlayerResources : MonoBehaviour
     /// <param name="numberOfResource"></param>
     public void AddResource(EResourceCategory resourceCategory, int numberOfResource)
     {
-        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].ResourceNumber += numberOfResource;
+        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].AddResource(numberOfResource);
     }
 
     /// <summary>
@@ -49,7 +75,7 @@ public class PlayerResources : MonoBehaviour
     /// <param name="numberOfResource"></param>
     public void RemoveResource(EResourceCategory resourceCategory, int numberOfResource)
     {
-        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].ResourceNumber -= numberOfResource;
+        this.resources[EnumHelper.GetIndex<EResourceCategory>(resourceCategory)].RemoveResource(numberOfResource);
     }
 
     /// <summary>
@@ -81,8 +107,8 @@ public class PlayerResources : MonoBehaviour
         if (haveEnoughResource)
         {
              for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
-                this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].ResourceNumber 
-                    -= resourcesNeed[resourceIndex].ResourceNumber;
+                this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
+                    RemoveResource(resourcesNeed[resourceIndex].ResourceNumber);
 
              ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
         }

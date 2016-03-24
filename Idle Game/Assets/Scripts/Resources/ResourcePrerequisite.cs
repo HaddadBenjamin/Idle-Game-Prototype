@@ -7,9 +7,9 @@ public class ResourcePrerequisite
 {
     #region Fields
     [SerializeField] // C'est aussi le nombre de resource prérequites lorsque l'on souhaite construire un batiment
-    private int resourceNumber;
+    protected int resourceNumber;
     [SerializeField]
-    private EResourceCategory resourceCategory;
+    protected EResourceCategory resourceCategory;
     #endregion
 
     #region Constructor
@@ -24,11 +24,11 @@ public class ResourcePrerequisite
     public int ResourceNumber
     {
         get { return resourceNumber; }
-        set
+        private set
         { 
             resourceNumber = value;
 
-            ServiceLocator.Instance.EventManagerEResourceCategory.CallEvent(this.resourceCategory);
+            this.ResourceNumberHaveBeenUpdated();
         }
     }
 
@@ -39,7 +39,20 @@ public class ResourcePrerequisite
     }
     #endregion
 
+    #region Virtual & Abstract Methods
+    protected virtual void ResourceNumberHaveBeenUpdated() { }
+    #endregion
+
     #region Behaviour Methods
+    public void AddResource(int resourceAdded)
+    {
+        this.ResourceNumber += resourceAdded;
+    }
+
+    public void RemoveResource(int resourceRemoved)
+    {
+        this.ResourceNumber -= resourceRemoved;
+    }
     #endregion
 
 }

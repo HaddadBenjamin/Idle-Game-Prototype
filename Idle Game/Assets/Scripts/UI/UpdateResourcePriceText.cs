@@ -13,7 +13,6 @@ public class UpdateResourcePriceText : MonoBehaviour
 
     private Text text;
     private int price;
-    private PlayerResources playerResources;
     #endregion
 
     #region Unity Functions
@@ -28,18 +27,14 @@ public class UpdateResourcePriceText : MonoBehaviour
 
         this.text.text = StringHelper.PriceToText(this.price);
         
-        this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
-
-        ServiceLocator.Instance.EventManagerEResourceCategory.SubcribeToEvent(EResourceCategory.Gold, this.UpdateText);
+        ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(this.resourceCategory, this.UpdateText);
     }
     #endregion
 
     #region Behaviour Methods
-    private void UpdateText()
+    private void UpdateText(int resourceNumber)
     {
-        int goldNumber = this.playerResources.GetResourceNumber(EResourceCategory.Gold);
-
-        this.text.color =   goldNumber > this.price ?
+        this.text.color =   resourceNumber > this.price ?
                             ColorHelper.LightGreen :
                             ColorHelper.LightRed;
     }

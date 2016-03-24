@@ -43,13 +43,25 @@ public class BuildingConfiguration
     /// </summary>
     [SerializeField]
     private float verticalOffsetNormalized;
-    /// <summary>
-    /// Type de bâtiment : construction, décors, autre ??e
-    /// </summary>
+    [SerializeField]
+    private BuildingLevelsConfiguration[] levelsConfiguration;
+    private int maximumLevel;
+    #endregion
 
+    #region Constructor
+    public void Initialize()
+    {
+        this.maximumLevel = this.levelsConfiguration.Length;
+    }
     #endregion
 
     #region Properties
+    public int MaximumLevel
+    {
+        get { return maximumLevel; }
+        private set { maximumLevel = value; }
+    }
+
     public ResourcePrerequisite[] ResourcesPrerequisite
     {
         get { return resourcesPrerequisite; }
@@ -94,6 +106,12 @@ public class BuildingConfiguration
     #endregion
 
     #region Behaviour
+    public BuildingLevelsConfiguration GetLevelConfiguration(int level)
+    {
+        return  level < this.maximumLevel ?
+                this.levelsConfiguration[level] :
+                null;
+    }
     /// <summary>
     /// Obtneir le prix d'une resource en fonction de son type de resource.
     /// </summary>

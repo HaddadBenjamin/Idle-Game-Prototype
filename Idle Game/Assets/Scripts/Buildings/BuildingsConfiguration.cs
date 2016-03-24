@@ -14,7 +14,14 @@ public class BuildingsConfiguration : MonoBehaviour
     private BuildingConfiguration[] buildings;
     #endregion
 
-    #region Properties
+    #region Unity Methods
+    void Awake()
+    {
+        System.Array.ForEach(this.buildings, building => building.Initialize()); 
+    }
+    #endregion
+
+    #region Behaviour Methods
     /// <summary>
     /// Récupère la configuration lié à un nom de bâtiment.
     /// </summary>

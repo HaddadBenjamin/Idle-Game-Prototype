@@ -37,7 +37,7 @@ public class ResourcesDisplay : MonoBehaviour
             UIGameObject.transform.SetParent(myTransform);
             rectTransform.SetPosition(new Vector3(0.0f, 64.0f * resourceCategoryIndex, 0.0f));
 
-            resourceDisplay.Initialize();
+            resourceDisplay.Initialize(resourceCategory);
             resourceDisplay.SetResourceImage(resourceImage);
             resourceDisplay.SetResourceText(resourceNumber);
         }
