@@ -115,5 +115,17 @@ public class PlayerResources : MonoBehaviour
 
         return haveEnoughResource;
     }
+
+    public void GenerateResource(BuildingLevelResourceGenerationConfiguration[] resourceGenerated)
+    {
+        for (int resourceGeneratedIndex = 0; resourceGeneratedIndex < resourceGenerated.Length; resourceGeneratedIndex++)
+        {
+            EResourceCategory resourceType = resourceGenerated[resourceGeneratedIndex].ResourceType;
+            float resourceAdded = resourceGenerated[resourceGeneratedIndex].ResourceGeneratedPerSeconds;
+
+            this.resourcesGeneration[EnumHelper.GetIndex<EResourceCategory>(resourceType)].
+                AddResourceGeneratedPerSeconds(resourceAdded);
+        }
+    }
     #endregion
 }

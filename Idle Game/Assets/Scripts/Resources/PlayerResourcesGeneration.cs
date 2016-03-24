@@ -18,6 +18,16 @@ public class PlayerResourcesGeneration
     #endregion
 
     #region Behaviour Methods
+    public void AddResourceGeneratedPerSeconds(float resourceAdded)
+    {
+        this.ResourceGeneratedPerSeconds += resourceAdded;
+    }
+
+    public void RemoveResourceGeneratedPerSeconds(float resourceRemoved)
+    {
+        this.ResourceGeneratedPerSeconds -= resourceRemoved;
+    }
+
     public void GenerateResources()
     {
         this.ResourceGenerated += this.ResourceGeneratedPerSeconds;
@@ -26,6 +36,7 @@ public class PlayerResourcesGeneration
         if (this.ResourceGenerated >= 1.0f)
         {
             int resourceGeneratedAsInt = Mathf.CeilToInt(this.ResourceGenerated);
+
             ServiceLocator.Instance.EventManagerResourceGenerated.CallEvent(this.ResourceCategory, resourceGeneratedAsInt);
 
             this.ResourceGenerated -= Mathf.Ceil(this.ResourceGenerated);

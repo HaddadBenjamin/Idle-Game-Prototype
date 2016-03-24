@@ -10,7 +10,7 @@ public class UpdatePiecesOfFurnitureText : MonoBehaviour
 
     void Start()
     {
-        this.playerBuildingsAnalytic = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBuildingsManager>().BuildingsAnalytic;
+        this.playerBuildingsAnalytic = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().BuildingsAnalytic;
 
         this.text = GetComponent<Text>();
 

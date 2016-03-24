@@ -128,6 +128,12 @@ public class PlayerBuildingsManager : ABuildingManager
 
         if (canAddBuilding)
         {
+            ABuilding building = this.buildingToCreateGameObject.GetComponent<ABuilding>();
+
+            // Permet la génération de resources, au destroy il faudra penser à faire l'inverse
+            if (EBuildingCategory.ResourceConstruction == building.BuildingCategory)
+                (building as IndustryBuilding).InitializeResourceGeneration(this.buildingName);
+
             // Pas besoin ici de faire un objectPool.RemoveInPool
             // Parcontre on devrait ici rajouter dans une List<APlayerBuilding>(buildingToCreateGameObject, cellData, priceData, etc..);            
             this.buildingToCreateGameObject = null;

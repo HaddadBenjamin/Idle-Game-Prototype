@@ -10,6 +10,16 @@ public class BuildingLevelResourceGenerationConfiguration
     private float resourceGeneratedPerSeconds;
     #endregion
 
+    #region Constructor
+    public BuildingLevelResourceGenerationConfiguration() { }
+
+    public BuildingLevelResourceGenerationConfiguration(EResourceCategory resourceType, float resourceGeneratedPerSeconds)
+    {
+        this.resourceType = resourceType;
+        this.resourceGeneratedPerSeconds = resourceGeneratedPerSeconds;
+    }
+    #endregion
+
     #region Properties
     public EResourceCategory ResourceType
     {

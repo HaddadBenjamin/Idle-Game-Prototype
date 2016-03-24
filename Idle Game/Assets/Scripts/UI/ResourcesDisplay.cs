@@ -19,7 +19,7 @@ public class ResourcesDisplay : MonoBehaviour
         SpriteManager spriteManager = ServiceLocator.Instance.SpriteManager;
         Transform myTransform = transform;
 
-        this.playerResources = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>();
+        this.playerResources = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
         ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.PlayerPayResources, this.UpdateResourceNumber);
 
         for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)

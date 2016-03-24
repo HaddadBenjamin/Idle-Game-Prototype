@@ -106,11 +106,21 @@ public class BuildingConfiguration
     #endregion
 
     #region Behaviour
+    public bool CanGetLevelConfiguration(int level)
+    {
+        return level <= this.levelsConfiguration.Length;
+    }
+
+    public BuildingLevelsConfiguration GetLevelConfigurationIfPossible(int level)
+    {
+        return  this.CanGetLevelConfiguration(level) ?
+                this.GetLevelConfiguration(level) :
+                null;
+    }
+
     public BuildingLevelsConfiguration GetLevelConfiguration(int level)
     {
-        return  level < this.maximumLevel ?
-                this.levelsConfiguration[level] :
-                null;
+        return this.levelsConfiguration[level - 1];
     }
     /// <summary>
     /// Obtneir le prix d'une resource en fonction de son type de resource.
