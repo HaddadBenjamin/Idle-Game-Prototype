@@ -93,7 +93,7 @@ public class PlayerBuildingsManager : ABuildingManager
 
                     if (piecesOfFurniture.CanAdd())
                     {
-                        if (this.playerResources.HaveEnoughtResource(this.buildingConfiguration.ResourcesPrerequisite))
+                        if (this.playerResources.HaveEnoughtResource(this.buildingConfiguration.GetLevelConfiguration(1).Price))
                         {
                             Debug.Log("A new building have been created");
 
@@ -144,7 +144,7 @@ public class PlayerBuildingsManager : ABuildingManager
             this.buildingsAnalytic.GetConstructionBuildings(this.buildingConfiguration.IndustryCategory).Add();
             this.buildingsAnalytic.PiecesOfFurniture.Add();
 
-            this.playerResources.Pay(this.buildingConfiguration.ResourcesPrerequisite);
+            this.playerResources.Pay(this.buildingConfiguration.GetLevelConfiguration(1).Price);
         }
 
         return canAddBuilding;

@@ -42,14 +42,14 @@ public class IndustryBuilding : ABuilding
 
         this.playerResources.GenerateResource(this.LevelsConfiguration.ResourceGeneration);
 
-        this.LevelUp();
+        //this.LevelUp();
     }
 
     public bool CanLevelup()
     {
         if (this.BuildingLevel + 1 >= ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).MaximumLevel)
         {
-            if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.PriceToLevelUp))
+            if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.Price))
                 return true;
             else
                 Debug.Log("You don't have enough resource to level up this building");
@@ -75,12 +75,12 @@ public class IndustryBuilding : ABuilding
 
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
-        this.playerResources.Pay(this.LevelsConfiguration.PriceToLevelUp);
+        this.playerResources.Pay(this.LevelsConfiguration.Price);
 
         //Action(level) ? pour les synergies ?
     }
 
-    // A mettre dans un helper ?
+    // A mettre dans un helper, DEVRA ABSOLUMENET TESTER SI LE NIVEAU DU BATIMENT PEUT LEVEL UP AVANT DETRE APPELER.
     private BuildingLevelResourceGenerationConfiguration[] GetLevelsDifferenceConfiguration(BuildingLevelResourceGenerationConfiguration[] A = null, int level = 1)
     {
         if (null == A)

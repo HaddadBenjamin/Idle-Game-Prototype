@@ -9,11 +9,6 @@ public class BuildingConfiguration
 {
     #region Fields
     /// <summary>
-    /// Prix du bâtiment, on peut spécifier plusieurs type de resources.
-    /// </summary>
-    [SerializeField]
-    private ResourcePrerequisite[] resourcesPrerequisite;
-    /// <summary>
     /// Nom de la préfab du bâtiment.
     /// </summary>
     [SerializeField]
@@ -60,12 +55,6 @@ public class BuildingConfiguration
     {
         get { return maximumLevel; }
         private set { maximumLevel = value; }
-    }
-
-    public ResourcePrerequisite[] ResourcesPrerequisite
-    {
-        get { return resourcesPrerequisite; }
-        private set { resourcesPrerequisite = value; }
     }
 
     public string PrefabName
@@ -121,21 +110,6 @@ public class BuildingConfiguration
     public BuildingLevelsConfiguration GetLevelConfiguration(int level)
     {
         return this.levelsConfiguration[level - 1];
-    }
-    /// <summary>
-    /// Obtneir le prix d'une resource en fonction de son type de resource.
-    /// </summary>
-    /// <param name="resourceCategory"></param>
-    /// <returns></returns>
-    public int GetResourcePrice(EResourceCategory resourceCategory)
-    {
-        for (int resourceIndex = 0; resourceIndex < this.resourcesPrerequisite.Length; resourceIndex++)
-        {
-            if (this.resourcesPrerequisite[resourceIndex].ResourceCategory == resourceCategory)
-                return this.resourcesPrerequisite[resourceIndex].ResourceNumber;
-        }
-
-        return 0;
     }
 
     /// <summary>

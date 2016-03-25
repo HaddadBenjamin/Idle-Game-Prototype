@@ -7,7 +7,7 @@ public class BuildingLevelsConfiguration
     [SerializeField]
     private BuildingLevelResourceGenerationConfiguration[] resourceGeneration;
     [SerializeField]
-    private ResourcePrerequisite[] priceToLevelUp;
+    private ResourcePrerequisite[] price;
     #endregion
 
     #region Properties
@@ -17,10 +17,10 @@ public class BuildingLevelsConfiguration
         private set { resourceGeneration = value; }
     }
 
-    public ResourcePrerequisite[] PriceToLevelUp
+    public ResourcePrerequisite[] Price
     {
-        get { return priceToLevelUp; }
-        private set { priceToLevelUp = value; }
+        get { return price; }
+        private set { price = value; }
     }
     #endregion
 }
