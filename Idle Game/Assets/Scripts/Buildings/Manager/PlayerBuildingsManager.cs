@@ -312,6 +312,11 @@ public class PlayerBuildingsManager : ABuildingManager
     {
         this.BuildingManagerMode = EBuildingManagerMode.Move;
 
+        this.SelectBuildingPreInteractionsForMoveRotateSellDestroy();
+    }
+
+    private void SelectBuildingPreInteractionsForMoveRotateSellDestroy()
+    {
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         this.buildingName = building.BuildingName;
@@ -319,7 +324,7 @@ public class PlayerBuildingsManager : ABuildingManager
         this.constructionSquare = building.ConstructionSquareReference;
         this.constructionSquareForMoveAndRotateTemporary = this.constructionSquare;
         this.buildingGameObject.transform.localPosition = Vector3.zero;
-        
+
         base.PutThisAreaAsConstructible(this.constructionSquare, this.buildingConfiguration);
     }
 
@@ -329,5 +334,32 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.PlaceBuildingAfterMoveOrRotate();
     }
+    
+    public void LevelUpSelectedBuilding()
+    {
+        ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+
+        // Dangereux.
+        bool canLevelUp = (building as IndustryBuilding).LevelUpIfPossible();
+
+        if (canLevelUp) // Dangereux
+            Debug.Log("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
+        else
+            Debug.Log("This building is already to max level");
+    }
+
+    //public void SellSelectedBuilding()
+    //{
+    //    this.SelectBuildingPreInteractionsForMoveRotateSellDestroy();
+      
+    //    ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+
+    //    for (int buildingLevelIndex = this.buildingConfiguration.MaximumLevel; buildingLevelIndex >= 1; buildingLevelIndex--)
+    //    {
+    //        //
+    //        //soustrait
+    //    }
+
+    //}
     #endregion
 }

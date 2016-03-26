@@ -46,7 +46,7 @@ public class IndustryBuilding : ABuilding
 
     public bool CanLevelup()
     {
-        if (this.BuildingLevel + 1 >= ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)
+        if (this.BuildingLevel < ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)
         {
             if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.Price))
                 return true;
@@ -59,10 +59,14 @@ public class IndustryBuilding : ABuilding
         return false;
     }
     
-    public void LevelUpIfPossible()
+    public bool LevelUpIfPossible()
     {
-        if (this.CanLevelup())
+        bool canLevelUp = this.CanLevelup();
+
+        if (canLevelUp) 
             this.LevelUp();
+
+        return canLevelUp;
     }
 
     private void LevelUp()
