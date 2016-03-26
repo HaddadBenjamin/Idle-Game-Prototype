@@ -8,6 +8,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// Lorsque l'on pose le bâtiment on doit déterminer si le joueur peut le payer et si cest le cas, alors le payer.
     /// </summary>
     private PlayerResources playerResources;
+    public MenusAnimations menusAnimations;
 
     /// <summary>
     /// Donne accès à pleins d'information spécifique à chaque bâtiment tels que sa position, son prix, son nom etc...
@@ -64,6 +65,7 @@ public class PlayerBuildingsManager : ABuildingManager
         this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
 
         ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.DestroyBuildingToBuild, this.DestroyBuildingToBuild);
+        this.menusAnimations = ServiceLocator.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
     }
 
     void Update()
@@ -75,7 +77,7 @@ public class PlayerBuildingsManager : ABuildingManager
             if (Input.GetMouseButtonDown(0))
                 this.AddBuilding();
         }
-        else
+        else if (EMenuAnimation.Default == this.menusAnimations.CurrentMenuAnimation)
         {
             this.RaycastOnBuildingLayer();
 
@@ -83,12 +85,14 @@ public class PlayerBuildingsManager : ABuildingManager
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log("select building");
+                    Debug.Log("select building & call event click on building");
 
                     ServiceLocator.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
                 }
             }
         }
+        else
+            Debug.Log(this.menusAnimations.CurrentMenuAnimation);
     }
     #endregion
 

@@ -10,7 +10,6 @@ public class CloseResourceMenuAndConstructionMenu : AMenuAnimationButton
 
         base.Button.onClick.AddListener(() =>
         {
-            Debug.Log(base.MenusAnimations.CurrentMenuAnimation);
             switch (base.MenusAnimations.CurrentMenuAnimation)
             {
                 case EMenuAnimation.ResourceConstruction :

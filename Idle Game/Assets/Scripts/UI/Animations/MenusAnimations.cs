@@ -7,7 +7,7 @@ public class MenusAnimations : MonoBehaviour
     #region Fields
     [SerializeField]
     private AnimationClip[] animations;
-    private EMenuAnimation currentMenuAnimation = EMenuAnimation.Default;
+    public EMenuAnimation CurrentMenuAnimation { get; private set; }
 
     private ServiceLocator serviceLocator;
     private CanvasGroup canvasGroup;
@@ -18,7 +18,27 @@ public class MenusAnimations : MonoBehaviour
     private RTSCamera RTSCamera;
     #endregion
 
-    #region Virtual Initializer
+    #region Constructor
+    public MenusAnimations()
+    {
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
+    }
+    #endregion
+
+    #region Properties
+    public AnimationClip GetAnimation(string animationName)
+    {
+        foreach (AnimationClip animation in animations)
+        {
+            if (animationName == animation.name)
+                return animation;
+        }
+
+        return null;
+    }
+    #endregion
+
+    #region Unity Methods
     void Start()
     {
         this.canvasGroup = GetComponent<CanvasGroup>();
@@ -31,25 +51,6 @@ public class MenusAnimations : MonoBehaviour
 
         this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
         this.buildingContainerScrollRectMask = this.serviceLocator.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
-    }
-    #endregion
-
-    #region Properties
-    public EMenuAnimation CurrentMenuAnimation
-    {
-        get { return currentMenuAnimation; }
-        set { currentMenuAnimation = value; }
-    }
-
-    public AnimationClip GetAnimation(string animationName)
-    {
-        foreach (AnimationClip animation in animations)
-        {
-            if (animationName == animation.name)
-                return animation;
-        }
-
-        return null;
     }
     #endregion
 
@@ -82,7 +83,7 @@ public class MenusAnimations : MonoBehaviour
         this.DisableMenus();
         this.animator.SetBool("constructionMenu", true);
 
-        this.currentMenuAnimation = EMenuAnimation.Construction;
+        this.CurrentMenuAnimation = EMenuAnimation.Construction;
     }
 
     public void OpenResourceConstructionMenu()
@@ -96,7 +97,7 @@ public class MenusAnimations : MonoBehaviour
         this.buttonBuildingContainerGameObject.SetActive(true);
         this.buildingContainerScrollRectMask.horizontalNormalizedPosition = 0.0f;
 
-        this.currentMenuAnimation = EMenuAnimation.ResourceConstruction;
+        this.CurrentMenuAnimation = EMenuAnimation.ResourceConstruction;
     }
 
     public void CloseConstructionMenu()
@@ -110,7 +111,7 @@ public class MenusAnimations : MonoBehaviour
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
 
-        this.currentMenuAnimation = EMenuAnimation.Construction;
+        this.CurrentMenuAnimation = EMenuAnimation.Construction;
     }
 
     public void CloseResourceConstructionMenu()
@@ -123,7 +124,7 @@ public class MenusAnimations : MonoBehaviour
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
 
-        this.currentMenuAnimation = EMenuAnimation.Construction;
+        this.CurrentMenuAnimation = EMenuAnimation.Construction;
     }
 
     private void OpenBuildingInteractionsMenu()
@@ -134,7 +135,9 @@ public class MenusAnimations : MonoBehaviour
 
         this.animator.SetBool("buildingInteractionsMenu", true);
 
-        this.currentMenuAnimation = EMenuAnimation.BuildingInteractions;
+        this.CurrentMenuAnimation = EMenuAnimation.BuildingInteractions;
+
+        Debug.Log("open building interactions menu");
     }
     #endregion
 }
