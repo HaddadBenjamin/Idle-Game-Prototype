@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum EPlayerMenuAnimation
+public enum EMenuAnimation
 {
     Default,
     Construction,
     ResourceConstruction,
+    BuildingInteractions,
     
     //CloseConstruction,
 }

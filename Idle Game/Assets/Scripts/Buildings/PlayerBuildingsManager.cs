@@ -31,6 +31,8 @@ public class PlayerBuildingsManager : ABuildingManager
     /// </summary>
     private Ray ray;
     private RaycastHit hit;
+    private bool raycastHitWithBuilding;
+
 
     /// <summary>
     /// Si notre rayon ne trouve pas de cases cette condition sinon elle est fausse.
@@ -60,6 +62,8 @@ public class PlayerBuildingsManager : ABuildingManager
         this.playerResources = GetComponent<PlayerResources>();
 
         this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
+
+        ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.DestroyBuildingToBuild, this.DestroyBuildingToBuild);
     }
 
     void Update()
@@ -67,9 +71,23 @@ public class PlayerBuildingsManager : ABuildingManager
         if (null != this.buildingToCreateGameObject)
         {
             this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
-            
+
             if (Input.GetMouseButtonDown(0))
                 this.AddBuilding();
+        }
+        else
+        {
+            this.RaycastOnBuildingLayer();
+
+            if (this.raycastHitWithBuilding)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("select building");
+
+                    ServiceLocator.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
+                }
+            }
         }
     }
     #endregion
@@ -220,6 +238,13 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.buildingToCreateGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
         this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
+    }
+
+    private void RaycastOnBuildingLayer()
+    {
+        this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        this.raycastHitWithBuilding = Physics.Raycast(this.ray, out this.hit, LayerMask.GetMask("Building"));
     }
     #endregion
 }

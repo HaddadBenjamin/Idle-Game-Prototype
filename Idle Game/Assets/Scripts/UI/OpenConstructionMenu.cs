@@ -2,15 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class OpenConstructionMenu : AResourceMenu
+public class OpenConstructionMenu : AMenuAnimationButton
 {
 	void Start ()
     {
         base.BaseStart();
 
-        this.button.onClick.AddListener(() =>
+        base.Button.onClick.AddListener(() =>
         {
-            base.OpenConstructionMenu();
+            base.MenusAnimations.OpenConstructionMenu();
         });
 	}
 }

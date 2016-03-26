@@ -1,4 +1,6 @@
 ﻿public enum EEvent
 {
-    PlayerPayResources
+    PlayerPayResources,
+    ClickOnBuilding,
+    DestroyBuildingToBuild,
 }

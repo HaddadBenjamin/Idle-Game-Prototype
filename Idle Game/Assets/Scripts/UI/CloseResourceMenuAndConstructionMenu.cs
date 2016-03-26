@@ -2,28 +2,29 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class CloseResourceMenuAndConstructionMenu : AResourceMenu
+public class CloseResourceMenuAndConstructionMenu : AMenuAnimationButton
 {
     void Start()
     {
         base.BaseStart();
 
-        base.button.onClick.AddListener(() =>
+        base.Button.onClick.AddListener(() =>
         {
-            switch (base.playerMenuAnimation.CurrentMenuAnimation)
+            Debug.Log(base.MenusAnimations.CurrentMenuAnimation);
+            switch (base.MenusAnimations.CurrentMenuAnimation)
             {
-                case EPlayerMenuAnimation.ResourceConstruction :
-                   base.CloseResourceConstructionMenu();
+                case EMenuAnimation.ResourceConstruction :
+                    base.MenusAnimations.CloseResourceConstructionMenu();
                 break;
 
-                case EPlayerMenuAnimation.Construction:
-                  base.CloseConstructionMenu();
+                case EMenuAnimation.Construction:
+                    base.MenusAnimations.CloseConstructionMenu();
                 break;
 
                 default : break;
             }
 
-            ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().DestroyBuildingToBuild();
+            ServiceLocator.Instance.EventManager.CallEvent(EEvent.DestroyBuildingToBuild);
         });
     }
 }

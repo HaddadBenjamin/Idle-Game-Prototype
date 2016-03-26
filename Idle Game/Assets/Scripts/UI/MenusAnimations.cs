@@ -1,0 +1,140 @@
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
+
+public class MenusAnimations : MonoBehaviour
+{
+    #region Fields
+    [SerializeField]
+    private AnimationClip[] animations;
+    private EMenuAnimation currentMenuAnimation = EMenuAnimation.Default;
+
+    private ServiceLocator serviceLocator;
+    private CanvasGroup canvasGroup;
+    private Animator animator;
+
+    private GameObject buttonBuildingContainerGameObject;
+    private ScrollRect buildingContainerScrollRectMask;
+    private RTSCamera RTSCamera;
+    #endregion
+
+    #region Virtual Initializer
+    void Start()
+    {
+        this.canvasGroup = GetComponent<CanvasGroup>();
+        this.animator = GetComponent<Animator>();
+        this.serviceLocator = ServiceLocator.Instance;
+
+        this.serviceLocator.EventManager.SubcribeToEvent(EEvent.ClickOnBuilding, this.OpenBuildingInteractionsMenu);
+
+        this.RTSCamera = Camera.main.GetComponent<RTSCamera>();
+
+        this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
+        this.buildingContainerScrollRectMask = this.serviceLocator.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
+    }
+    #endregion
+
+    #region Properties
+    public EMenuAnimation CurrentMenuAnimation
+    {
+        get { return currentMenuAnimation; }
+        set { currentMenuAnimation = value; }
+    }
+
+    public AnimationClip GetAnimation(string animationName)
+    {
+        foreach (AnimationClip animation in animations)
+        {
+            if (animationName == animation.name)
+                return animation;
+        }
+
+        return null;
+    }
+    #endregion
+
+    #region Behaviour Methods
+    protected void DisableMenus()
+    {
+        this.animator.SetBool("defaultMenu", false);
+        this.animator.SetBool("constructionMenu", false);
+        this.animator.SetBool("resourceConstructionMenu", false);
+        this.animator.SetBool("buildingInteractionsMenu", false);
+    }
+
+    // Désactiver les intéractions sur le canvas actuel pendant que le temps de l'anmation "currentAnimationName" se joue et défini la vitesse que l'animation joue.
+    public IEnumerator DisableCanvasInteractionWhenAnimationOccur(string currentAnimationName, float animationSpeedMultiplicator)
+    {
+        this.animator.SetFloat("animationSpeedMultiplicator", animationSpeedMultiplicator);
+
+        float animationLength = Mathf.Abs(this.GetAnimation(currentAnimationName).length * animationSpeedMultiplicator);
+
+        //yield return new WaitForEndOfFrame();
+        this.canvasGroup.interactable = false;
+        yield return new WaitForSeconds(animationLength);
+        this.canvasGroup.interactable = true;
+    }
+
+    public void OpenConstructionMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("OpenConstructionMenu", 1.0f);
+
+        this.DisableMenus();
+        this.animator.SetBool("constructionMenu", true);
+
+        this.currentMenuAnimation = EMenuAnimation.Construction;
+    }
+
+    public void OpenResourceConstructionMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("OpenResourceConstructionMenu", 1.0f);
+
+        this.DisableMenus();
+        this.animator.SetBool("resourceConstructionMenu", true);
+
+        // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
+        this.buttonBuildingContainerGameObject.SetActive(true);
+        this.buildingContainerScrollRectMask.horizontalNormalizedPosition = 0.0f;
+
+        this.currentMenuAnimation = EMenuAnimation.ResourceConstruction;
+    }
+
+    public void CloseConstructionMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("OpenConstructionMenu", -1.0f);
+
+        this.DisableMenus();
+        this.animator.SetBool("defaultMenu", true);
+        this.RTSCamera.enabled = true;
+
+        // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
+        this.buttonBuildingContainerGameObject.SetActive(false);
+
+        this.currentMenuAnimation = EMenuAnimation.Construction;
+    }
+
+    public void CloseResourceConstructionMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("OpenResourceConstructionMenu", -1.0f);
+
+        this.DisableMenus();
+        this.animator.SetBool("constructionMenu", true);
+
+        // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
+        this.buttonBuildingContainerGameObject.SetActive(false);
+
+        this.currentMenuAnimation = EMenuAnimation.Construction;
+    }
+
+    private void OpenBuildingInteractionsMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("openBuildingInteractionsMenu", 1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("buildingInteractionsMenu", true);
+
+        this.currentMenuAnimation = EMenuAnimation.BuildingInteractions;
+    }
+    #endregion
+}
