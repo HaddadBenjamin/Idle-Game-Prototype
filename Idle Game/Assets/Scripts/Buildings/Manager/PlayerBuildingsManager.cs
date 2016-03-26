@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public enum EBuildingManagerMode
 {
@@ -48,11 +49,13 @@ public class PlayerBuildingsManager : ABuildingManager
     /// </summary>
     private bool canPlaceTheBuildingOnGrid;
 
-    private List<ABuilding> Buildings;
     public EBuildingManagerMode BuildingManagerMode { get; private set; }
     private ConstructionSquare constructionSquareForMoveAndRotateTemporary;
 
     private BuildingsAnalytic buildingsAnalytic;
+
+    private List<GameObject> remisedBuildings;
+    private bool findObjectInRemise = false;
     #endregion
 
     #region Properties
@@ -68,9 +71,9 @@ public class PlayerBuildingsManager : ABuildingManager
     {
         this.MyAwake();
         this.buildingsAnalytic = new BuildingsAnalytic();
-        this.Buildings = new List<ABuilding>();
 
         this.BuildingManagerMode = EBuildingManagerMode.Construction;
+        this.remisedBuildings = new List<GameObject>();
     }
 
     void Start()
@@ -199,13 +202,19 @@ public class PlayerBuildingsManager : ABuildingManager
             ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
             building.ConstructionSquareReference = this.constructionSquare;
+            Debug.Log("remised ? " + this.findObjectInRemise);
 
             // Permet la génération de resources, au destroy il faudra penser à faire l'inverse
             if (EBuildingCategory.ResourceConstruction == building.BuildingCategory)
-                (building as IndustryBuilding).InitializeResourceGeneration(this.buildingName);
-
-            this.Buildings.Add(building);
-
+            {
+                if (!this.findObjectInRemise)
+                    (building as IndustryBuilding).InitializeResourceGeneration(this.buildingName);
+                else
+                {
+                    (building as IndustryBuilding).GenerateteAllResources();
+                    Debug.Log("Add building from remise");
+                }
+            }
             // Pas besoin ici de faire un objectPool.RemoveInPool
             // Parcontre on devrait ici rajouter dans une List<APlayerBuilding>(buildingToCreateGameObject, cellData, priceData, etc..);            
             this.buildingGameObject = null;
@@ -216,7 +225,8 @@ public class PlayerBuildingsManager : ABuildingManager
             this.buildingsAnalytic.GetConstructionBuildings(this.buildingConfiguration.IndustryCategory).Add();
             this.buildingsAnalytic.PiecesOfFurniture.Add();
 
-            this.playerResources.Pay(this.buildingConfiguration.GetLevelConfiguration(1).Price);
+            if (!this.findObjectInRemise)
+                this.playerResources.Pay(this.buildingConfiguration.GetLevelConfiguration(1).Price);
         }
 
         return canAddBuilding;
@@ -297,7 +307,16 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.DestroyBuildingToBuildingIfPossible();
 
-        this.buildingGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(this.buildingName);
+        this.buildingGameObject = this.remisedBuildings.Find(remiseBuilding =>
+                ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).IndustryCategory ==
+                ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(remiseBuilding.GetComponent<ABuilding>().BuildingName).IndustryCategory);
+        
+        this.findObjectInRemise = null != this.buildingGameObject;
+        if (this.findObjectInRemise)
+            this.buildingGameObject.SetActive(true);
+        else
+            this.buildingGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(this.buildingName);
+        
         this.buildingGameObject.transform.localPosition = Vector3.zero;
     }
 
@@ -348,13 +367,11 @@ public class PlayerBuildingsManager : ABuildingManager
             Debug.Log("This building is already to max level");
     }
 
-    public void RemoveSelectedBuilding()
+    public void RemoveSelectedBuilding(bool canRemove = true)
     {
         this.SelectBuildingPreInteractionsForMoveRotateSellDestroy(); 
         
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
-
-        this.Buildings.Remove(building);
 
         base.DisableAllConstructionSquaresOutline();
         base.PutThisAreaAsConstructible(this.constructionSquare, this.buildingConfiguration);
@@ -365,16 +382,27 @@ public class PlayerBuildingsManager : ABuildingManager
         // Dangereux
         (building as IndustryBuilding).UnGenerateAllResources();
 
-        Destroy(this.buildingGameObject);
+        if (canRemove)
+            Destroy(this.buildingGameObject);
     }
 
     public void SellSelectedBuilding()
     {
-        this.RemoveSelectedBuilding();
-
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         building.Sell();
+
+        this.RemoveSelectedBuilding();
+
+    }
+
+    public void RemiseSelectedBuilding()
+    {
+        this.RemoveSelectedBuilding(false);
+
+        this.remisedBuildings.Add(this.buildingGameObject);
+
+        this.buildingGameObject.SetActive(false);
     }
     #endregion
 }

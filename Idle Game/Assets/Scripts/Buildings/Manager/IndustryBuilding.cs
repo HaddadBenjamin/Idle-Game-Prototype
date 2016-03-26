@@ -118,8 +118,27 @@ public class IndustryBuilding : ABuilding
 
         while (buildingLevelTemporary < this.BuildingLevel)
         {
-            this.playerResources.UngenerateResource(
-                this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, buildingLevelTemporary));
+            this.playerResources.UngenerateResource(this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, buildingLevelTemporary));
+
+            ++buildingLevelTemporary;
+
+            this.LevelsConfiguration = this.GetLevelsConfiguration(buildingLevelTemporary);
+        }
+    }
+
+    /// <summary>
+    /// Appeler lors d'une suppression d'un bâtiment d'un bâtiment.
+    /// </summary>
+    public void GenerateteAllResources()
+    {
+        int buildingLevelTemporary = 1;
+        this.LevelsConfiguration = this.GetLevelsConfiguration(1);
+        this.playerResources.GenerateResource(this.GetLevelsConfiguration(buildingLevelTemporary).ResourceGeneration);
+
+        Debug.Log("building level " + this.BuildingLevel);
+        while (buildingLevelTemporary < this.BuildingLevel)
+        {
+            this.playerResources.GenerateResource(this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, buildingLevelTemporary));
 
             ++buildingLevelTemporary;
 
