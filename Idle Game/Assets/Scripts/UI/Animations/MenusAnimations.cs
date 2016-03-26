@@ -111,7 +111,7 @@ public class MenusAnimations : MonoBehaviour
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
 
-        this.CurrentMenuAnimation = EMenuAnimation.Construction;
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
     }
 
     public void CloseResourceConstructionMenu()
@@ -136,8 +136,17 @@ public class MenusAnimations : MonoBehaviour
         this.animator.SetBool("buildingInteractionsMenu", true);
 
         this.CurrentMenuAnimation = EMenuAnimation.BuildingInteractions;
+    }
 
-        Debug.Log("open building interactions menu");
+    public void CloseBuildingInteractionsMenu()
+    {
+        this.DisableCanvasInteractionWhenAnimationOccur("openBuildingInteractionsMenu", -1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("defaultMenu", true);
+
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
     }
     #endregion
 }

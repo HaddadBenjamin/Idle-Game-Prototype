@@ -91,8 +91,6 @@ public class PlayerBuildingsManager : ABuildingManager
                 }
             }
         }
-        else
-            Debug.Log(this.menusAnimations.CurrentMenuAnimation);
     }
     #endregion
 
