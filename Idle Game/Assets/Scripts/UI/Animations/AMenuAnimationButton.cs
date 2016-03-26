@@ -11,8 +11,8 @@ public abstract class AMenuAnimationButton : MonoBehaviour
     #region Initializer
     protected void BaseStart()
     {
-        this.MenusAnimations = ServiceLocator.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
         this.Button = GetComponent<Button>();
+        this.MenusAnimations = ServiceLocator.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
     }
     #endregion
 }

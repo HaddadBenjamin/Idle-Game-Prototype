@@ -78,16 +78,18 @@ public class MenusAnimations : MonoBehaviour
 
     public void OpenConstructionMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.Construction;
+
         this.DisableCanvasInteractionWhenAnimationOccur("OpenConstructionMenu", 1.0f);
 
         this.DisableMenus();
         this.animator.SetBool("constructionMenu", true);
-
-        this.CurrentMenuAnimation = EMenuAnimation.Construction;
     }
 
     public void OpenResourceConstructionMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.ResourceConstruction;
+
         this.DisableCanvasInteractionWhenAnimationOccur("OpenResourceConstructionMenu", 1.0f);
 
         this.DisableMenus();
@@ -96,12 +98,12 @@ public class MenusAnimations : MonoBehaviour
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(true);
         this.buildingContainerScrollRectMask.horizontalNormalizedPosition = 0.0f;
-
-        this.CurrentMenuAnimation = EMenuAnimation.ResourceConstruction;
     }
 
     public void CloseConstructionMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
+
         this.DisableCanvasInteractionWhenAnimationOccur("OpenConstructionMenu", -1.0f);
 
         this.DisableMenus();
@@ -110,12 +112,12 @@ public class MenusAnimations : MonoBehaviour
 
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
-
-        this.CurrentMenuAnimation = EMenuAnimation.Default;
     }
 
     public void CloseResourceConstructionMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.Construction;
+
         this.DisableCanvasInteractionWhenAnimationOccur("OpenResourceConstructionMenu", -1.0f);
 
         this.DisableMenus();
@@ -123,30 +125,28 @@ public class MenusAnimations : MonoBehaviour
 
         // On a pas accès à la méthode SetActive dans l'animator, d'où la raison de ce cette ligne de code sale.
         this.buttonBuildingContainerGameObject.SetActive(false);
-
-        this.CurrentMenuAnimation = EMenuAnimation.Construction;
     }
 
     private void OpenBuildingInteractionsMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.BuildingInteractions;
+
         this.DisableCanvasInteractionWhenAnimationOccur("openBuildingInteractionsMenu", 1.0f);
 
         this.DisableMenus();
 
         this.animator.SetBool("buildingInteractionsMenu", true);
-
-        this.CurrentMenuAnimation = EMenuAnimation.BuildingInteractions;
     }
 
     public void CloseBuildingInteractionsMenu()
     {
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
+      
         this.DisableCanvasInteractionWhenAnimationOccur("openBuildingInteractionsMenu", -1.0f);
 
         this.DisableMenus();
 
         this.animator.SetBool("defaultMenu", true);
-
-        this.CurrentMenuAnimation = EMenuAnimation.Default;
     }
     #endregion
 }

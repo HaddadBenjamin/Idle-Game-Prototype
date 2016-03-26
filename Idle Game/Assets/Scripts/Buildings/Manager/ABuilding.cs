@@ -13,6 +13,9 @@ public abstract class ABuilding : MonoBehaviour
     /// </summary>
     [SerializeField]
     private EBuildingCategory buildingCategory;
+    [SerializeField]
+    private string buildingName;
+    private ConstructionSquare constructionSquareReference;
     #endregion
 
     #region Properties
@@ -21,7 +24,17 @@ public abstract class ABuilding : MonoBehaviour
         get { return buildingCategory; }
         private set { buildingCategory = value; }
     }
+
+    public string BuildingName
+    {
+        get { return buildingName; }
+        set { buildingName = value; }
+    }
+
+    public ConstructionSquare ConstructionSquareReference
+    {
+        get { return constructionSquareReference; }
+        set { constructionSquareReference = value; }
+    }
     #endregion
-
-
 }

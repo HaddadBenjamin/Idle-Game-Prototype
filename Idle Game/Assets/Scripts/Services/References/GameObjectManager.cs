@@ -6,7 +6,7 @@ public class GameObjectManager : AReferenceContainer<GameObject>
 {
     public GameObject Instantiate(string gameobjectName)
     {
-        return GameObject.Instantiate(this.Get(gameobjectName));
+        return GameObject.Instantiate(this.Get(gameobjectName)) as GameObject;
     }
 
     public GameObject Instantiate(string gameobjectName, Vector3 position, Vector3 eulerAngles)

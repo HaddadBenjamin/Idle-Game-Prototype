@@ -9,8 +9,7 @@ public class IndustryBuilding : ABuilding
     /// </summary>
     [SerializeField]
     private EIndustryBuildingCategory constructionBuildingCategory;
-    [SerializeField]
-    private string buildingName;
+
     public BuildingLevelsConfiguration LevelsConfiguration { get; private set; }
     public BuildingConfiguration BuildingConfiguration { get; private set; }
     public int BuildingLevel { get; private set; }
@@ -28,11 +27,11 @@ public class IndustryBuilding : ABuilding
     #region Initializer
     public void InitializeResourceGeneration(string buildingName)
     {
-        this.buildingName = buildingName;
+        base.BuildingName = buildingName;
         this.BuildingLevel = 1;
 
         this.BuildingConfiguration = ServiceLocator.Instance.
-                                    BuildingsConfiguration.GetConfiguration(this.buildingName);
+                                    BuildingsConfiguration.GetConfiguration(base.BuildingName);
 
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
@@ -47,7 +46,7 @@ public class IndustryBuilding : ABuilding
 
     public bool CanLevelup()
     {
-        if (this.BuildingLevel + 1 >= ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).MaximumLevel)
+        if (this.BuildingLevel + 1 >= ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)
         {
             if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.Price))
                 return true;

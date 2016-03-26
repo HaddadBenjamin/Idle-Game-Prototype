@@ -1,6 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
+public enum EBuildingManagerMode
+{
+    Construction,
+    SelectBuilding,
+    Move,
+}
+
+//construction Square, cellule, taillee
 public class PlayerBuildingsManager : ABuildingManager
 {
     #region Fields
@@ -21,7 +30,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// <summary>
     /// Correspond au bâtiment que l'on souhaite construire.
     /// </summary>
-    private GameObject buildingToCreateGameObject;
+    private GameObject buildingGameObject;
     /// <summary>
     /// Le nom de la prefab du bâtiment à instancier / détruire (utilisation de l'object pool).
     /// </summary>
@@ -34,11 +43,14 @@ public class PlayerBuildingsManager : ABuildingManager
     private RaycastHit hit;
     private bool raycastHitWithBuilding;
 
-
     /// <summary>
     /// Si notre rayon ne trouve pas de cases cette condition sinon elle est fausse.
     /// </summary>
     private bool canPlaceTheBuildingOnGrid;
+
+    private List<ABuilding> Buildings;
+    public EBuildingManagerMode BuildingManagerMode { get; private set; }
+    private ConstructionSquare constructionSquareForMoveAndRotateTemporary;
 
     private BuildingsAnalytic buildingsAnalytic;
     #endregion
@@ -56,6 +68,9 @@ public class PlayerBuildingsManager : ABuildingManager
     {
         this.MyAwake();
         this.buildingsAnalytic = new BuildingsAnalytic();
+        this.Buildings = new List<ABuilding>();
+
+        this.BuildingManagerMode = EBuildingManagerMode.Construction;
     }
 
     void Start()
@@ -70,27 +85,60 @@ public class PlayerBuildingsManager : ABuildingManager
 
     void Update()
     {
-        if (null != this.buildingToCreateGameObject)
+        if (EMenuAnimation.ResourceConstruction == this.menusAnimations.CurrentMenuAnimation)
         {
-            this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
+            if (null != this.buildingGameObject)
+            {
+                this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
 
-            if (Input.GetMouseButtonDown(0))
-                this.AddBuilding();
+                if (Input.GetMouseButtonDown(0))
+                    this.AddBuilding();
+            }
         }
+        
         else if (EMenuAnimation.Default == this.menusAnimations.CurrentMenuAnimation)
         {
             this.RaycastOnBuildingLayer();
 
-            if (this.raycastHitWithBuilding)
+            if (this.hit.collider &&  this.hit.collider.gameObject.layer == LayerMask.NameToLayer("Building") && Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Debug.Log("select building & call event click on building");
+                this.buildingGameObject = this.hit.collider.gameObject;
 
-                    ServiceLocator.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
-                }
+                Debug.Log(buildingGameObject);
+                Debug.Log("select building & call event click on building");
+
+                ServiceLocator.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
             }
         }
+        else if (EMenuAnimation.BuildingInteractions == this.menusAnimations.CurrentMenuAnimation)
+        {
+            if (EBuildingManagerMode.Move == this.BuildingManagerMode)
+            {
+                this.PlaceBuildingAndAffectOutlineOfConstructionSquares();
+
+                this.PlaceBuildingOnClickAfterMoveOrRotateInteractions();
+            }
+        }
+    }
+
+    private void PlaceBuildingOnClickAfterMoveOrRotateInteractions()
+    {
+        if (Input.GetMouseButtonDown(0) && this.canPlaceTheBuildingOnGrid && base.DoesItIsPossibleToBuildABuildingOnThisArea(this.constructionSquare, this.buildingConfiguration))
+            this.PlaceBuildingAfterMoveOrRotate();
+    }
+
+    private void PlaceBuildingAfterMoveOrRotate()
+    {
+        this.buildingGameObject.GetComponent<ABuilding>().ConstructionSquareReference = this.constructionSquare;
+        
+        GridPosition buildingGridPosition = this.buildingConfiguration.GetGridPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid, constructionSquare.VerticalPositionInGrid);
+        this.buildingGameObject.transform.position = base.GetNewBuildingPosition(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition, this.buildingConfiguration); ;
+
+        this.buildingGameObject = null;
+        base.DisableAllConstructionSquaresOutline();
+        base.PutThisAreaAsUnconstructible(this.constructionSquare, this.buildingConfiguration);
+
+        this.BuildingManagerMode = EBuildingManagerMode.Construction;
     }
     #endregion
 
@@ -148,15 +196,19 @@ public class PlayerBuildingsManager : ABuildingManager
 
         if (canAddBuilding)
         {
-            ABuilding building = this.buildingToCreateGameObject.GetComponent<ABuilding>();
+            ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+
+            building.ConstructionSquareReference = this.constructionSquare;
 
             // Permet la génération de resources, au destroy il faudra penser à faire l'inverse
             if (EBuildingCategory.ResourceConstruction == building.BuildingCategory)
                 (building as IndustryBuilding).InitializeResourceGeneration(this.buildingName);
 
+            this.Buildings.Add(building);
+
             // Pas besoin ici de faire un objectPool.RemoveInPool
             // Parcontre on devrait ici rajouter dans une List<APlayerBuilding>(buildingToCreateGameObject, cellData, priceData, etc..);            
-            this.buildingToCreateGameObject = null;
+            this.buildingGameObject = null;
 
             base.DisableAllConstructionSquaresOutline();
             base.PutThisAreaAsUnconstructible(this.constructionSquare, this.buildingConfiguration);
@@ -177,27 +229,34 @@ public class PlayerBuildingsManager : ABuildingManager
     {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(this.ray, out this.hit, LayerMask.GetMask("ConstructionSquare")))
+        bool raycastWorked = false;
+        ///Les masques ne marchent pas j'ai le seum !!!!'
+        if (Physics.Raycast(this.ray, out this.hit, (1 << LayerMask.NameToLayer("ConstructionSquare"))))
         {
-            Transform colliderTransform = this.hit.collider.transform;
+            raycastWorked = (this.hit.collider.gameObject.layer == LayerMask.NameToLayer("ConstructionSquare"));
 
-            this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
-            this.canPlaceTheBuildingOnGrid = true;
+            //Debug.Log("raycast worked : " + raycastWorked);
+            if (raycastWorked)
+            {
+                Transform colliderTransform = this.hit.collider.transform;
+                this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
+                this.canPlaceTheBuildingOnGrid = true;
+                this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
 
-            GridPosition buildingGridPosition = this.buildingConfiguration.GetGridPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid, constructionSquare.VerticalPositionInGrid);
+                GridPosition buildingGridPosition = this.buildingConfiguration.GetGridPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid, constructionSquare.VerticalPositionInGrid);
 
-            this.buildingToCreateGameObject.transform.position = base.GetNewBuildingPosition(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition, this.buildingConfiguration); ;
+                this.buildingGameObject.transform.position = base.GetNewBuildingPosition(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition, this.buildingConfiguration); ;
 
-            base.EnableBuildingOutline(base.GetSquare(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition), this.buildingConfiguration);
+                base.EnableBuildingOutline(base.GetSquare(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition), this.buildingConfiguration);
+                // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
+            }
+            else
+            {
+                this.buildingGameObject.transform.position = this.ray.origin + this.ray.direction * 7.5f;
 
-            // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
-        }
-        else
-        {
-            this.buildingToCreateGameObject.transform.position = this.ray.origin + this.ray.direction * 7.5f;
-
-            base.DisableAllConstructionSquaresOutline();
-            this.canPlaceTheBuildingOnGrid = false;
+                base.DisableAllConstructionSquaresOutline();
+                this.canPlaceTheBuildingOnGrid = false;
+            }
         }
     }
 
@@ -206,7 +265,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// </summary>
     public void DestroyBuildingToBuild()
     {
-        ServiceLocator.Instance.ObjectsPoolManager.RemoveObjectInPool(this.buildingName, buildingToCreateGameObject);
+        ServiceLocator.Instance.ObjectsPoolManager.RemoveObjectInPool(this.buildingName, buildingGameObject);
     }
     
     /// <summary>
@@ -215,7 +274,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// <returns></returns>
     public bool CanDestroyBuildingToBuild()
     {
-        return null != this.buildingToCreateGameObject;
+        return null != this.buildingGameObject;
     }
 
     /// <summary>
@@ -238,15 +297,37 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.DestroyBuildingToBuildingIfPossible();
 
-        this.buildingToCreateGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
-        this.buildingToCreateGameObject.transform.localPosition = Vector3.zero;
+        this.buildingGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
+        this.buildingGameObject.transform.localPosition = Vector3.zero;
     }
 
     private void RaycastOnBuildingLayer()
     {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        this.raycastHitWithBuilding = Physics.Raycast(this.ray, out this.hit, LayerMask.GetMask("Building"));
+        Physics.Raycast(this.ray, out this.hit, (1 << LayerMask.NameToLayer("Building")));
+    }
+
+    public void MoveSelectedBuilding()
+    {
+        this.BuildingManagerMode = EBuildingManagerMode.Move;
+
+        ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+
+        this.buildingName = building.BuildingName;
+        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
+        this.constructionSquare = building.ConstructionSquareReference;
+        this.constructionSquareForMoveAndRotateTemporary = this.constructionSquare;
+        this.buildingGameObject.transform.localPosition = Vector3.zero;
+        
+        base.PutThisAreaAsConstructible(this.constructionSquare, this.buildingConfiguration);
+    }
+
+    public void CancelBuildingMove()
+    {
+        this.constructionSquare = this.constructionSquareForMoveAndRotateTemporary;
+
+        this.PlaceBuildingAfterMoveOrRotate();
     }
     #endregion
 }
