@@ -38,4 +38,18 @@ public abstract class ABuilding : MonoBehaviour
         set { constructionSquareReference = value; }
     }
     #endregion
+
+
+    #region Behaviour Methods
+    public void Sell()
+    {
+        PlayerResources         playerResources =  ServiceLocator.Instance.
+                                GameObjectReferenceManager.Get("[PLAYER]").
+                                GetComponent<PlayerResources>();
+        BuildingConfiguration   buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName);
+
+        for (int buildingLevelIndex = 1; buildingLevelIndex <= this.BuildingLevel; buildingLevelIndex++)
+            playerResources.Unpay(buildingConfiguration.GetLevelConfigurationIfPossible(buildingLevelIndex).Price);
+    }
+    #endregion
 }

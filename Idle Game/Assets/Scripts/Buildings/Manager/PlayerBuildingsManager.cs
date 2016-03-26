@@ -368,18 +368,13 @@ public class PlayerBuildingsManager : ABuildingManager
         Destroy(this.buildingGameObject);
     }
 
-    //public void SellSelectedBuilding()
-    //{
-    //    this.SelectBuildingPreInteractionsForMoveRotateSellDestroy();
-      
-    //    ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+    public void SellSelectedBuilding()
+    {
+        this.RemoveSelectedBuilding();
 
-    //    for (int buildingLevelIndex = this.buildingConfiguration.MaximumLevel; buildingLevelIndex >= 1; buildingLevelIndex--)
-    //    {
-    //        //
-    //        //soustrait
-    //    }
+        ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
-    //}
+        building.Sell();
+    }
     #endregion
 }

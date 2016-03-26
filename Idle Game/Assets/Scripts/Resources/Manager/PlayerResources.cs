@@ -116,6 +116,27 @@ public class PlayerResources : MonoBehaviour
         return haveEnoughResource;
     }
 
+    /// <summary>
+    /// Paye resourceNeed si vous possédez suffisament de resources et renvoi si vous avez pu payer.
+    /// </summary>
+    /// <param name="resourcesNeed"></param>
+    /// <returns></returns>
+    public bool Unpay(ResourcePrerequisite[] resourcesNeed)
+    {
+        bool haveEnoughResource = this.HaveEnoughtResource(resourcesNeed);
+
+        if (haveEnoughResource)
+        {
+            for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
+                this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
+                    AddResource(resourcesNeed[resourceIndex].ResourceNumber);
+
+            ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
+        }
+
+        return haveEnoughResource;
+    }
+
     public void GenerateResource(BuildingLevelResourceGenerationConfiguration[] resourceGenerated)
     {
         for (int resourceGeneratedIndex = 0; resourceGeneratedIndex < resourceGenerated.Length; resourceGeneratedIndex++)
