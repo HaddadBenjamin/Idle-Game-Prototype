@@ -16,6 +16,7 @@ public abstract class ABuilding : MonoBehaviour
     [SerializeField]
     private string buildingName;
     private ConstructionSquare constructionSquareReference;
+    public int BuildingLevel { get; protected set; }
     #endregion
 
     #region Properties

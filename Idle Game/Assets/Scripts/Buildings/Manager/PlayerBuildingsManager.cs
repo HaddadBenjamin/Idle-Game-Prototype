@@ -265,7 +265,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// </summary>
     public void DestroyBuildingToBuild()
     {
-        ServiceLocator.Instance.ObjectsPoolManager.RemoveObjectInPool(this.buildingName, buildingGameObject);
+       Destroy(buildingGameObject);
     }
     
     /// <summary>
@@ -297,7 +297,7 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.DestroyBuildingToBuildingIfPossible();
 
-        this.buildingGameObject = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool(this.buildingName);
+        this.buildingGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(this.buildingName);
         this.buildingGameObject.transform.localPosition = Vector3.zero;
     }
 
@@ -346,6 +346,26 @@ public class PlayerBuildingsManager : ABuildingManager
             Debug.Log("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
         else
             Debug.Log("This building is already to max level");
+    }
+
+    public void RemoveSelectedBuilding()
+    {
+        this.SelectBuildingPreInteractionsForMoveRotateSellDestroy(); 
+        
+        ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+
+        this.Buildings.Remove(building);
+
+        base.DisableAllConstructionSquaresOutline();
+        base.PutThisAreaAsConstructible(this.constructionSquare, this.buildingConfiguration);
+
+        this.buildingsAnalytic.GetConstructionBuildings(this.buildingConfiguration.IndustryCategory).Remove();
+        this.buildingsAnalytic.PiecesOfFurniture.Remove();
+
+        // Dangereux
+        (building as IndustryBuilding).UnGenerateAllResources();
+
+        Destroy(this.buildingGameObject);
     }
 
     //public void SellSelectedBuilding()

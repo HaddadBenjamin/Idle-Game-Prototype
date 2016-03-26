@@ -12,7 +12,6 @@ public class IndustryBuilding : ABuilding
 
     public BuildingLevelsConfiguration LevelsConfiguration { get; private set; }
     public BuildingConfiguration BuildingConfiguration { get; private set; }
-    public int BuildingLevel { get; private set; }
     public PlayerResources playerResources { get; private set; }
     #endregion
 
@@ -28,7 +27,7 @@ public class IndustryBuilding : ABuilding
     public void InitializeResourceGeneration(string buildingName)
     {
         base.BuildingName = buildingName;
-        this.BuildingLevel = 1;
+        base.BuildingLevel = 1;
 
         this.BuildingConfiguration = ServiceLocator.Instance.
                                     BuildingsConfiguration.GetConfiguration(base.BuildingName);
@@ -72,9 +71,9 @@ public class IndustryBuilding : ABuilding
     private void LevelUp()
     {
         this.playerResources.GenerateResource(
-            this.GetLevelsDifferenceConfiguration(this.LevelsConfiguration.ResourceGeneration, this.BuildingLevel));
+            this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, this.BuildingLevel));
 
-        ++this.BuildingLevel;
+        ++base.BuildingLevel;
 
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
@@ -84,7 +83,7 @@ public class IndustryBuilding : ABuilding
     }
 
     // A mettre dans un helper, DEVRA ABSOLUMENET TESTER SI LE NIVEAU DU BATIMENT PEUT LEVEL UP AVANT DETRE APPELER.
-    private BuildingLevelResourceGenerationConfiguration[] GetLevelsDifferenceConfiguration(BuildingLevelResourceGenerationConfiguration[] A = null, int level = 1)
+    private BuildingLevelResourceGenerationConfiguration[] GetLevelsDifferenceResourceGenerationConfiguration(BuildingLevelResourceGenerationConfiguration[] A = null, int level = 1)
     {
         if (null == A)
             A = this.GetLevelsConfiguration(level).ResourceGeneration;
@@ -106,6 +105,26 @@ public class IndustryBuilding : ABuilding
         }
 
          return C;
+    }
+    
+    /// <summary>
+    /// Appeler lors d'une suppression d'un bâtiment d'un bâtiment.
+    /// </summary>
+    public void UnGenerateAllResources()
+    {
+        int buildingLevelTemporary = 1;
+        this.LevelsConfiguration = this.GetLevelsConfiguration(1);
+        this.playerResources.UngenerateResource(this.GetLevelsConfiguration(buildingLevelTemporary).ResourceGeneration);
+
+        while (buildingLevelTemporary < this.BuildingLevel)
+        {
+            this.playerResources.UngenerateResource(
+                this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, buildingLevelTemporary));
+
+            ++buildingLevelTemporary;
+
+            this.LevelsConfiguration = this.GetLevelsConfiguration(buildingLevelTemporary);
+        }
     }
 
     private BuildingLevelsConfiguration GetLevelsConfiguration(int level)
