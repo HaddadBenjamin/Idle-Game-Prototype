@@ -18,7 +18,7 @@ public class PlayerBuildingsManager : ABuildingManager
     /// Lorsque l'on pose le bâtiment on doit déterminer si le joueur peut le payer et si cest le cas, alors le payer.
     /// </summary>
     private PlayerResources playerResources;
-    public MenusAnimations menusAnimations;
+    private MenusAnimations menusAnimations;
 
     /// <summary>
     /// Donne accès à pleins d'information spécifique à chaque bâtiment tels que sa position, son prix, son nom etc...
