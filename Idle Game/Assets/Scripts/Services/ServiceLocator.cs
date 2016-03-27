@@ -6,6 +6,7 @@ public class ServiceLocator : MonoBehaviour
     #region Attributes & Properties
     public TextureManager TextureManager { get; private set; }
     public MaterialManager MaterialManager { get; private set; }
+    public StuffsConfiguration StuffsConfiguration { get; private set; }
     public SpriteManager SpriteManager { get; private set; }
     public GameObjectManager GameObjectManager { get; private set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
@@ -45,6 +46,8 @@ public class ServiceLocator : MonoBehaviour
     private void Initialize()
     {
         this.BuildingsConfiguration = gameObject.GetComponent<BuildingsConfiguration>();
+        this.StuffsConfiguration = gameObject.GetComponent<StuffsConfiguration>();
+
         this.EventManagerParamsConstructionSquareArrayAndInt = new EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt>();
         this.EventManagerResourceNumberHaveBeenUpdated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();

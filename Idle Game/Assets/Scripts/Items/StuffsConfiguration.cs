@@ -108,5 +108,10 @@ public class StuffsConfiguration : MonoBehaviour
     {
         return Array.Find(this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)], stuff => stuff.StuffName == stuffName);
     }
+
+    public StuffConfiguration[] GetStuffsConfiguration(EStuffCategory stuffCategory)
+    {
+        return this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)];
+    }
     #endregion
 }
