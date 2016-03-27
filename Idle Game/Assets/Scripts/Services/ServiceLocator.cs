@@ -4,7 +4,7 @@ using System.Collections;
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
-    public MaterialManager MaterialManager { get; private set; }
+    public MaterialReferences MaterialManager { get; private set; }
     public StuffsConfiguration StuffsConfiguration { get; private set; }
     public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
     public GameObjectReferencesArrays GameObjectReferencesArrays { get; private set; }
@@ -58,7 +58,7 @@ public class ServiceLocator : MonoBehaviour
         AServiceComponent[] servicesComponent =
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
-            (this.MaterialManager = gameObject.GetComponent<MaterialManager>()),
+            (this.MaterialManager = gameObject.GetComponent<MaterialReferences>()),
             (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
         };
 

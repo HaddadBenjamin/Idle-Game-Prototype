@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class MaterialManager : AReferenceContainer<Material>
+public class TextureReferences : AReferenceContainer<Texture2D>
 {
 
 }
