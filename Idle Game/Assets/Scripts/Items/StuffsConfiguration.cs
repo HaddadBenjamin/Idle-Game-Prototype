@@ -62,8 +62,6 @@ public class StuffsConfiguration : MonoBehaviour
     private StuffConfiguration[] musics;
     [SerializeField]
     private StuffConfiguration[] pendants;
-    [SerializeField]
-    private StuffConfiguration[] raws;
     #endregion
 
     #region Properties
@@ -91,7 +89,6 @@ public class StuffsConfiguration : MonoBehaviour
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Potion)]          = this.potions;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Projectile)]      = this.projectiles;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Remedy)]          = this.remedys;
-        this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Resource)]        = this.raws;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Ring)]            = this.rings;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Shield)]          = this.shields;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Shoes)]           = this.shoes;

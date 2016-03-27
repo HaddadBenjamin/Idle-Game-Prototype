@@ -20,7 +20,7 @@ public class BuildingButton : MonoBehaviour
     {
         Transform myTransform = transform;
         BuildingConfiguration buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.prefabName);
-        SpriteManager spriteManager = ServiceLocator.Instance.SpriteManager;
+        SpriteManagerReferencesArrays spriteManager = ServiceLocator.Instance.SpriteManagerReferencesArrays;
         GameObject playerGameObject = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]");
 
         PlayerResources playerResource = playerGameObject.GetComponent<PlayerResources>();
@@ -39,20 +39,20 @@ public class BuildingButton : MonoBehaviour
         this.quantityText = myTransform.Find("Quantity Text").GetComponent<Text>();
 
         // Set de l'image et du texte du bâtiment, le nombre de bâtiment (0/3).
-        myTransform.Find("Industry Image").GetComponent<Image>().sprite = spriteManager.Get(resourceGenerated.ToString() + "Bin");
+        myTransform.Find("Industry Image").GetComponent<Image>().sprite = spriteManager.GetResourceBinSprite(resourceGenerated);
         myTransform.Find("Industry Text").GetComponent<Text>().text = this.prefabName;
         playerGameObject.GetComponent<PlayerBuildingsManager>().
             BuildingsAnalytic.GetConstructionBuildings(industryBuildingCategory).
             CurrentValueModificationDelegate += this.UpdateBuildingQuantityText;
         UpdateBuildingQuantityText(playerGameObject.GetComponent<PlayerBuildingsManager>().BuildingsAnalytic.GetConstructionBuildings(industryBuildingCategory).CurrentValue, playerGameObject.GetComponent<PlayerBuildingsManager>().BuildingsAnalytic.GetConstructionBuildings(industryBuildingCategory).MaximumValue);
         // Set de l'image de resource généré et son texte.
-        myTransform.Find("Resource Image").GetComponent<Image>().sprite = spriteManager.Get(resourceGenerated.ToString());
+        myTransform.Find("Resource Image").GetComponent<Image>().sprite = spriteManager.GetResourceSprite(resourceGenerated);
         myTransform.Find("Resource Text").GetComponent<Text>().text = resourceGenerated.ToString();
 
         // Set du prix, sa couleur, son image.
         this.price = firstResourcePrice;
         this.priceText.text = StringHelper.PriceToText(this.price);
-        myTransform.Find("Price Image").GetComponent<Image>().sprite = spriteManager.Get(priceCategory.ToString());
+        myTransform.Find("Price Image").GetComponent<Image>().sprite = spriteManager.GetResourceSprite(priceCategory);
         ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(priceCategory, this.UpdateText);
         this.UpdateText(playerResource.GetResourceNumber(priceCategory));
 

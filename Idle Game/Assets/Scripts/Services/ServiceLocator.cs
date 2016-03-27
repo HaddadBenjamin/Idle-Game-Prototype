@@ -7,8 +7,7 @@ public class ServiceLocator : MonoBehaviour
     public TextureManager TextureManager { get; private set; }
     public MaterialManager MaterialManager { get; private set; }
     public StuffsConfiguration StuffsConfiguration { get; private set; }
-    public SpriteManagerForAllStuffs SpriteManagerForAllStuffs { get; private set; }
-    public SpriteManager SpriteManager { get; private set; }
+    public SpriteManagerReferencesArrays SpriteManagerReferencesArrays { get; private set; }
     public GameObjectManager GameObjectManager { get; private set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
@@ -54,13 +53,12 @@ public class ServiceLocator : MonoBehaviour
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
 
-        this.SpriteManagerForAllStuffs = gameObject.GetComponent<SpriteManagerForAllStuffs>();
+        this.SpriteManagerReferencesArrays = gameObject.GetComponent<SpriteManagerReferencesArrays>();
 
         AServiceComponent[] servicesComponent =
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
             (this.TextureManager = gameObject.GetComponent<TextureManager>()),
-            (this.SpriteManager = gameObject.GetComponent<SpriteManager>()),
             (this.MaterialManager = gameObject.GetComponent<MaterialManager>()),
             (this.GameObjectManager = gameObject.GetComponent<GameObjectManager>()),
             (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),

@@ -16,7 +16,7 @@ public class ResourcesDisplay : MonoBehaviour
     void Start()
     {
         GameObject UIPrefab = ServiceLocator.Instance.GameObjectManager.Get("Resource UI");
-        SpriteManager spriteManager = ServiceLocator.Instance.SpriteManager;
+        SpriteManagerReferencesArrays spriteManager = ServiceLocator.Instance.SpriteManagerReferencesArrays;
         Transform myTransform = transform;
 
         this.playerResources = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
@@ -29,7 +29,7 @@ public class ResourcesDisplay : MonoBehaviour
             ResourceDisplay resourceDisplay = UIGameObject.GetComponent<ResourceDisplay>();
 
             EResourceCategory resourceCategory = (EResourceCategory)resourceCategoryIndex;
-            Sprite resourceImage = spriteManager.Get(resourceCategory.ToString());
+            Sprite resourceImage = spriteManager.GetResourceSprite(resourceCategory);
             int resourceNumber = playerResources.GetResourceNumber(resourceCategory);
 
             this.resources[resourceCategoryIndex] = resourceDisplay;

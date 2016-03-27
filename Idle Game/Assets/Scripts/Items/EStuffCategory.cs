@@ -30,5 +30,4 @@
     Ring,
     Music,
     Pendant,
-    Resource
 }

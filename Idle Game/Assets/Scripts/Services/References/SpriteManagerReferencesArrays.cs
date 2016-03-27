@@ -21,10 +21,19 @@ public class SpriteManagerForAStuffCategory
     }
 }
 
-public class SpriteManagerForAllStuffs : MonoBehaviour
+public class SpriteManagerReferencesArrays : MonoBehaviour
 {
     #region Fields
     private SpriteManagerForAStuffCategory[] allStuffs;
+
+    [SerializeField]
+    private SpriteManagerForAStuffCategory resources;
+    [SerializeField]
+    private SpriteManagerForAStuffCategory resourcesBin;
+    [SerializeField]
+    private SpriteManagerForAStuffCategory raws;
+    [SerializeField]
+    private SpriteManagerForAStuffCategory rests;
 
     // Weapons
     [SerializeField]
@@ -81,8 +90,6 @@ public class SpriteManagerForAllStuffs : MonoBehaviour
     private SpriteManagerForAStuffCategory musics;
     [SerializeField]
     private SpriteManagerForAStuffCategory pendants;
-    [SerializeField]
-    private SpriteManagerForAStuffCategory raws;
     #endregion
 
     #region Unity Methods
@@ -107,7 +114,6 @@ public class SpriteManagerForAllStuffs : MonoBehaviour
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Potion)] = this.potions;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Projectile)] = this.projectiles;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Remedy)] = this.remedys;
-        this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Resource)] = this.raws;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Ring)] = this.rings;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Shield)] = this.shields;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Shoes)] = this.shoes;
@@ -118,6 +124,11 @@ public class SpriteManagerForAllStuffs : MonoBehaviour
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Vest)] = this.vests;
 
         Array.ForEach(this.allStuffs, stuffsCategory => stuffsCategory.Initialize());
+
+        this.resources.Initialize();
+        this.resourcesBin.Initialize();
+        this.raws.Initialize();
+        this.rests.Initialize();
     }
     #endregion
 
@@ -125,6 +136,21 @@ public class SpriteManagerForAllStuffs : MonoBehaviour
     public Sprite Get(string stuffName, EStuffCategory stuffCategory)
     {
         return this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)].Get(stuffName);
+    }
+
+    public Sprite GetRawSprite(ERaw rawCategory)
+    {
+        return this.raws.Get(EnumHelper.GetRawCategoryString(rawCategory));
+    }
+
+    public Sprite GetResourceSprite(EResourceCategory resourceCategory)
+    {
+        return this.resources.Get(resourceCategory.ToString());
+    }
+
+    public Sprite GetResourceBinSprite(EResourceCategory resourceCategory)
+    {
+        return this.resourcesBin.Get(resourceCategory.ToString() + "Bin");
     }
     #endregion
 }

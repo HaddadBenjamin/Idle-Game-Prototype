@@ -33,7 +33,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
             Transform craftEquipmentButtonTransform = craftEquipmentButton.transform;
 
             // Set de son image et de son texte.
-            craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceLocator.Instance.SpriteManagerForAllStuffs.Get(
+            craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceLocator.Instance.SpriteManagerReferencesArrays.Get(
                 stuffsConfiguration[stuffConfigurationIndex].StuffName,
                 stuffCategory);
             craftEquipmentButtonTransform.Find("Equipment Text").GetComponent<Text>().text = stuffsConfiguration[stuffConfigurationIndex].StuffName;
@@ -47,9 +47,9 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
             {
                 GameObject resourceUI = this.GetResourceUIGameObject(resourcePrerequisiteIndex, craftEquipmentButtonTransform);
                 Transform resourceUITransform = resourceUI.transform;
-
+                
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                    ServiceLocator.Instance.SpriteManager.Get(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory.ToString());
+                    ServiceLocator.Instance.SpriteManagerReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = resourcesPrerequisite[resourcePrerequisiteIndex].ResourceNumber.ToString();
 
                 ++prerequisiteIndex;
@@ -61,7 +61,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform resourceUITransform = resourceUI.transform;
 
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                    ServiceLocator.Instance.SpriteManagerForAllStuffs.Get(EnumHelper.GetRawCategoryString(rawsPrerequisite[rawPrerequisiteIndex].RawCategory), EStuffCategory.Resource);
+                    ServiceLocator.Instance.SpriteManagerReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
 
                 ++prerequisiteIndex;
@@ -73,7 +73,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform resourceUITransform = resourceUI.transform;
 
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                   ServiceLocator.Instance.SpriteManagerForAllStuffs.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
+                   ServiceLocator.Instance.SpriteManagerReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = stuffsPrerequisite[stuffPrerequisiteIndex].Number.ToString();
 
                 ++prerequisiteIndex;
