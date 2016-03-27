@@ -24,16 +24,17 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
         for (int stuffConfigurationIndex = 0; stuffConfigurationIndex < stuffsConfiguration.Length; stuffConfigurationIndex++)
         {
             // Instantiation de la prefab du bouton d'équipement.
-            GameObject craftEquipmentButton = ServiceLocator.Instance.GameObjectManager.Instantiate(
+            GameObject craftEquipmentButton = ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(
                 "Craft Equipment Button",
                 new Vector3(41.0f + stuffConfigurationIndex * 276.0f, 121.0f, 0.0f),
                 Vector3.zero,
                 Vector3.one,
-                myTransform);
+                myTransform,
+                EGameObjectReferences.UI);
             Transform craftEquipmentButtonTransform = craftEquipmentButton.transform;
 
             // Set de son image et de son texte.
-            craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceLocator.Instance.SpriteManagerReferencesArrays.Get(
+            craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceLocator.Instance.SpriteReferencesArrays.Get(
                 stuffsConfiguration[stuffConfigurationIndex].StuffName,
                 stuffCategory);
             craftEquipmentButtonTransform.Find("Equipment Text").GetComponent<Text>().text = stuffsConfiguration[stuffConfigurationIndex].StuffName;
@@ -49,7 +50,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform resourceUITransform = resourceUI.transform;
                 
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                    ServiceLocator.Instance.SpriteManagerReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
+                    ServiceLocator.Instance.SpriteReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = resourcesPrerequisite[resourcePrerequisiteIndex].ResourceNumber.ToString();
 
                 ++prerequisiteIndex;
@@ -61,7 +62,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform resourceUITransform = resourceUI.transform;
 
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                    ServiceLocator.Instance.SpriteManagerReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
+                    ServiceLocator.Instance.SpriteReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
 
                 ++prerequisiteIndex;
@@ -73,7 +74,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform resourceUITransform = resourceUI.transform;
 
                 resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                   ServiceLocator.Instance.SpriteManagerReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
+                   ServiceLocator.Instance.SpriteReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
                 resourceUITransform.Find("Resource Text").GetComponent<Text>().text = stuffsPrerequisite[stuffPrerequisiteIndex].Number.ToString();
 
                 ++prerequisiteIndex;
@@ -89,12 +90,13 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
     {
         int line = prerequisiteIndex / numberOfElementsPerLine;
 
-        return ServiceLocator.Instance.GameObjectManager.Instantiate(
+        return ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(
                 "Resource Equipment Prerequisite UI",
                 new Vector3(prerequisiteIndex % numberOfElementsPerLine * 119.0f, line * -51.0f, 0.0f),
                 Vector3.zero,
                 Vector3.one,
-                craftEquipmentButtonTransform);
+                craftEquipmentButtonTransform,
+                EGameObjectReferences.UI);
     }
     #endregion
 }

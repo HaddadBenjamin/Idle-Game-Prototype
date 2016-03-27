@@ -315,7 +315,7 @@ public class PlayerBuildingsManager : ABuildingManager
         if (this.findObjectInRemise)
             this.buildingGameObject.SetActive(true);
         else
-            this.buildingGameObject = ServiceLocator.Instance.GameObjectManager.Instantiate(this.buildingName);
+            this.buildingGameObject = ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(this.buildingName, EGameObjectReferences.ResourceBuildings);
         
         this.buildingGameObject.transform.localPosition = Vector3.zero;
     }

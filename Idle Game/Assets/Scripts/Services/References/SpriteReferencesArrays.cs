@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class SpriteManagerForAStuffCategory
+public class SpriteReferences
 {
     [SerializeField]
     protected Sprite[] references;
@@ -21,81 +21,81 @@ public class SpriteManagerForAStuffCategory
     }
 }
 
-public class SpriteManagerReferencesArrays : MonoBehaviour
+public class SpriteReferencesArrays : MonoBehaviour
 {
     #region Fields
-    private SpriteManagerForAStuffCategory[] allStuffs;
+    private SpriteReferences[] allStuffs;
 
     [SerializeField]
-    private SpriteManagerForAStuffCategory resources;
+    private SpriteReferences resources;
     [SerializeField]
-    private SpriteManagerForAStuffCategory resourcesBin;
+    private SpriteReferences resourcesBin;
     [SerializeField]
-    private SpriteManagerForAStuffCategory raws;
+    private SpriteReferences raws;
     [SerializeField]
-    private SpriteManagerForAStuffCategory rests;
+    private SpriteReferences rests;
 
     // Weapons
     [SerializeField]
-    private SpriteManagerForAStuffCategory swords;
+    private SpriteReferences swords;
     [SerializeField]
-    private SpriteManagerForAStuffCategory daggers;
+    private SpriteReferences daggers;
     [SerializeField]
-    private SpriteManagerForAStuffCategory axes;
+    private SpriteReferences axes;
     [SerializeField]
-    private SpriteManagerForAStuffCategory spears;
+    private SpriteReferences spears;
     [SerializeField]
-    private SpriteManagerForAStuffCategory maces;
+    private SpriteReferences maces;
     [SerializeField]
-    private SpriteManagerForAStuffCategory staves;
+    private SpriteReferences staves;
     [SerializeField]
-    private SpriteManagerForAStuffCategory bows;
+    private SpriteReferences bows;
     [SerializeField]
-    private SpriteManagerForAStuffCategory guns;
+    private SpriteReferences guns;
 
     // Garments
     [SerializeField]
-    private SpriteManagerForAStuffCategory armors;
+    private SpriteReferences armors;
     [SerializeField]
-    private SpriteManagerForAStuffCategory clothes;
+    private SpriteReferences clothes;
     [SerializeField]
-    private SpriteManagerForAStuffCategory vests;
+    private SpriteReferences vests;
     [SerializeField]
-    private SpriteManagerForAStuffCategory shields;
+    private SpriteReferences shields;
     [SerializeField]
-    private SpriteManagerForAStuffCategory helmets;
+    private SpriteReferences helmets;
     [SerializeField]
-    private SpriteManagerForAStuffCategory hats;
+    private SpriteReferences hats;
     [SerializeField]
-    private SpriteManagerForAStuffCategory gauntlets;
+    private SpriteReferences gauntlets;
     [SerializeField]
-    private SpriteManagerForAStuffCategory gloves;
+    private SpriteReferences gloves;
     [SerializeField]
-    private SpriteManagerForAStuffCategory shoes;
+    private SpriteReferences shoes;
     [SerializeField]
-    private SpriteManagerForAStuffCategory footwears;
+    private SpriteReferences footwears;
 
     // Accessories
     [SerializeField]
-    private SpriteManagerForAStuffCategory remedys;
+    private SpriteReferences remedys;
     [SerializeField]
-    private SpriteManagerForAStuffCategory spells;
+    private SpriteReferences spells;
     [SerializeField]
-    private SpriteManagerForAStuffCategory potions;
+    private SpriteReferences potions;
     [SerializeField]
-    private SpriteManagerForAStuffCategory projectiles;
+    private SpriteReferences projectiles;
     [SerializeField]
-    private SpriteManagerForAStuffCategory rings;
+    private SpriteReferences rings;
     [SerializeField]
-    private SpriteManagerForAStuffCategory musics;
+    private SpriteReferences musics;
     [SerializeField]
-    private SpriteManagerForAStuffCategory pendants;
+    private SpriteReferences pendants;
     #endregion
 
     #region Unity Methods
     void Awake()
     {
-        this.allStuffs = new SpriteManagerForAStuffCategory[EnumHelper.Count<EStuffCategory>()];
+        this.allStuffs = new SpriteReferences[EnumHelper.Count<EStuffCategory>()];
 
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Armor)] = this.armors;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Axe)] = this.axes;

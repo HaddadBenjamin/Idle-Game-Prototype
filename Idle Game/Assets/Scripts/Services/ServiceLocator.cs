@@ -4,11 +4,10 @@ using System.Collections;
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
-    public TextureManager TextureManager { get; private set; }
     public MaterialManager MaterialManager { get; private set; }
     public StuffsConfiguration StuffsConfiguration { get; private set; }
-    public SpriteManagerReferencesArrays SpriteManagerReferencesArrays { get; private set; }
-    public GameObjectManager GameObjectManager { get; private set; }
+    public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
+    public GameObjectReferencesArrays GameObjectReferencesArrays { get; private set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
     public EventManager<EEvent> EventManager { get; private set; }
@@ -53,14 +52,13 @@ public class ServiceLocator : MonoBehaviour
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
 
-        this.SpriteManagerReferencesArrays = gameObject.GetComponent<SpriteManagerReferencesArrays>();
+        this.SpriteReferencesArrays = gameObject.GetComponent<SpriteReferencesArrays>();
+        this.GameObjectReferencesArrays = gameObject.GetComponent<GameObjectReferencesArrays>();
 
         AServiceComponent[] servicesComponent =
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
-            (this.TextureManager = gameObject.GetComponent<TextureManager>()),
             (this.MaterialManager = gameObject.GetComponent<MaterialManager>()),
-            (this.GameObjectManager = gameObject.GetComponent<GameObjectManager>()),
             (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
         };
 

@@ -20,11 +20,12 @@ public class GenerateConstructionBuildingButtons : MonoBehaviour
 
         for (int prefabNameIndex = 0; prefabNameIndex < this.prefabsName.Length; prefabNameIndex++)
         {
-            ServiceLocator.Instance.GameObjectManager.Instantiate("Building Button",
+            ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate("Building Button",
                 new Vector3(50.0f + 216.0f * prefabNameIndex, 52.0f, 0.0f),
                 Vector3.zero,
                 new Vector3(0.81f, 0.81f, 0.81f), //C'est immonde
-                myTransform).GetComponent<BuildingButton>().Initialize(this.prefabsName[prefabNameIndex]);
+                myTransform,
+                EGameObjectReferences.UI).GetComponent<BuildingButton>().Initialize(this.prefabsName[prefabNameIndex]);
         }
     }
     #endregion

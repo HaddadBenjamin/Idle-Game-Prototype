@@ -15,8 +15,8 @@ public class ResourcesDisplay : MonoBehaviour
 
     void Start()
     {
-        GameObject UIPrefab = ServiceLocator.Instance.GameObjectManager.Get("Resource UI");
-        SpriteManagerReferencesArrays spriteManager = ServiceLocator.Instance.SpriteManagerReferencesArrays;
+        GameObject UIPrefab = ServiceLocator.Instance.GameObjectReferencesArrays.Get("Resource UI", EGameObjectReferences.UI);
+        SpriteReferencesArrays spriteManager = ServiceLocator.Instance.SpriteReferencesArrays;
         Transform myTransform = transform;
 
         this.playerResources = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
