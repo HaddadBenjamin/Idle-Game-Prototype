@@ -122,7 +122,7 @@ public class SpriteManagerForAllStuffs : MonoBehaviour
     #endregion
 
     #region Behaviour Methods
-    public Sprite GetStuffConfiguration(string stuffName, EStuffCategory stuffCategory)
+    public Sprite Get(string stuffName, EStuffCategory stuffCategory)
     {
         return this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)].Get(stuffName);
     }

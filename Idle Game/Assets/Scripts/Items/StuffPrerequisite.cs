@@ -9,6 +9,8 @@ public class StuffPrerequisite
     [SerializeField]
     private int number;
     [SerializeField]
+    private EStuffCategory stuffCategory;
+    [SerializeField]
     private EStuffQuality quality;
     #endregion
 
@@ -23,6 +25,12 @@ public class StuffPrerequisite
     {
         get { return number; }
         private set { number = value; }
+    }
+
+    public EStuffCategory StuffCategory
+    {
+        get { return stuffCategory; }
+        private set { stuffCategory = value; }
     }
 
     public EStuffQuality Quality

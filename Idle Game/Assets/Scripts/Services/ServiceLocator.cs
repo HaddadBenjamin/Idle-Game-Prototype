@@ -7,6 +7,7 @@ public class ServiceLocator : MonoBehaviour
     public TextureManager TextureManager { get; private set; }
     public MaterialManager MaterialManager { get; private set; }
     public StuffsConfiguration StuffsConfiguration { get; private set; }
+    public SpriteManagerForAllStuffs SpriteManagerForAllStuffs { get; private set; }
     public SpriteManager SpriteManager { get; private set; }
     public GameObjectManager GameObjectManager { get; private set; }
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
@@ -52,6 +53,8 @@ public class ServiceLocator : MonoBehaviour
         this.EventManagerResourceNumberHaveBeenUpdated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
+
+        this.SpriteManagerForAllStuffs = gameObject.GetComponent<SpriteManagerForAllStuffs>();
 
         AServiceComponent[] servicesComponent =
         {

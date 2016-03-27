@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class RawPrerequisite : MonoBehaviour
+[System.Serializable]
+public class RawPrerequisite
 {
     #region Fields
     [SerializeField]
@@ -24,8 +25,5 @@ public class RawPrerequisite : MonoBehaviour
     #endregion
 
     #region Unity Methods
-    #endregion
-
-    #region Behaviour Methods
     #endregion
 }
