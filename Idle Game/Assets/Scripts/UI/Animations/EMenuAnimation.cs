@@ -7,6 +7,7 @@ public enum EMenuAnimation
     Construction,
     ResourceConstruction,
     BuildingInteractions,
+    CraftEquipment
     
     //CloseConstruction,
 }

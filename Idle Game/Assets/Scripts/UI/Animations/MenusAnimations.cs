@@ -61,6 +61,7 @@ public class MenusAnimations : MonoBehaviour
         this.animator.SetBool("constructionMenu", false);
         this.animator.SetBool("resourceConstructionMenu", false);
         this.animator.SetBool("buildingInteractionsMenu", false);
+        this.animator.SetBool("craftEquipmentMenu", false);
     }
 
     // Désactiver les intéractions sur le canvas actuel pendant que le temps de l'anmation "currentAnimationName" se joue et défini la vitesse que l'animation joue.
@@ -143,6 +144,28 @@ public class MenusAnimations : MonoBehaviour
         this.CurrentMenuAnimation = EMenuAnimation.Default;
       
         this.DisableCanvasInteractionWhenAnimationOccur("openBuildingInteractionsMenu", -1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("defaultMenu", true);
+    }
+
+    public void OpenCraftEquipmentMenu()
+    {
+        this.CurrentMenuAnimation = EMenuAnimation.CraftEquipment;
+
+        this.DisableCanvasInteractionWhenAnimationOccur("openCraftEquipmentMenu", 1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("craftEquipmentMenu", true);
+    }
+
+    public void CloseCraftEquipmentMenu()
+    {
+        this.CurrentMenuAnimation = EMenuAnimation.Default;
+
+        this.DisableCanvasInteractionWhenAnimationOccur("openCraftEquipmentMenu", -1.0f);
 
         this.DisableMenus();
 
