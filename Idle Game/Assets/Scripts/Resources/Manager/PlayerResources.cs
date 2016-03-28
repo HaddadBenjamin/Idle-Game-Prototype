@@ -121,20 +121,13 @@ public class PlayerResources : MonoBehaviour
     /// </summary>
     /// <param name="resourcesNeed"></param>
     /// <returns></returns>
-    public bool Unpay(ResourcePrerequisite[] resourcesNeed)
+    public void Unpay(ResourcePrerequisite[] resourcesNeed)
     {
-        bool haveEnoughResource = this.HaveEnoughtResource(resourcesNeed);
+        for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
+            this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
+                AddResource(resourcesNeed[resourceIndex].ResourceNumber);
 
-        if (haveEnoughResource)
-        {
-            for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
-                this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
-                    AddResource(resourcesNeed[resourceIndex].ResourceNumber);
-
-            ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
-        }
-
-        return haveEnoughResource;
+        ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
     }
 
     public void GenerateResource(BuildingLevelResourceGenerationConfiguration[] resourceGenerated)

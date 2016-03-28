@@ -13,6 +13,8 @@ public class ServiceLocator : MonoBehaviour
     public EventManager<EEvent> EventManager { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceGenerated { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceNumberHaveBeenUpdated { get; private set; }
+    public EventManagerParamsInt<ERaw> EventManagerRawNumberHaveBeenUpdated { get; private set; }
+    public EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality> EventManagerStuffNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt> EventManagerParamsConstructionSquareArrayAndInt { get; private set; }
     public ObjectsPoolManager ObjectsPoolManager { get; private set; }
 
@@ -49,6 +51,8 @@ public class ServiceLocator : MonoBehaviour
 
         this.EventManagerParamsConstructionSquareArrayAndInt = new EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt>();
         this.EventManagerResourceNumberHaveBeenUpdated = new EventManagerParamsInt<EResourceCategory>();
+        this.EventManagerStuffNumberHaveBeenUpdated = new EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality>();
+        this.EventManagerRawNumberHaveBeenUpdated = new EventManagerParamsInt<ERaw>();
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
 

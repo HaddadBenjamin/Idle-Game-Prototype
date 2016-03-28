@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Préparez-vous à pleurer, ce code est crade comme pas permis.
+/// </summary>
 public class GenerateCraftEquipmentButtons : MonoBehaviour
 {
     #region Fields
@@ -64,10 +67,12 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 {
                     GameObject resourceUI = this.GetResourceUIGameObject(resourcePrerequisiteIndex, craftEquipmentButtonTransform);
                     Transform resourceUITransform = resourceUI.transform;
-                
+                    Text resourceText = resourceUITransform.Find("Resource Text").GetComponent<Text>();
+
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
                         ServiceLocator.Instance.SpriteReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
-                    resourceUITransform.Find("Resource Text").GetComponent<Text>().text = resourcesPrerequisite[resourcePrerequisiteIndex].ResourceNumber.ToString();
+                    resourceText.text = resourcesPrerequisite[resourcePrerequisiteIndex].ResourceNumber.ToString();
+                    resourceText.gameObject.AddComponent<UpdateCraftEquipmentResourcePrerequisiteText>().Initialize(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
 
                     ++prerequisiteIndex;
                 }
@@ -76,10 +81,12 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 {
                     GameObject resourceUI = this.GetResourceUIGameObject(prerequisiteIndex, craftEquipmentButtonTransform);
                     Transform resourceUITransform = resourceUI.transform;
+                    Text resourceText = resourceUITransform.Find("Resource Text").GetComponent<Text>();
 
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
                         ServiceLocator.Instance.SpriteReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
-                    resourceUITransform.Find("Resource Text").GetComponent<Text>().text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
+                    resourceText.text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
+                    resourceText.gameObject.AddComponent<UpdateCraftEquipmentRawPrerequisiteText>().Initialize(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
 
                     ++prerequisiteIndex;
                 }
@@ -88,11 +95,14 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 {
                     GameObject resourceUI = this.GetResourceUIGameObject(prerequisiteIndex, craftEquipmentButtonTransform);
                     Transform resourceUITransform = resourceUI.transform;
+                    Text resourceText = resourceUITransform.Find("Resource Text").GetComponent<Text>();
 
+                    // A REFAIRE ABSOLUMENT
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
                        ServiceLocator.Instance.SpriteReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
-                    resourceUITransform.Find("Resource Text").GetComponent<Text>().text = stuffsPrerequisite[stuffPrerequisiteIndex].Number.ToString();
-
+                    resourceText.text = stuffsPrerequisite[stuffPrerequisiteIndex].Number.ToString();
+                    resourceText.gameObject.AddComponent<UpdateCraftEquipmentStuffPrerequisiteText>().Initialize(stuffsPrerequisite[stuffPrerequisiteIndex]);
+                   
                     ++prerequisiteIndex;
                 }
                 // position puis image et texte, resource c'est bon, parcontre raw et item il me faudra un manager

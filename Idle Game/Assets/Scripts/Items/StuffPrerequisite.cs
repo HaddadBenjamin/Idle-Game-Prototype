@@ -14,6 +14,16 @@ public class StuffPrerequisite
     private EStuffQuality quality;
     #endregion
 
+     #region Constructor
+    public StuffPrerequisite(string name, int number, EStuffCategory stuffCategory, EStuffQuality quality)
+    {
+        this.name = name;
+        this.number = number;
+        this.stuffCategory = stuffCategory;
+        this.quality = quality;
+    }
+    #endregion
+
     #region Properties
     public string Name
     {
@@ -24,7 +34,12 @@ public class StuffPrerequisite
     public int Number
     {
         get { return number; }
-        private set { number = value; }
+        private set 
+        { 
+            number = value;
+
+            this.StuffNumberHaveBeenUpdated();
+        }
     }
 
     public EStuffCategory StuffCategory
@@ -37,6 +52,22 @@ public class StuffPrerequisite
     {
         get { return quality; }
         private set { quality = value; }
+    }
+    #endregion
+
+    #region Virtual & Abstract Methods
+    protected virtual void StuffNumberHaveBeenUpdated() { }
+    #endregion
+
+    #region Behaviour Methods
+    public void AddStuff(int stuffAdded)
+    {
+        this.Number += stuffAdded;
+    }
+
+    public void RemoveStuff(int stuffRemoved)
+    {
+        this.Number -= stuffRemoved;
     }
     #endregion
 }
