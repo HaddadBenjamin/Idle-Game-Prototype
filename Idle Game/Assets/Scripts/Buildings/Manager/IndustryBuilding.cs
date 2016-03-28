@@ -77,7 +77,7 @@ public class IndustryBuilding : ABuilding
 
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
-        this.playerResources.Pay(this.LevelsConfiguration.Price);
+        this.playerResources.PayIfPossible(this.LevelsConfiguration.Price);
 
         //Action(level) ? pour les synergies ?
     }

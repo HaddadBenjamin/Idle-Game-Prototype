@@ -227,7 +227,7 @@ public class PlayerBuildingsManager : ABuildingManager
             this.buildingsAnalytic.PiecesOfFurniture.Add();
 
             if (!this.findObjectInRemise)
-                this.playerResources.Pay(this.buildingConfiguration.GetLevelConfiguration(1).Price);
+                this.playerResources.PayIfPossible(this.buildingConfiguration.GetLevelConfiguration(1).Price);
         }
 
         return canAddBuilding;

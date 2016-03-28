@@ -38,7 +38,7 @@ public class PlayerRaws : MonoBehaviour
 
     public bool HaveEnoughtRaw(RawPrerequisite[] rawsNeed)
     {
-        for (byte rawIndex = 0; rawIndex < rawsNeed.Length; rawIndex++)
+        for (int rawIndex = 0; rawIndex < rawsNeed.Length; rawIndex++)
         {
             if (this.raws[EnumHelper.GetIndex<ERaw>(rawsNeed[rawIndex].RawCategory)].Number <= rawsNeed[rawIndex].Number)
                 return false;
@@ -47,17 +47,20 @@ public class PlayerRaws : MonoBehaviour
         return true;
     }
 
-    public bool Pay(RawPrerequisite[] rawsNeed)
+    public bool PayIfPossible(RawPrerequisite[] rawsNeed)
     {
         bool haveEnoughRaw = this.HaveEnoughtRaw(rawsNeed);
 
         if (haveEnoughRaw)
-        {
-            for (byte rawIndex = 0; rawIndex < rawsNeed.Length; rawIndex++)
-                this.raws[EnumHelper.GetIndex<ERaw>(rawsNeed[rawIndex].RawCategory)].RemoveRaw(rawsNeed[rawIndex].Number);
-        }
+            this.Pay(rawsNeed);
 
         return haveEnoughRaw;
+    }
+
+    public void Pay(RawPrerequisite[] rawsNeed)
+    {
+        for (byte rawIndex = 0; rawIndex < rawsNeed.Length; rawIndex++)
+            this.raws[EnumHelper.GetIndex<ERaw>(rawsNeed[rawIndex].RawCategory)].RemoveRaw(rawsNeed[rawIndex].Number);
     }
 
     public void Unpay(RawPrerequisite[] rawsNeed)

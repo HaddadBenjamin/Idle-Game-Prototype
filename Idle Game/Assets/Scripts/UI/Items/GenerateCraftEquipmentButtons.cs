@@ -105,6 +105,8 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                    
                     ++prerequisiteIndex;
                 }
+
+                craftEquipmentButton.AddComponent<CraftEquipmentButton>().Initialize(resourcesPrerequisite, rawsPrerequisite, stuffsPrerequisite, stuffsConfiguration[stuffConfigurationIndex]);
                 // position puis image et texte, resource c'est bon, parcontre raw et item il me faudra un manager
             }
         }

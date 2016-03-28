@@ -100,21 +100,25 @@ public class PlayerResources : MonoBehaviour
     /// </summary>
     /// <param name="resourcesNeed"></param>
     /// <returns></returns>
-    public bool Pay(ResourcePrerequisite[] resourcesNeed)
+    public bool PayIfPossible(ResourcePrerequisite[] resourcesNeed)
     {
         bool haveEnoughResource = this.HaveEnoughtResource(resourcesNeed);
 
         if (haveEnoughResource)
-        {
-             for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
-                this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
-                    RemoveResource(resourcesNeed[resourceIndex].ResourceNumber);
-
-             ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
-        }
+            this.Pay(resourcesNeed);
 
         return haveEnoughResource;
     }
+
+    public void Pay(ResourcePrerequisite[] resourcesNeed)
+    {
+        for (byte resourceIndex = 0; resourceIndex < resourcesNeed.Length; resourceIndex++)
+            this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
+                RemoveResource(resourcesNeed[resourceIndex].ResourceNumber);
+
+        ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
+    }
+
 
     /// <summary>
     /// Paye resourceNeed si vous possédez suffisament de resources et renvoi si vous avez pu payer.

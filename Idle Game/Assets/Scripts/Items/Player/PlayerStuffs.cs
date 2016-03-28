@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerStuffs : MonoBehaviour
 {
-   
-
     #region Fields
     private PlayerCategoryStuffs[] allCategoriesStuffs;
     #endregion
@@ -17,7 +15,8 @@ public class PlayerStuffs : MonoBehaviour
 
         this.allCategoriesStuffs = new PlayerCategoryStuffs[enumerationStuffCategorySize];
 
-        Array.ForEach(this.allCategoriesStuffs, oneCategoryStuffs => oneCategoryStuffs = new PlayerCategoryStuffs());
+        for (int categoryStuffIndex = 0; categoryStuffIndex < enumerationStuffCategorySize; categoryStuffIndex++)
+        this.allCategoriesStuffs[categoryStuffIndex] = new PlayerCategoryStuffs();
     }
     #endregion
 
@@ -34,6 +33,7 @@ public class PlayerStuffs : MonoBehaviour
 
     public void AddStuff(string name, EStuffCategory stuffCategory, EStuffQuality stuffQuality, int numberOfStuff)
     {
+        Debug.LogFormat("Add Stuff : {1}, category {1} quality {2}", name, stuffCategory, stuffQuality);
         this.allCategoriesStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)].AddNumber(name, stuffCategory, stuffQuality, numberOfStuff);
     }
 
@@ -58,12 +58,15 @@ public class PlayerStuffs : MonoBehaviour
         bool haveEnoughStuff = this.HaveEnoughtStuff(stuffsNeed);
 
         if (haveEnoughStuff)
-        {
-            for (int stuffIndex = 0; stuffIndex < stuffsNeed.Length; stuffIndex++)
-                this.allCategoriesStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffsNeed[stuffIndex].StuffCategory)].PayIfPossible(stuffsNeed[stuffIndex]);
-        }
+            this.Pay(stuffsNeed);
 
         return haveEnoughStuff;
+    }
+
+    public void Pay(StuffPrerequisite[] stuffsNeed)
+    {
+        for (int stuffIndex = 0; stuffIndex < stuffsNeed.Length; stuffIndex++)
+            this.allCategoriesStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffsNeed[stuffIndex].StuffCategory)].PayIfPossible(stuffsNeed[stuffIndex]);
     }
 
     public void Unpay(StuffPrerequisite[] stuffsNeed)
