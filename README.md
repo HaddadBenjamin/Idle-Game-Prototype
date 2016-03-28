@@ -1,33 +1,23 @@
 # Jeu-Passif-Prototype-Unity3D
-Prototypage d'un idle game, le but de ce projet est de me faire manipuler l'UI d'Unity, voir les problèmatiques d'un Idle Game, tenter d'avoir une architecture bien pensé, utiliser les animations d'Unity et probablement tester le réseau d'Unity.
+Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui génèrent de la ressources et par la suite les utiliser de sorte à créer des équipements de sorte à les revendre.
 
 - Trello : https://trello.com/b/l6zvRFBy/idle-game-prototype-unity3d
-- Architecture des batiments (sans la partie UI) : http://i.imgur.com/BR4Ccmp.png
-- Code source actuel : http://i.imgur.com/eOzRsFw.png
-
 
 Points intéressants :
-- Mon architecture s'améliore et permet de respecter l'encapsulation de mes classes grâce à mon gestionnaire d'évênements.
-- Tous les points important du gameplay sont configurable à travers l'inspecteur d'Unity.
-- Aucune des données de cette architecture sont en double.
+- Mon architecture s'améliore et permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évênements.
+- Tous les points important unique du gameplay sont configurable à travers l'inspecteur d'Unity, ceci me permet aussi d'éviter des doublons de données.
 - Toutes les intéractions sont faites à un moment précis et non à chaque frame.
 - L'architecture de cette application donne accès à une pelleté de services : gestionnaire d'évênements, gestionnaire de pool étendable ou non, gestionnaire d'objets, de matériaux, de textures, de sprites, de references, etc...
-- Les bâtiments peuvent générer plusieurs types de resources et ont un prix configurable par niveau, les resouces qu'ils gnèrent sont aussi entièrement configurable à travers l'inteface, tous le code est générique, ce qui est plaisant c'est que tous est configurable et par la suite si je souhaite générer d'autres ressources ou créer d'autres type de bâtiment qui en génère je n'aurais pas besoin de coder de nouvelles lignes de codes.
+- Les bâtiments de génération de resources peuvent générer plusieurs types de resources, et en fonction du niveau de ce bâtiment ils peuvent générer plus ou moins de ressources, leur prix pour aller au niveau suivant augmente, etc.. Tous ces paramètres sont entièrement configurable à travers l'inteface. Ceci m'a permet de générer les 12 différents bâtiments de resources via l'interface sans devoir rajouter une seule ligne de code.
+- On peut configurer chacune des recettes à travers l'interface par type d'équipement et leur spécifier des resources prérequises, des matériaux prérequis, prix de l'objet de base, niveau de l'objet de base, etc... Ceci permet de changer le gameplay sans devoir coder.
+- Ce projet à été réalisé en 7 à 10 jours en temps plein et il est constitué de ~75 différent fichiers.
 
-![Alt text](http://i.imgur.com/CUyM374.jpg "Création et placement d'un bâtiment qui permet de générer des resources.")
-![Alt text](http://i.imgur.com/K4ZQyY7.jpg "Interface par défaut où l'on voit les ressources du joueur.")
-![Alt text](http://i.imgur.com/n5aS2aj.png "Une bonne pelleté de services qui sont tous configurable.")
-![Alt text](http://i.imgur.com/xTl3NCu.png "Code actuel du projet après environ 35-40h de développement il me semble (5 jours, vérifier cela sur le Github)")
-
-Il y a actuellement 10 bâtiments configuré qui peuvent générés plusieurs types de ressources, chacun de ces bâtiments ont un prix de base configurable et peuvent être monter de niveau si vous payer un certain montant de ressources (configurable) ce qui leur permet de générer plus de ressources et là encore tous est configurable à travers l'interface d'Unity.
-
-Actuellement on peut placer 10 différents bâtiments dont 3 bâtiments par type de bâtiment.
-
-Grâce à l'interface générique réalisé sur ce projet, je n'est pas eu besoin de rajouter une seule ligne de code pour rajouter ces 10 nouveaux bâtiments.
-
-Je pense que je vais maintenant m'attaquer à l'interface d'informations des bâtiments qui permettra de monter de niveau un bâtiment si l'on paye un montant de ressources, déplacer un bâtiment, supprimer un bâtiment, vendre un bâtiment.
-
-Enfin je terminerai le gameplay de base par la création d'objets avec ces ressources et les permettre de les revendre en or du jeu.
-
-Ceci permettra de poser la base du gameplay de ce jeu, quand cela sera fini j'imaginerai un gameplay plus poussé avec des objets, des sorts, des dungeons de sorte à rendre ce jeu plus riche, plus dynamique et plus fun.
-
+![Alt text](http://i.imgur.com/WqNXcOJ.jpg "Menu de création de bâtiment qui génère de la ressource puis placement de ce bâtiment.")
+![Alt text](http://i.imgur.com/U7lpP7W.jpg "Menu de création d'équipement, on peut sélectionner le filtre que l'on souhaite et configurer entièrement la partie recette ainsi que la configuration des objets qu'il génère.")
+![Alt text](http://i.imgur.com/V8JBkZ0.jpg "Boutons d'intéractions d'un bâtiment.")
+![Alt text](http://i.imgur.com/2OX9oRM.jpg "Boutons permettant de naviguer sur les menus de construction d'équipements et de création de bâtiment générant des resources.")
+![Alt text](http://i.imgur.com/ffKkgYI.jpg "Architecture du jeu. (~75 fichiers en 7-10 jours en temps plein)")
+![Alt text](http://i.imgur.com/zx10bbK.jpg "Configuration des bâtiments générant des ressources.")
+![Alt text](http://i.imgur.com/Znyq5tb.jpg "Configuration des recettes ainsi que des objets générer, les données qui peuvent changés ne peuvent pas être modifié d'ici cette interface. (ceci me permet d'éviter des doublons de données).")
+![Alt text](http://i.imgur.com/2fiBgcz.jpg "Présentation d'une partie des services de cette application.")
+![Alt text](http://i.imgur.com/GDUWymp.jpg "Animations de mes menus.")
