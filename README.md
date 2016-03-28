@@ -1,7 +1,9 @@
 # Jeu-Passif-Prototype-Unity3D
 Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui génèrent de la ressources et par la suite les utiliser de sorte à créer des équipements de sorte à les revendre.
 
+Sites web :
 - Trello : https://trello.com/b/l6zvRFBy/idle-game-prototype-unity3d
+- Site dédié : http://haddadbpro.wix.com/portfolio#!jeu-passif/se9ch
 
 Points intéressants :
 - Mon architecture s'améliore et permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
