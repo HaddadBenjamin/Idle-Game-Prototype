@@ -7,7 +7,7 @@ Sites web :
 - Linkedin : https://www.linkedin.com/in/haddadbenjamin
 
 Points intéressants :
-- Mon architecture s'améliore et permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
+- Mon architecture permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
 - Tous les points importants gameplay et qui doivent être unique du  sont configurables à travers l'inspecteur d'Unity, ceci me permet aussi d'éviter des doublons de données.
 - Toutes les intéractions sont faites à un moment précis et non à chaque frame.
 - L'architecture de cette application donne accès à une pelletée de services : gestionnaire d'évènements, gestionnaire de pool étendable ou non, gestionnaire d'objets, de matériaux, de textures, de sprites, de références, etc...
