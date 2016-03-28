@@ -16,6 +16,7 @@ public class MenusAnimations : MonoBehaviour
     private GameObject buttonBuildingContainerGameObject;
     private ScrollRect buildingContainerScrollRectMask;
     private RTSCamera RTSCamera;
+    private GenerateCraftEquipmentButtons generateCraftEquipmentButtons;
     #endregion
 
     #region Constructor
@@ -51,6 +52,7 @@ public class MenusAnimations : MonoBehaviour
 
         this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
         this.buildingContainerScrollRectMask = this.serviceLocator.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
+        this.generateCraftEquipmentButtons = ServiceLocator.Instance.GameObjectReferenceManager.Get("Craft Equipment Button Container").GetComponent<GenerateCraftEquipmentButtons>();
     }
     #endregion
 
@@ -62,6 +64,7 @@ public class MenusAnimations : MonoBehaviour
         this.animator.SetBool("resourceConstructionMenu", false);
         this.animator.SetBool("buildingInteractionsMenu", false);
         this.animator.SetBool("craftEquipmentMenu", false);
+        this.animator.SetBool("craftEquipmenCategoryMenu", false);
     }
 
     // Désactiver les intéractions sur le canvas actuel pendant que le temps de l'anmation "currentAnimationName" se joue et défini la vitesse que l'animation joue.
@@ -170,6 +173,32 @@ public class MenusAnimations : MonoBehaviour
         this.DisableMenus();
 
         this.animator.SetBool("defaultMenu", true);
+    }
+
+    public void OpenCraftEquipmentCategoryMenu(EStuffCategory craftEquipmentCategoryToOpen)
+    {
+        this.CurrentMenuAnimation = EMenuAnimation.CraftEquipmentCategory;
+
+        this.DisableCanvasInteractionWhenAnimationOccur("openCraftEquipmentCategoryMenu", 1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("craftEquipmenCategoryMenu", true);
+
+        this.generateCraftEquipmentButtons.EnableCraftCategoryEquipmentButtonsContainer(craftEquipmentCategoryToOpen);
+    }
+
+    public void CloseCraftEquipmentCategoryMenu()
+    {
+        this.CurrentMenuAnimation = EMenuAnimation.CraftEquipment;
+
+        this.DisableCanvasInteractionWhenAnimationOccur("openCraftEquipmentCategoryMenu", -1.0f);
+
+        this.DisableMenus();
+
+        this.animator.SetBool("craftEquipmentMenu", true);
+
+        this.generateCraftEquipmentButtons.DisableCraftCategoriesEquipmentButtonsContainer();
     }
     #endregion
 }

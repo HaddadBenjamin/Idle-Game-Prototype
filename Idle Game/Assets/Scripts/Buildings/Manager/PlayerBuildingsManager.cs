@@ -56,6 +56,7 @@ public class PlayerBuildingsManager : ABuildingManager
 
     private List<GameObject> remisedBuildings;
     private bool findObjectInRemise = false;
+    private GameObject moveGameObjectReference = null;
     #endregion
 
     #region Properties
@@ -329,13 +330,22 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public void MoveSelectedBuilding()
     {
+        this.moveGameObjectReference = this.buildingGameObject;
         this.BuildingManagerMode = EBuildingManagerMode.Move;
 
         this.SelectBuildingPreInteractionsForMoveRotateSellDestroy();
     }
 
+    private void SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull()
+    {
+        if (this.buildingGameObject == null)
+            this.buildingGameObject = this.moveGameObjectReference;
+    }
+
     private void SelectBuildingPreInteractionsForMoveRotateSellDestroy()
     {
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         this.buildingName = building.BuildingName;
@@ -349,6 +359,8 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public void CancelBuildingMove()
     {
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
         this.constructionSquare = this.constructionSquareForMoveAndRotateTemporary;
 
         this.PlaceBuildingAfterMoveOrRotate();
@@ -356,6 +368,8 @@ public class PlayerBuildingsManager : ABuildingManager
     
     public void LevelUpSelectedBuilding()
     {
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         // Dangereux.
@@ -369,8 +383,10 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public void RemoveSelectedBuilding(bool canRemove = true)
     {
-        this.SelectBuildingPreInteractionsForMoveRotateSellDestroy(); 
-        
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
+        this.SelectBuildingPreInteractionsForMoveRotateSellDestroy();
+
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         base.DisableAllConstructionSquaresOutline();
@@ -388,16 +404,19 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public void SellSelectedBuilding()
     {
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         building.Sell();
 
         this.RemoveSelectedBuilding();
-
     }
 
     public void RemiseSelectedBuilding()
     {
+        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+
         this.RemoveSelectedBuilding(false);
 
         this.remisedBuildings.Add(this.buildingGameObject);

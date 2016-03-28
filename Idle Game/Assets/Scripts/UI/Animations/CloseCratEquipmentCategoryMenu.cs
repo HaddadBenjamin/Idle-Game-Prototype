@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CloseCraftEquipmentMenu : AMenuAnimationButton
+public class CloseCratEquipmentCategoryMenu : AMenuAnimationButton
 {
     void Start()
     {
@@ -10,15 +10,15 @@ public class CloseCraftEquipmentMenu : AMenuAnimationButton
         {
             switch (base.MenusAnimations.CurrentMenuAnimation)
             {
-                case EMenuAnimation.CraftEquipmentCategory:
+                case EMenuAnimation.CraftEquipmentCategory :
                     base.MenusAnimations.CloseCraftEquipmentCategoryMenu();
-                    break;
+                break;
 
                 case EMenuAnimation.CraftEquipment:
                     base.MenusAnimations.CloseCraftEquipmentMenu();
-                    break;
+                break;
 
-                default: break;
+                default : break;
             }
         });
     }
