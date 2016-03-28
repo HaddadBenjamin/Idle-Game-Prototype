@@ -4,7 +4,7 @@ Création d'un petit jeu passif dans lequel le joueur peut créer et placer des 
 Sites web :
 - Trello : https://trello.com/b/l6zvRFBy/idle-game-prototype-unity3d
 - Site dédié : http://haddadbpro.wix.com/portfolio#!jeu-passif/se9ch
-- https://www.linkedin.com/in/haddadbenjamin
+- Linkedin : https://www.linkedin.com/in/haddadbenjamin
 
 Points intéressants :
 - Mon architecture s'améliore et permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
