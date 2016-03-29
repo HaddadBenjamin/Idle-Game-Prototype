@@ -9,8 +9,8 @@ public class CloseBuildingInteractionsMenuOrMoveAndRotateBuildingInteraction : A
 
         base.Button.onClick.AddListener(() =>
         {
-            PlayerBuildingsManager playerBuildingsManager = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
-            switch (ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().BuildingManagerMode)
+            PlayerBuildingsManager playerBuildingsManager = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
+            switch (ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().BuildingManagerMode)
             {
                 case EBuildingManagerMode.Move:
                     playerBuildingsManager.CancelBuildingMove();

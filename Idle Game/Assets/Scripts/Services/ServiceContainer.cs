@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ServiceLocator : MonoBehaviour
+public class ServiceContainer : MonoBehaviour
 {
     #region Attributes & Properties
     public MaterialReferences MaterialReferences { get; private set; }
@@ -25,15 +25,15 @@ public class ServiceLocator : MonoBehaviour
     public EventManagerParamsVector3<EEventParamsVector3> EventManagerParamsVector3 { get; private set; }
   
 
-    private static ServiceLocator instance = null;
+    private static ServiceContainer instance = null;
     
-    public static ServiceLocator Instance
+    public static ServiceContainer Instance
     {
         get
         {
             if (null == instance)
             {
-                instance = GameObject.FindGameObjectWithTag("ServiceLocator").GetComponent<ServiceLocator>();
+                instance = GameObject.FindGameObjectWithTag("ServiceContainer").GetComponent<ServiceContainer>();
 
                 instance.Initialize();
 
@@ -75,7 +75,7 @@ public class ServiceLocator : MonoBehaviour
         };
 
         foreach (AServiceComponent serviceComponent in servicesComponent)
-            serviceComponent.InitializeByServiceLocator();
+            serviceComponent.InitializeByserviceContainer();
 
         this.EventManager.CallEvent(EEvent.ServicesHaveBeenInitialized);
         //GameObject[] pool = new GameObject[150];

@@ -7,6 +7,6 @@
 
     protected override void StuffNumberHaveBeenUpdated()
     {
-        ServiceLocator.Instance.EventManagerStuffNumberHaveBeenUpdated.CallEvent(base.StuffCategory, base.Quality, base.Number, base.Name);
+        ServiceContainer.Instance.EventManagerStuffNumberHaveBeenUpdated.CallEvent(base.StuffCategory, base.Quality, base.Number, base.Name);
     }
 }

@@ -8,6 +8,6 @@ public class PlayerRawPrerequisite : RawPrerequisite
 
     protected override void RawNumberHaveBeenUpdated()
     {
-        ServiceLocator.Instance.EventManagerRawNumberHaveBeenUpdated.CallEvent(base.RawCategory, base.Number);
+        ServiceContainer.Instance.EventManagerRawNumberHaveBeenUpdated.CallEvent(base.RawCategory, base.Number);
     }
 }

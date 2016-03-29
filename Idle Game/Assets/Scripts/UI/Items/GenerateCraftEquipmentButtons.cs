@@ -31,19 +31,19 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
 
         this.InitializeAndGenerateCraftCategoryEquipmentButtonsContainer();
 
-        PlayerResources playerResources = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        PlayerResources playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
         
         // Parcours de tous les types de catégorie d'équipement de sorte à générer chaque recettes de chaque types d'équipements.
         for (int stuffCategoryIndex = 0; stuffCategoryIndex < EnumHelper.Count<EStuffCategory>(); stuffCategoryIndex++)
         {
             Transform parentTransform = this.craftCategoriesEquipmentButtonsContainer[stuffCategoryIndex].transform;
 
-            StuffConfiguration[] stuffsConfiguration = ServiceLocator.Instance.StuffsConfiguration.GetStuffsConfiguration((EStuffCategory)stuffCategoryIndex);
+            StuffConfiguration[] stuffsConfiguration = ServiceContainer.Instance.StuffsConfiguration.GetStuffsConfiguration((EStuffCategory)stuffCategoryIndex);
 
             for (int stuffConfigurationIndex = 0; stuffConfigurationIndex < stuffsConfiguration.Length; stuffConfigurationIndex++)
             {
                 // Instantiation de la prefab du bouton d'équipement.
-                GameObject craftEquipmentButton = ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(
+                GameObject craftEquipmentButton = ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(
                     "Craft Equipment Button",
                     new Vector3(41.0f + stuffConfigurationIndex * 276.0f, 121.0f, 0.0f),
                     Vector3.zero,
@@ -53,7 +53,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                 Transform craftEquipmentButtonTransform = craftEquipmentButton.transform;
 
                 // Set de son image et de son texte.
-                craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceLocator.Instance.SpriteReferencesArrays.Get(
+                craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceContainer.Instance.SpriteReferencesArrays.Get(
                     stuffsConfiguration[stuffConfigurationIndex].StuffName,
                     (EStuffCategory)stuffCategoryIndex);
                 craftEquipmentButtonTransform.Find("Equipment Text").GetComponent<Text>().text = stuffsConfiguration[stuffConfigurationIndex].StuffName;
@@ -70,7 +70,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     Text resourceText = resourceUITransform.Find("Resource Text").GetComponent<Text>();
 
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                        ServiceLocator.Instance.SpriteReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
+                        ServiceContainer.Instance.SpriteReferencesArrays.GetResourceSprite(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
                     resourceText.text = resourcesPrerequisite[resourcePrerequisiteIndex].ResourceNumber.ToString();
                     resourceText.gameObject.AddComponent<UpdateCraftEquipmentResourcePrerequisiteText>().Initialize(resourcesPrerequisite[resourcePrerequisiteIndex].ResourceCategory);
 
@@ -84,7 +84,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     Text resourceText = resourceUITransform.Find("Resource Text").GetComponent<Text>();
 
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                        ServiceLocator.Instance.SpriteReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
+                        ServiceContainer.Instance.SpriteReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
                     resourceText.text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
                     resourceText.gameObject.AddComponent<UpdateCraftEquipmentRawPrerequisiteText>().Initialize(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
 
@@ -99,7 +99,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
 
                     // A REFAIRE ABSOLUMENT
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
-                       ServiceLocator.Instance.SpriteReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
+                       ServiceContainer.Instance.SpriteReferencesArrays.Get(stuffsPrerequisite[stuffPrerequisiteIndex].Name, stuffsPrerequisite[stuffPrerequisiteIndex].StuffCategory);
                     resourceText.text = stuffsPrerequisite[stuffPrerequisiteIndex].Number.ToString();
                     resourceText.gameObject.AddComponent<UpdateCraftEquipmentStuffPrerequisiteText>().Initialize(stuffsPrerequisite[stuffPrerequisiteIndex]);
                    
@@ -122,7 +122,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
     {
         int line = prerequisiteIndex / numberOfElementsPerLine;
 
-        return ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(
+        return ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(
                 "Resource Equipment Prerequisite UI",
                 new Vector3(prerequisiteIndex % numberOfElementsPerLine * 119.0f, line * -51.0f, 0.0f),
                 Vector3.zero,
@@ -137,7 +137,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
 
         for (int stuffCategoryIndex = 0; stuffCategoryIndex < EnumHelper.Count<EStuffCategory>(); stuffCategoryIndex++)
         {
-            this.craftCategoriesEquipmentButtonsContainer[stuffCategoryIndex] = ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(
+            this.craftCategoriesEquipmentButtonsContainer[stuffCategoryIndex] = ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(
                 "Empty Rect Transform",
                 Vector3.zero,
                 Vector3.zero,

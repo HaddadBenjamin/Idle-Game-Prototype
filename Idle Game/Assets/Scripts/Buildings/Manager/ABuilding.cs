@@ -43,10 +43,10 @@ public abstract class ABuilding : MonoBehaviour
     #region Behaviour Methods
     public void Sell()
     {
-        PlayerResources         playerResources =  ServiceLocator.Instance.
+        PlayerResources         playerResources =  ServiceContainer.Instance.
                                 GameObjectReferenceManager.Get("[PLAYER]").
                                 GetComponent<PlayerResources>();
-        BuildingConfiguration   buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName);
+        BuildingConfiguration   buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName);
 
         for (int buildingLevelIndex = 1; buildingLevelIndex <= this.BuildingLevel; buildingLevelIndex++)
             playerResources.Unpay(buildingConfiguration.GetLevelConfigurationIfPossible(buildingLevelIndex).Price);

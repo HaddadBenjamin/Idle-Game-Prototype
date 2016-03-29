@@ -116,7 +116,7 @@ public class PlayerResources : MonoBehaviour
             this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
                 RemoveResource(resourcesNeed[resourceIndex].ResourceNumber);
 
-        ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
+        ServiceContainer.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
     }
 
 
@@ -131,7 +131,7 @@ public class PlayerResources : MonoBehaviour
             this.resources[EnumHelper.GetIndex<EResourceCategory>(resourcesNeed[resourceIndex].ResourceCategory)].
                 AddResource(resourcesNeed[resourceIndex].ResourceNumber);
 
-        ServiceLocator.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
+        ServiceContainer.Instance.EventManager.CallEvent(EEvent.PlayerPayResources);
     }
 
     public void GenerateResource(BuildingLevelResourceGenerationConfiguration[] resourceGenerated)

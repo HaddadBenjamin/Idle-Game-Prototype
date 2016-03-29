@@ -23,7 +23,7 @@ public class CloseResourceMenuAndConstructionMenu : AMenuAnimationButton
                 default : break;
             }
 
-            ServiceLocator.Instance.EventManager.CallEvent(EEvent.DestroyBuildingToBuild);
+            ServiceContainer.Instance.EventManager.CallEvent(EEvent.DestroyBuildingToBuild);
         });
     }
 }

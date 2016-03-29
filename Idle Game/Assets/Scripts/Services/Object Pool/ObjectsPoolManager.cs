@@ -23,7 +23,7 @@ public sealed class ObjectsPoolManager : AServiceComponent
     #endregion
 
     #region Initialize
-    public override void InitializeByServiceLocator()
+    public override void InitializeByserviceContainer()
     {
         ObjectContainerHelper.InitializeHashIds(
             Array.ConvertAll(this.objectsPools, reference => reference.Prefab.name),

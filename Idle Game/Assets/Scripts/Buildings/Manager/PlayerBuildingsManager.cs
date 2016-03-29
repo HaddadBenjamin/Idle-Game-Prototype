@@ -83,8 +83,8 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
 
-        ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.DestroyBuildingToBuild, this.DestroyBuildingToBuild);
-        this.menusAnimations = ServiceLocator.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
+        ServiceContainer.Instance.EventManager.SubcribeToEvent(EEvent.DestroyBuildingToBuild, this.DestroyBuildingToBuild);
+        this.menusAnimations = ServiceContainer.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
     }
 
     void Update()
@@ -111,7 +111,7 @@ public class PlayerBuildingsManager : ABuildingManager
                 Debug.Log(buildingGameObject);
                 Debug.Log("select building & call event click on building");
 
-                ServiceLocator.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
+                ServiceContainer.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
             }
         }
         else if (EMenuAnimation.BuildingInteractions == this.menusAnimations.CurrentMenuAnimation)
@@ -252,7 +252,7 @@ public class PlayerBuildingsManager : ABuildingManager
                 Transform colliderTransform = this.hit.collider.transform;
                 this.constructionSquare = colliderTransform.GetComponent<ConstructionSquare>();
                 this.canPlaceTheBuildingOnGrid = true;
-                this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
+                this.buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
 
                 GridPosition buildingGridPosition = this.buildingConfiguration.GetGridPositionWithoutOverflow(constructionSquare.HorizontalPositionInGrid, constructionSquare.VerticalPositionInGrid);
 
@@ -304,19 +304,19 @@ public class PlayerBuildingsManager : ABuildingManager
     public void InstantiateBuilding(string buildingName)
     {
         this.buildingName = buildingName;
-        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
+        this.buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
 
         this.DestroyBuildingToBuildingIfPossible();
 
         this.buildingGameObject = this.remisedBuildings.Find(remiseBuilding =>
-                ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).IndustryCategory ==
-                ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(remiseBuilding.GetComponent<ABuilding>().BuildingName).IndustryCategory);
+                ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).IndustryCategory ==
+                ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(remiseBuilding.GetComponent<ABuilding>().BuildingName).IndustryCategory);
         
         this.findObjectInRemise = null != this.buildingGameObject;
         if (this.findObjectInRemise)
             this.buildingGameObject.SetActive(true);
         else
-            this.buildingGameObject = ServiceLocator.Instance.GameObjectReferencesArrays.Instantiate(this.buildingName, EGameObjectReferences.ResourceBuildings);
+            this.buildingGameObject = ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(this.buildingName, EGameObjectReferences.ResourceBuildings);
         
         this.buildingGameObject.transform.localPosition = Vector3.zero;
     }
@@ -349,7 +349,7 @@ public class PlayerBuildingsManager : ABuildingManager
         ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
         this.buildingName = building.BuildingName;
-        this.buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
+        this.buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName);
         this.constructionSquare = building.ConstructionSquareReference;
         this.constructionSquareForMoveAndRotateTemporary = this.constructionSquare;
         this.buildingGameObject.transform.localPosition = Vector3.zero;

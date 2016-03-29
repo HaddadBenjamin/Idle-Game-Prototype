@@ -9,7 +9,7 @@ public class MenusAnimations : MonoBehaviour
     private AnimationClip[] animations;
     public EMenuAnimation CurrentMenuAnimation { get; private set; }
 
-    private ServiceLocator serviceLocator;
+    private ServiceContainer serviceContainer;
     private CanvasGroup canvasGroup;
     private Animator animator;
 
@@ -44,15 +44,15 @@ public class MenusAnimations : MonoBehaviour
     {
         this.canvasGroup = GetComponent<CanvasGroup>();
         this.animator = GetComponent<Animator>();
-        this.serviceLocator = ServiceLocator.Instance;
+        this.serviceContainer = ServiceContainer.Instance;
 
-        this.serviceLocator.EventManager.SubcribeToEvent(EEvent.ClickOnBuilding, this.OpenBuildingInteractionsMenu);
+        this.serviceContainer.EventManager.SubcribeToEvent(EEvent.ClickOnBuilding, this.OpenBuildingInteractionsMenu);
 
         this.RTSCamera = Camera.main.GetComponent<RTSCamera>();
 
-        this.buttonBuildingContainerGameObject = this.serviceLocator.GameObjectReferenceManager.Get("Button Building Container");
-        this.buildingContainerScrollRectMask = this.serviceLocator.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
-        this.generateCraftEquipmentButtons = ServiceLocator.Instance.GameObjectReferenceManager.Get("Craft Equipment Button Container").GetComponent<GenerateCraftEquipmentButtons>();
+        this.buttonBuildingContainerGameObject = this.serviceContainer.GameObjectReferenceManager.Get("Button Building Container");
+        this.buildingContainerScrollRectMask = this.serviceContainer.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
+        this.generateCraftEquipmentButtons = ServiceContainer.Instance.GameObjectReferenceManager.Get("Craft Equipment Button Container").GetComponent<GenerateCraftEquipmentButtons>();
     }
     #endregion
 

@@ -29,12 +29,12 @@ public class IndustryBuilding : ABuilding
         base.BuildingName = buildingName;
         base.BuildingLevel = 1;
 
-        this.BuildingConfiguration = ServiceLocator.Instance.
+        this.BuildingConfiguration = ServiceContainer.Instance.
                                     BuildingsConfiguration.GetConfiguration(base.BuildingName);
 
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
-        this.playerResources =  ServiceLocator.Instance.
+        this.playerResources =  ServiceContainer.Instance.
                                 GameObjectReferenceManager.Get("[PLAYER]").
                                 GetComponent<PlayerResources>();
 
@@ -45,7 +45,7 @@ public class IndustryBuilding : ABuilding
 
     public bool CanLevelup()
     {
-        if (this.BuildingLevel < ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)
+        if (this.BuildingLevel < ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)
         {
             if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.Price))
                 return true;

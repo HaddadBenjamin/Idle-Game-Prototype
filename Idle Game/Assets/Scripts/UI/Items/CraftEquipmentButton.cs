@@ -24,7 +24,7 @@ public class CraftEquipmentButton : MonoBehaviour
 
         this.stuffConfiguration = stuffConfiguration;
 
-        GameObject player = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]");
+        GameObject player = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]");
 
         this.playerResources = player.GetComponent<PlayerResources>();
         this.playerRaws = player.GetComponent<PlayerRaws>();

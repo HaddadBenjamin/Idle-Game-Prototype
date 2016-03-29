@@ -44,7 +44,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
             // Parcour horizontal
             for (int boardHorizontalIndex = 0; boardHorizontalIndex < this.boardHorizontal; boardHorizontalIndex++)
             {
-                GameObject constructionSquare = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
+                GameObject constructionSquare = ServiceContainer.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
 
                 Transform constructionSquareTransform = constructionSquare.transform;
                 ConstructionSquare constructionSquareScript = constructionSquare.AddComponent<ConstructionSquare>();
@@ -62,7 +62,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
             }
         }
 
-        ServiceLocator.Instance.EventManagerParamsConstructionSquareArrayAndInt.CallEvent(
+        ServiceContainer.Instance.EventManagerParamsConstructionSquareArrayAndInt.CallEvent(
             EEventParamsConstructionSquareArrayAndInt.FinishToGenerateConstructionSquare,
             constructionSquares, 
             this.boardHorizontal);
@@ -70,7 +70,7 @@ public class ConstructionSquareGenerator : MonoBehaviour
 
     private void GenerateTerrain(Transform parent)
     {
-        GameObject terrain = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
+        GameObject terrain = ServiceContainer.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
         Transform terrainTransform = terrain.transform;
 
         terrainTransform.parent = parent;
@@ -81,10 +81,10 @@ public class ConstructionSquareGenerator : MonoBehaviour
         terrainTransform.localScale = new Vector3(this.boardHorizontal, 1.0f, this.boardVertical);
 
 
-        terrain.GetComponent<Renderer>().material = ServiceLocator.Instance.MaterialReferences.Get("Wood");
+        terrain.GetComponent<Renderer>().material = ServiceContainer.Instance.MaterialReferences.Get("Wood");
         terrain.GetComponent<BoxCollider>().enabled = false;
 
-        ServiceLocator.Instance.EventManagerParamsVector3.CallEvent(
+        ServiceContainer.Instance.EventManagerParamsVector3.CallEvent(
             EEventParamsVector3.ConstructionSquareHaveBeenGeneratedHereTheCenterPosition, 
             new Vector3(terrainTransform.position.x, terrainTransform.position.y + 10.0f, terrainTransform.position.z));
 

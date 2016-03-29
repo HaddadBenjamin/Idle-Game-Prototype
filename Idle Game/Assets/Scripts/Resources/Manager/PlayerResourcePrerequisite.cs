@@ -8,11 +8,11 @@ public class PlayerResourcePrerequisite : ResourcePrerequisite
 
     public void InitializeAtStart()
     {
-        ServiceLocator.Instance.EventManagerResourceGenerated.SubcribeToEvent(base.ResourceCategory, base.AddResource);
+        ServiceContainer.Instance.EventManagerResourceGenerated.SubcribeToEvent(base.ResourceCategory, base.AddResource);
     }
 
     protected override void ResourceNumberHaveBeenUpdated()
     {
-        ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.CallEvent(base.resourceCategory, base.ResourceNumber);
+        ServiceContainer.Instance.EventManagerResourceNumberHaveBeenUpdated.CallEvent(base.resourceCategory, base.ResourceNumber);
     }
 }

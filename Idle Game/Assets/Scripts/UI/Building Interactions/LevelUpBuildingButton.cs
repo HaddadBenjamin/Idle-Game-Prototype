@@ -8,7 +8,7 @@ public class LevelUpBuildingButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().LevelUpSelectedBuilding();
+            ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().LevelUpSelectedBuilding();
         });
     }
     #endregion

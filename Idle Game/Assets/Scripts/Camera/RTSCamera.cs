@@ -22,7 +22,7 @@ public class RTSCamera : MonoBehaviour
      
     void Awake()
     {
-        ServiceLocator.Instance.EventManagerParamsVector3.SubcribeToEvent(EEventParamsVector3.ConstructionSquareHaveBeenGeneratedHereTheCenterPosition, this.SetCameraPosition);
+        ServiceContainer.Instance.EventManagerParamsVector3.SubcribeToEvent(EEventParamsVector3.ConstructionSquareHaveBeenGeneratedHereTheCenterPosition, this.SetCameraPosition);
     }
 
     void Update()

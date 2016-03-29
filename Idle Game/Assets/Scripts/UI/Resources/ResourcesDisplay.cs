@@ -15,12 +15,12 @@ public class ResourcesDisplay : MonoBehaviour
 
     void Start()
     {
-        GameObject UIPrefab = ServiceLocator.Instance.GameObjectReferencesArrays.Get("Resource UI", EGameObjectReferences.UI);
-        SpriteReferencesArrays spriteManager = ServiceLocator.Instance.SpriteReferencesArrays;
+        GameObject UIPrefab = ServiceContainer.Instance.GameObjectReferencesArrays.Get("Resource UI", EGameObjectReferences.UI);
+        SpriteReferencesArrays spriteManager = ServiceContainer.Instance.SpriteReferencesArrays;
         Transform myTransform = transform;
 
-        this.playerResources = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
-        ServiceLocator.Instance.EventManager.SubcribeToEvent(EEvent.PlayerPayResources, this.UpdateResourceNumber);
+        this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        ServiceContainer.Instance.EventManager.SubcribeToEvent(EEvent.PlayerPayResources, this.UpdateResourceNumber);
 
         for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)
         {

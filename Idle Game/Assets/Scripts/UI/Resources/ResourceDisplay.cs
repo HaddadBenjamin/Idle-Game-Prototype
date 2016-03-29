@@ -18,7 +18,7 @@ public class ResourceDisplay : MonoBehaviour
 
         this.resourceCategory = resourceCategory;
 
-        ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(this.resourceCategory, this.SetResourceText);
+        ServiceContainer.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(this.resourceCategory, this.SetResourceText);
     }
     #endregion
 

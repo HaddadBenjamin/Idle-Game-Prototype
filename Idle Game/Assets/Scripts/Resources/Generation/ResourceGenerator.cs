@@ -41,7 +41,7 @@
 //    #region Constructor
 //    public ResourceGenerator(string buildingName, EResourceCategory resourceType)
 //    {
-//        //this.resourceLevel = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(buildingName).GetLevel(0);
+//        //this.resourceLevel = serviceContainer.Instance.BuildingsConfiguration.GetConfiguration(buildingName).GetLevel(0);
 //    }
 //    #endregion
 //    #region Properties
@@ -99,7 +99,7 @@
 
 //constructor()
 //{
-//    level = ServiceLocator.Instance.GetConfiguration(buildingName).GetLevel(0);
+//    level = serviceContainer.Instance.GetConfiguration(buildingName).GetLevel(0);
 //}
 
 //void Generate()

@@ -8,7 +8,7 @@ public abstract class AReferenceContainer<ReferenceClass> : AServiceComponent wh
     protected ReferenceClass[] references;
     protected int[] hashIds;
 
-    public override void InitializeByServiceLocator()
+    public override void InitializeByserviceContainer()
     {
         ObjectContainerHelper.InitializeHashIds(
             Array.ConvertAll(this.references, reference => reference.name),

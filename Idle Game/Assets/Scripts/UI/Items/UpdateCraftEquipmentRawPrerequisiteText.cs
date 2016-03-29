@@ -5,7 +5,7 @@ public class UpdateCraftEquipmentResourcePrerequisiteText : AUpdateCraftEquipmen
     #region Initializer
     public void Initialize(EResourceCategory resourceCategory)
     {
-        ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(resourceCategory, base.UpdateColorText);
+        ServiceContainer.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(resourceCategory, base.UpdateColorText);
     }
     #endregion
 }

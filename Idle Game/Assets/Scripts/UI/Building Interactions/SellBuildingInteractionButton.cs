@@ -8,7 +8,7 @@ public class SellBuildingInteractionButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().SellSelectedBuilding();
+            ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().SellSelectedBuilding();
         });
     }
     #endregion

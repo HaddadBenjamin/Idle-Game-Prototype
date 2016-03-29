@@ -17,7 +17,7 @@ public abstract class ABuildingManager : MonoBehaviour
     #region Unity Functions
     protected void MyAwake()
     {
-        ServiceLocator.Instance.EventManagerParamsConstructionSquareArrayAndInt.
+        ServiceContainer.Instance.EventManagerParamsConstructionSquareArrayAndInt.
             SubcribeToEvent(
                 EEventParamsConstructionSquareArrayAndInt.FinishToGenerateConstructionSquare, 
                 this.SetConstructionSquaresAndBoardHorizontal);

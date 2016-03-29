@@ -5,7 +5,7 @@ public class UpdateCraftEquipmentRawPrerequisiteText : AUpdateCraftEquipmentReso
     #region Initializer
     public void Initialize(ERaw rawCategory)
     {
-        ServiceLocator.Instance.EventManagerRawNumberHaveBeenUpdated.SubcribeToEvent(rawCategory, base.UpdateColorText);
+        ServiceContainer.Instance.EventManagerRawNumberHaveBeenUpdated.SubcribeToEvent(rawCategory, base.UpdateColorText);
     }
     #endregion
 }

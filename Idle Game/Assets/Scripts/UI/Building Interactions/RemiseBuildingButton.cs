@@ -8,7 +8,7 @@ public class RemiseBuildingButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().RemiseSelectedBuilding();
+            ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().RemiseSelectedBuilding();
         });
     }
     #endregion

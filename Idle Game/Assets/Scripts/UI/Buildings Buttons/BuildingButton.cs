@@ -19,9 +19,9 @@ public class BuildingButton : MonoBehaviour
     void Start()
     {
         Transform myTransform = transform;
-        BuildingConfiguration buildingConfiguration = ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.prefabName);
-        SpriteReferencesArrays spriteManager = ServiceLocator.Instance.SpriteReferencesArrays;
-        GameObject playerGameObject = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]");
+        BuildingConfiguration buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.prefabName);
+        SpriteReferencesArrays spriteManager = ServiceContainer.Instance.SpriteReferencesArrays;
+        GameObject playerGameObject = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]");
 
         PlayerResources playerResource = playerGameObject.GetComponent<PlayerResources>();
         PlayerBuildingsManager playerBuildingCreation = playerGameObject.GetComponent<PlayerBuildingsManager>();
@@ -53,7 +53,7 @@ public class BuildingButton : MonoBehaviour
         this.price = firstResourcePrice;
         this.priceText.text = StringHelper.PriceToText(this.price);
         myTransform.Find("Price Image").GetComponent<Image>().sprite = spriteManager.GetResourceSprite(priceCategory);
-        ServiceLocator.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(priceCategory, this.UpdateText);
+        ServiceContainer.Instance.EventManagerResourceNumberHaveBeenUpdated.SubcribeToEvent(priceCategory, this.UpdateText);
         this.UpdateText(playerResource.GetResourceNumber(priceCategory));
 
         // Intéractions du bouton au clique :

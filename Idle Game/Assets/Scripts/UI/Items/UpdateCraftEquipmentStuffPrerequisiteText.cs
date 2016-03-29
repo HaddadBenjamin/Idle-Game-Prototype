@@ -11,7 +11,7 @@ public class UpdateCraftEquipmentStuffPrerequisiteText : AUpdateCraftEquipmentRe
     {
         this.stuffPrerequisite = stuffPrerequisite;
 
-        ServiceLocator.Instance.EventManagerStuffNumberHaveBeenUpdated.SubcribeToEvent(this.stuffPrerequisite.StuffCategory, this.stuffPrerequisite.Quality, this.UpdateColorTextWithName);
+        ServiceContainer.Instance.EventManagerStuffNumberHaveBeenUpdated.SubcribeToEvent(this.stuffPrerequisite.StuffCategory, this.stuffPrerequisite.Quality, this.UpdateColorTextWithName);
     }
     #endregion
 

@@ -8,7 +8,7 @@ public class MoveBuildingButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().MoveSelectedBuilding();                   
+            ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().MoveSelectedBuilding();                   
         });
     }
     #endregion

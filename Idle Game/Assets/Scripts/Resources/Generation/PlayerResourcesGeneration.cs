@@ -37,7 +37,7 @@ public class PlayerResourcesGeneration
         {
             int resourceGeneratedAsInt = Mathf.CeilToInt(this.ResourceGenerated);
 
-            ServiceLocator.Instance.EventManagerResourceGenerated.CallEvent(this.ResourceCategory, resourceGeneratedAsInt);
+            ServiceContainer.Instance.EventManagerResourceGenerated.CallEvent(this.ResourceCategory, resourceGeneratedAsInt);
 
             this.ResourceGenerated -= Mathf.Ceil(this.ResourceGenerated);
         }

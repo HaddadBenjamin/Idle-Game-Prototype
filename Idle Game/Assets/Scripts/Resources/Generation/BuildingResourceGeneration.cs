@@ -14,10 +14,10 @@ public class BuildingResourceGeneration : MonoBehaviour
         this.buildingName = buildingName;
 
         // Récupération des données du premier niveau
-        ServiceLocator.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).GetLevelConfigurationIfPossible(1);
+        ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.buildingName).GetLevelConfigurationIfPossible(1);
 
         // Le bâtiment doit accéder au données du joueur ? c'est bien de la merde
-        PlayerResources playerResource = ServiceLocator.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        PlayerResources playerResource = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
     }
     #endregion
 
