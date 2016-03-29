@@ -13,7 +13,7 @@ Points intéressants :
 - L'architecture de cette application donne accès à une pelletée de services : gestionnaire d'évènements, gestionnaire de pool étendable ou non, gestionnaire d'objets, de matériaux, de textures, de sprites, de références, etc...
 - Les bâtiments de génération de ressources peuvent générer plusieurs types de ressources, et en fonction du niveau de ce bâtiment ils peuvent générer plus ou moins de ressources, leur prix pour aller au niveau suivant augmente, etc.. Tous ces paramètres sont entièrement configurables à travers l'interface. Ceci m'a permis de générer les 12 différents bâtiments de ressources via l'interface sans devoir rajouter une seule ligne de code.
 - On peut configurer chacune des recettes à travers l'interface par type d'équipement et leur spécifier des ressources pré requises, des matériaux pré requis, prix de l'objet de base, niveau de l'objet de base, etc... Ceci permet de changer le gameplay sans devoir coder.
-- Ce projet a été réalisé en 7 à 10 jours en temps plein et il est constitué de ~75 différents fichiers.
+- Ce projet a été réalisé en 7 à 10 jours en temps plein et il est constitué de ~100 différents fichiers.
 
 ![Alt text](http://i.imgur.com/WqNXcOJ.jpg "Menu de création de bâtiment qui génère de la ressource puis placement de ce bâtiment.")
 ![Alt text](http://i.imgur.com/U7lpP7W.jpg "Menu de création d'équipement, on peut sélectionner le filtre que l'on souhaite et configurer entièrement la partie recette ainsi que la configuration des objets qu'il génère.")
