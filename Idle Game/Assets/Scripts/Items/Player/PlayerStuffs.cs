@@ -33,7 +33,6 @@ public class PlayerStuffs : MonoBehaviour
 
     public void AddStuff(string name, EStuffCategory stuffCategory, EStuffQuality stuffQuality, int numberOfStuff)
     {
-        Debug.LogFormat("Add Stuff : {1}, category {1} quality {2}", name, stuffCategory, stuffQuality);
         this.allCategoriesStuffs[EnumHelper.GetIndex<EStuffCategory>(stuffCategory)].AddNumber(name, stuffCategory, stuffQuality, numberOfStuff);
     }
 

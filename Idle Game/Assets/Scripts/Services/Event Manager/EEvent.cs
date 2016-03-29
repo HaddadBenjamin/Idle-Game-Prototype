@@ -3,4 +3,5 @@
     PlayerPayResources,
     ClickOnBuilding,
     DestroyBuildingToBuild,
+    ServicesHaveBeenInitialized,
 }

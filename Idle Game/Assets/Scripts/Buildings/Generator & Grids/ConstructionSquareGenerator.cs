@@ -36,6 +36,8 @@ public class ConstructionSquareGenerator : MonoBehaviour
         Transform myTransform = transform;
         ConstructionSquare[] constructionSquares = new ConstructionSquare[this.boardHorizontal * this.boardVertical];
 
+        this.GenerateTerrain(myTransform);
+
         // Parcour vertical
         for (int boardVerticalIndex = 0; boardVerticalIndex < this.boardVertical; boardVerticalIndex++)
         {
@@ -64,5 +66,27 @@ public class ConstructionSquareGenerator : MonoBehaviour
             EEventParamsConstructionSquareArrayAndInt.FinishToGenerateConstructionSquare,
             constructionSquares, 
             this.boardHorizontal);
+    }
+
+    private void GenerateTerrain(Transform parent)
+    {
+        GameObject terrain = ServiceLocator.Instance.ObjectsPoolManager.AddObjectInPool("ConstructionSquare");
+        Transform terrainTransform = terrain.transform;
+
+        terrainTransform.parent = parent;
+
+        terrainTransform.localPosition = new Vector3((this.boardHorizontal - 1) * 0.5f * terrainTransform.lossyScale.x,
+            -0.1f,
+            -(this.boardVertical - 1) * 0.5f * terrainTransform.lossyScale.z); 
+        terrainTransform.localScale = new Vector3(this.boardHorizontal, 1.0f, this.boardVertical);
+
+
+        terrain.GetComponent<Renderer>().material = ServiceLocator.Instance.MaterialReferences.Get("Wood");
+        terrain.GetComponent<BoxCollider>().enabled = false;
+
+        ServiceLocator.Instance.EventManagerParamsVector3.CallEvent(
+            EEventParamsVector3.ConstructionSquareHaveBeenGeneratedHereTheCenterPosition, 
+            new Vector3(terrainTransform.position.x, terrainTransform.position.y + 10.0f, terrainTransform.position.z));
+
     }
 }

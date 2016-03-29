@@ -55,8 +55,8 @@ public class ConstructionSquare : MonoBehaviour
             if (true == showOutline)
             {
                 GetComponent<Renderer>().material = this.doesThereIsABuilding ?
-                                                    ServiceLocator.Instance.MaterialManager.Get("RedOutline") :
-                                                    ServiceLocator.Instance.MaterialManager.Get("GreenOutline");
+                                                    ServiceLocator.Instance.MaterialReferences.Get("RedOutline") :
+                                                    ServiceLocator.Instance.MaterialReferences.Get("GreenOutline");
             }
             else
                 GetComponent<Renderer>().material = this.beginMaterial;

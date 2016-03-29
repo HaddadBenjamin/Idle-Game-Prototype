@@ -4,19 +4,26 @@ using System.Collections;
 public class ServiceLocator : MonoBehaviour
 {
     #region Attributes & Properties
-    public MaterialReferences MaterialManager { get; private set; }
-    public StuffsConfiguration StuffsConfiguration { get; private set; }
+    public MaterialReferences MaterialReferences { get; private set; }
+
     public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
     public GameObjectReferencesArrays GameObjectReferencesArrays { get; private set; }
+
     public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
+    public ObjectsPoolManager ObjectsPoolManager { get; private set; }
+
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
+    public StuffsConfiguration StuffsConfiguration { get; private set; }
+
+
     public EventManager<EEvent> EventManager { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceGenerated { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsInt<ERaw> EventManagerRawNumberHaveBeenUpdated { get; private set; }
     public EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality> EventManagerStuffNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt> EventManagerParamsConstructionSquareArrayAndInt { get; private set; }
-    public ObjectsPoolManager ObjectsPoolManager { get; private set; }
+    public EventManagerParamsVector3<EEventParamsVector3> EventManagerParamsVector3 { get; private set; }
+  
 
     private static ServiceLocator instance = null;
     
@@ -49,6 +56,7 @@ public class ServiceLocator : MonoBehaviour
         this.BuildingsConfiguration = gameObject.GetComponent<BuildingsConfiguration>();
         this.StuffsConfiguration = gameObject.GetComponent<StuffsConfiguration>();
 
+        this.EventManagerParamsVector3 = new EventManagerParamsVector3<EEventParamsVector3>();
         this.EventManagerParamsConstructionSquareArrayAndInt = new EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt>();
         this.EventManagerResourceNumberHaveBeenUpdated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManagerStuffNumberHaveBeenUpdated = new EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality>();
@@ -62,13 +70,14 @@ public class ServiceLocator : MonoBehaviour
         AServiceComponent[] servicesComponent =
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
-            (this.MaterialManager = gameObject.GetComponent<MaterialReferences>()),
+            (this.MaterialReferences = gameObject.GetComponent<MaterialReferences>()),
             (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
         };
 
         foreach (AServiceComponent serviceComponent in servicesComponent)
             serviceComponent.InitializeByServiceLocator();
 
+        this.EventManager.CallEvent(EEvent.ServicesHaveBeenInitialized);
         //GameObject[] pool = new GameObject[150];
 
         //for (int i = 0; i < 150; i++)
