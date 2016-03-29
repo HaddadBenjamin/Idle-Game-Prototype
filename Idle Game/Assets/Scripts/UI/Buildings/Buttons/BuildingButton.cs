@@ -65,10 +65,10 @@ public class BuildingButton : MonoBehaviour
                 if (playerResource.HaveEnoughtResource(resourcesPrerequisitePrice))
                     playerBuildingCreation.InstantiateBuilding(this.prefabName);
                 else
-                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You can't pay this building");
+                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You can't pay this building", ETextInformation.YouCantDoAnAction);
             }
             else
-                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already have the number maximum of this building");
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already have the number maximum of this building", ETextInformation.YouCantDoAnAction);
         });
     }
     #endregion

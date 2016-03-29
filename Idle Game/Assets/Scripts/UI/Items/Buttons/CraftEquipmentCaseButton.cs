@@ -12,6 +12,7 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
     private Transform myTransform;
     private Image equipmentImage;
     private Image craftImage;
+    private Image progressBarCraftingEquipment;
     private Text text;
 
     private StuffConfiguration stuffConfiguration;
@@ -39,6 +40,7 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
         this.text = this.myTransform.Find("Text").gameObject.GetComponent<Text>();
         this.equipmentImage = this.myTransform.Find("Equipment Image").gameObject.GetComponent<Image>();
         this.craftImage = this.myTransform.Find("Craft Image").gameObject.GetComponent<Image>();
+        this.progressBarCraftingEquipment = this.myTransform.Find("Progress Bar").gameObject.GetComponent<Image>();
 
         this.playerStuffs = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerStuffs>();
         this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
@@ -72,6 +74,8 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
                 timespan.Hours > 0      ? string.Format("{0}h {1:D2}m", timespan.Hours, timespan.Minutes) :
                 timespan.Minutes > 0    ? string.Format("{0}m {1:D2}s", timespan.Minutes, timespan.Seconds) :
                                           string.Format("{0}s",timespan.Seconds);
+
+            this.progressBarCraftingEquipment.fillAmount = this.alarm.Ratio();
 
             if (this.alarm.IsRingingUpdated())
             {

@@ -172,19 +172,19 @@ public class PlayerBuildingsManager : ABuildingManager
                             return true;
                         }
                         else
-                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("cant pay the building");
+                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("cant pay the building", ETextInformation.YouCantDoAnAction);
                     }
                     else
-                        ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + piecesOfFurniture.CurrentValue + " / " + piecesOfFurniture.MaximumValue + " of pieces of furniture");
+                        ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + piecesOfFurniture.CurrentValue + " / " + piecesOfFurniture.MaximumValue + " of pieces of furniture", ETextInformation.YouCantDoAnAction);
                 }
                 else
-                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + minimumMaximumBuilding.CurrentValue + " / " + minimumMaximumBuilding.MaximumValue + " of this type of building");
+                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + minimumMaximumBuilding.CurrentValue + " / " + minimumMaximumBuilding.MaximumValue + " of this type of building", ETextInformation.YouCantDoAnAction);
             }
             else
-                ServiceContainer.Instance.TextInformationManager.AddTextInformation("There is already a building here");
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("There is already a building here", ETextInformation.YouCantDoAnAction);
         }
         else
-            ServiceContainer.Instance.TextInformationManager.AddTextInformation("Cant Add Building on the grid because you are not over it ");
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("Cant Add Building on the grid because you are not over it ", ETextInformation.YouCantDoAnAction);
 
 
         return false;
