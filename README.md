@@ -1,5 +1,5 @@
 # Jeu-Passif-Prototype-Unity3D
-Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui génèrent de la ressources et par la suite les utiliser de sorte à créer des équipements de sorte à les revendre.
+Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui permettent de générer des ressources de sorte à pouvoir fabriquer des équipements pour les revendre.
 
 Sites web :
 - Trello : https://trello.com/b/l6zvRFBy/idle-game-prototype-unity3d
