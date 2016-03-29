@@ -68,5 +68,11 @@ public class StuffConfiguration
         get { return rawsPrerequisite; }
         private set { rawsPrerequisite = value; }
     }
+
+    public int TimeToCraft
+    {
+        get { return timeToCraft; }
+        private set { timeToCraft = value; }
+    }
     #endregion
 }

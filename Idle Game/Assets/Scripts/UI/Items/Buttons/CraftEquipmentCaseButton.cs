@@ -6,6 +6,7 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
 {
     #region Fields
     private ECraftEquipmentMode craftEquipmentMode;
+    private Alarm alarm;
   
     // Les références
     private Transform myTransform;
@@ -54,7 +55,32 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
                 base.MenusAnimations.OpenCraftEquipmentMenu();
             else if (ECraftEquipmentMode.Collect == this.craftEquipmentMode)
                 this.Collect();
+            else
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You have to wait, your " + this.stuffConfiguration.StuffCategory + " is not finish to be crafted");
         });
+    }
+    #endregion
+
+    #region Unity Methods
+    void Update()
+    {
+        if (null != this.alarm)
+        {
+            System.TimeSpan timespan = System.TimeSpan.FromSeconds(this.alarm.GetTimeToWait());
+
+            this.text.text = 
+                timespan.Hours > 0      ? string.Format("{0}h {1:D2}m", timespan.Hours, timespan.Minutes) :
+                timespan.Minutes > 0    ? string.Format("{0}m {1:D2}s", timespan.Minutes, timespan.Seconds) :
+                                          string.Format("{0}s",timespan.Seconds);
+
+            if (this.alarm.IsRingingUpdated())
+            {
+                this.craftEquipmentMode = ECraftEquipmentMode.Collect;
+                this.text.text = "Collect";
+
+                this.alarm = null;
+            }
+        }
     }
     #endregion
 
@@ -66,16 +92,17 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
     }
     public void AddItemToColect(StuffConfiguration stuffConfiguration)
     {
-        /// En réalité cela doit être en mode waiting le temps de la configuration mais on sen fous
-        this.craftEquipmentMode = ECraftEquipmentMode.Collect;
+        // Collect pour avoir le commportement qui marche mais pas fini
+        this.craftEquipmentMode = ECraftEquipmentMode.Crafting;
 
         this.stuffConfiguration = stuffConfiguration;
 
-        this.text.text = "Collect";
         this.craftImage.enabled = false;
         this.equipmentImage.enabled = true;
 
         this.equipmentImage.sprite = ServiceContainer.Instance.SpriteReferencesArrays.Get(stuffConfiguration.StuffName, stuffConfiguration.StuffCategory);
+
+        this.alarm = new Alarm(stuffConfiguration.TimeToCraft, false);
     }
 
     public void Collect()

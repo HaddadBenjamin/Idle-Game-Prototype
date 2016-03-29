@@ -3,27 +3,34 @@ using System.Collections;
 
 public class Alarm
 {
+    #region Fields
     private float timer;
     private float elapsedTime;
+    #endregion
 
+    #region Constructor
+    public Alarm(float timer, bool alarmisRinging = true)
+    {
+        this.timer = timer;
+        this.elapsedTime = alarmisRinging ? this.timer : 0.0f;
+    }
+    #endregion
+
+    #region Properties
     public float Timer
     {
         get { return timer; }
         private set { timer = value; }
     }
 
-    public float TimeToRingTheAlarm
+    public float ElapsedTime
     {
         get { return elapsedTime; }
         private set { elapsedTime = value; }
     }
+    #endregion
 
-    public Alarm(float timer, bool alarmisRinging = true)
-    {
-        this.timer = timer;
-        this.elapsedTime = alarmisRinging ? this.timer : 0.0f;
-    }
-
+    #region Behaviour Methods
     public bool IsRingingUpdated()
     {
         this.Update();
@@ -55,4 +62,10 @@ public class Alarm
     {
         return this.elapsedTime / this.timer;
     }
+
+    public float GetTimeToWait()
+    {
+        return this.timer - this.elapsedTime;
+    }
+    #endregion
 }
