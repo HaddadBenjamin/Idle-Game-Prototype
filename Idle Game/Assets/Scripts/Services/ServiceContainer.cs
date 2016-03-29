@@ -6,23 +6,22 @@ public class ServiceContainer : MonoBehaviour
     #region Attributes & Properties
     public MaterialReferences MaterialReferences { get; private set; }
 
-    public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
     public GameObjectReferencesArrays GameObjectReferencesArrays { get; private set; }
+    public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
 
-    public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
     public ObjectsPoolManager ObjectsPoolManager { get; private set; }
+    public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
 
-    public BuildingsConfiguration BuildingsConfiguration { get; private set; }
     public StuffsConfiguration StuffsConfiguration { get; private set; }
-
+    public BuildingsConfiguration BuildingsConfiguration { get; private set; }
 
     public EventManager<EEvent> EventManager { get; private set; }
+    public EventManagerParamsInt<ERaw> EventManagerRawNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceGenerated { get; private set; }
     public EventManagerParamsInt<EResourceCategory> EventManagerResourceNumberHaveBeenUpdated { get; private set; }
-    public EventManagerParamsInt<ERaw> EventManagerRawNumberHaveBeenUpdated { get; private set; }
+    public EventManagerParamsVector3<EEventParamsVector3> EventManagerParamsVector3 { get; private set; }
     public EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality> EventManagerStuffNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt> EventManagerParamsConstructionSquareArrayAndInt { get; private set; }
-    public EventManagerParamsVector3<EEventParamsVector3> EventManagerParamsVector3 { get; private set; }
   
 
     private static ServiceContainer instance = null;
