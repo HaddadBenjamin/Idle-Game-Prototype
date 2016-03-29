@@ -3,9 +3,9 @@ using System.Collections;
 
 public enum EResourceCategory
 {
+    Gold,
     Stone,
     Wood,
-    Gold,
     Fabric,
     Hardwood,
     Herb,

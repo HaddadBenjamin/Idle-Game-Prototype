@@ -45,8 +45,7 @@ public class PlayerCategoryStuffs
 
         if (null != stuffPrerequisite)
             stuffPrerequisite.RemoveStuff(numberOfStuff);
-        else
-            this.stuffsFromCategory.Remove(new PlayerStuffPrerequisite(name, numberOfStuff, stuffCategory, stuffQuality));
+            // Update Number
     }
 
     public bool HaveEnoughtStuff(StuffPrerequisite stuff)

@@ -57,6 +57,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     stuffsConfiguration[stuffConfigurationIndex].StuffName,
                     (EStuffCategory)stuffCategoryIndex);
                 craftEquipmentButtonTransform.Find("Equipment Text").GetComponent<Text>().text = stuffsConfiguration[stuffConfigurationIndex].StuffName;
+                craftEquipmentButtonTransform.Find("Chest Text").gameObject.AddComponent<UpdateCraftEquipmentStuffNumberText>().Initialize(stuffsConfiguration[stuffConfigurationIndex]);
            
                 // Set des resources prerequites avec leur texte et images.
                 int prerequisiteIndex = 0;
@@ -106,7 +107,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     ++prerequisiteIndex;
                 }
 
-                craftEquipmentButton.AddComponent<CraftEquipmentButton>().Initialize(resourcesPrerequisite, rawsPrerequisite, stuffsPrerequisite, stuffsConfiguration[stuffConfigurationIndex]);
+                craftEquipmentButton.AddComponent<CraftEquipmentButton>().Initialize(stuffsConfiguration[stuffConfigurationIndex]);
                 // position puis image et texte, resource c'est bon, parcontre raw et item il me faudra un manager
             }
         }

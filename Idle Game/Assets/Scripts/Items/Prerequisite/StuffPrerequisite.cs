@@ -21,6 +21,8 @@ public class StuffPrerequisite
         this.number = number;
         this.stuffCategory = stuffCategory;
         this.quality = quality;
+
+        this.StuffNumberHaveBeenUpdated();
     }
     #endregion
 
