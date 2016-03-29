@@ -59,6 +59,18 @@ public class ObjectsPool
         get { return extandable; }
         private set { extandable = value; }
     }
+
+    public List<GameObject> ExtandablePool
+    {
+        get { return extandablePool; }
+        private set { extandablePool = value; }
+    }
+
+    public GameObject[] NotExtandablePool
+    {
+        get { return notExtandablePool; }
+        private set { notExtandablePool = value; }
+    }
     #endregion
 
     #region Initialize

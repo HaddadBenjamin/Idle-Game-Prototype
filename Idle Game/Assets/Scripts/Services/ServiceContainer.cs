@@ -22,7 +22,8 @@ public class ServiceContainer : MonoBehaviour
     public EventManagerParamsVector3<EEventParamsVector3> EventManagerParamsVector3 { get; private set; }
     public EventManagerDoubleEnumParamsIntAndString<EStuffCategory, EStuffQuality> EventManagerStuffNumberHaveBeenUpdated { get; private set; }
     public EventManagerParamsConstructionSquareArrayAndInt<EEventParamsConstructionSquareArrayAndInt> EventManagerParamsConstructionSquareArrayAndInt { get; private set; }
-  
+
+    public TextInformationManager TextInformationManager { get; private set; }
 
     private static ServiceContainer instance = null;
     
@@ -63,14 +64,14 @@ public class ServiceContainer : MonoBehaviour
         this.EventManagerResourceGenerated = new EventManagerParamsInt<EResourceCategory>();
         this.EventManager = new EventManager<EEvent>();
 
-        this.SpriteReferencesArrays = gameObject.GetComponent<SpriteReferencesArrays>();
-        this.GameObjectReferencesArrays = gameObject.GetComponent<GameObjectReferencesArrays>();
-
         AServiceComponent[] servicesComponent =
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
             (this.MaterialReferences = gameObject.GetComponent<MaterialReferences>()),
             (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
+            (this.GameObjectReferencesArrays = gameObject.GetComponent<GameObjectReferencesArrays>()),
+            (this.TextInformationManager = gameObject.GetComponent<TextInformationManager>()),
+            (this.SpriteReferencesArrays = gameObject.GetComponent<SpriteReferencesArrays>()),
         };
 
         foreach (AServiceComponent serviceComponent in servicesComponent)

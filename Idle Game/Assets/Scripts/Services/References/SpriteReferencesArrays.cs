@@ -1,27 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[System.Serializable]
-public class SpriteReferences
-{
-    [SerializeField]
-    protected Sprite[] references;
-    protected int[] hashIds;
-
-    public void Initialize()
-    {
-        ObjectContainerHelper.InitializeHashIds(
-            Array.ConvertAll(this.references, reference => reference.name),
-            ref this.hashIds);
-    }
-
-    public Sprite Get(string refenceName)
-    {
-        return this.references[ObjectContainerHelper.GetHashCodeIndex(refenceName, ref this.hashIds)];
-    }
-}
-
-public class SpriteReferencesArrays : MonoBehaviour
+public class SpriteReferencesArrays : AServiceComponent
 {
     #region Fields
     private SpriteReferences[] allStuffs;
@@ -92,8 +72,8 @@ public class SpriteReferencesArrays : MonoBehaviour
     private SpriteReferences pendants;
     #endregion
 
-    #region Unity Methods
-    void Awake()
+    #region Abstract Initializer
+    public override void InitializeByserviceContainer()
     {
         this.allStuffs = new SpriteReferences[EnumHelper.Count<EStuffCategory>()];
 

@@ -39,7 +39,7 @@ public sealed class ObjectsPoolManager : AServiceComponent
     /// </summary>
     /// <param name="poolName"></param>
     /// <returns></returns>
-    private ObjectsPool GetPool(string poolName)
+    public ObjectsPool GetPool(string poolName)
     {
         int hashID = ObjectContainerHelper.GetHashCodeIndex(poolName, ref this.objectsPoolsHashID);
 

@@ -32,10 +32,10 @@ public class CraftEquipmentButton : MonoBehaviour
 
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            Debug.LogFormat("can pay : res  {0}, raws {1}, stuffs {2}:",
-                this.playerResources.HaveEnoughtResource(this.resourcesPrerequisite),
-                this.playerRaws.HaveEnoughtRaw(this.rawsPrerequisite),
-                this.playerStuffs.HaveEnoughtStuff(this.stuffsPrerequisite));
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation(
+                 "can pay :  + res " + this.playerResources.HaveEnoughtResource(this.resourcesPrerequisite) +
+                " raws " + this.playerRaws.HaveEnoughtRaw(this.rawsPrerequisite) + 
+                " stuffs " + this.playerStuffs.HaveEnoughtStuff(this.stuffsPrerequisite));
 
             if (this.playerResources.HaveEnoughtResource(this.resourcesPrerequisite) &&
                 this.playerRaws.HaveEnoughtRaw(this.rawsPrerequisite) &&

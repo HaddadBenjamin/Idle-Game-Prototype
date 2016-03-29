@@ -71,7 +71,7 @@ public class GameObjectReferences
     #endregion
 }
 
-public class GameObjectReferencesArrays : MonoBehaviour
+public class GameObjectReferencesArrays : AServiceComponent
 {
     #region Fields
     [SerializeField]
@@ -81,7 +81,7 @@ public class GameObjectReferencesArrays : MonoBehaviour
     #endregion
 
     #region Unity Methods
-    void Awake()
+    public override void InitializeByserviceContainer()
     {
         this.resourceBuildings.Initialize();
         this.UI.Initialize();

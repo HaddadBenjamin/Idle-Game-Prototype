@@ -18,6 +18,13 @@ public static class TransformExtension
         transform.localEulerAngles = rotation;
     }
 
+    public static void SetPositionAndParent(this Transform transform, Vector3 position, Transform parent)
+    {
+        transform.SetParent(parent);
+
+        transform.localPosition = position;
+    }
+
     public static void SetPositionX(this Transform transform, float positionX)
     {
         transform.position = new Vector3(positionX, transform.position.y, transform.position.z);

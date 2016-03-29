@@ -50,10 +50,10 @@ public class IndustryBuilding : ABuilding
             if (this.playerResources.HaveEnoughtResource(this.LevelsConfiguration.Price))
                 return true;
             else
-                Debug.Log("You don't have enough resource to level up this building");
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You don't have enough resource to level up this building");
         }
         else
-            Debug.Log("You can't level up this building because it level is already to its maximum");
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("You can't level up this building because it level is already to its maximum");
         
         return false;
     }
@@ -135,7 +135,7 @@ public class IndustryBuilding : ABuilding
         this.LevelsConfiguration = this.GetLevelsConfiguration(1);
         this.playerResources.GenerateResource(this.GetLevelsConfiguration(buildingLevelTemporary).ResourceGeneration);
 
-        Debug.Log("building level " + this.BuildingLevel);
+        ServiceContainer.Instance.TextInformationManager.AddTextInformation("building level " + this.BuildingLevel);
         while (buildingLevelTemporary < this.BuildingLevel)
         {
             this.playerResources.GenerateResource(this.GetLevelsDifferenceResourceGenerationConfiguration(this.LevelsConfiguration.ResourceGeneration, buildingLevelTemporary));

@@ -108,8 +108,8 @@ public class PlayerBuildingsManager : ABuildingManager
             {
                 this.buildingGameObject = this.hit.collider.gameObject;
 
-                Debug.Log(buildingGameObject);
-                Debug.Log("select building & call event click on building");
+                //ServiceContainer.Instance.TextInformationManager.AddTextInformation(buildingGameObject);
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("select building & call event click on building");
 
                 ServiceContainer.Instance.EventManager.CallEvent(EEvent.ClickOnBuilding);
             }
@@ -167,24 +167,24 @@ public class PlayerBuildingsManager : ABuildingManager
                     {
                         if (this.playerResources.HaveEnoughtResource(this.buildingConfiguration.GetLevelConfiguration(1).Price))
                         {
-                            Debug.Log("A new building have been created");
+                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("A new building have been created");
 
                             return true;
                         }
                         else
-                            Debug.Log("cant pay the building");
+                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("cant pay the building");
                     }
                     else
-                        Debug.Log("You already build " + piecesOfFurniture.CurrentValue + " / " + piecesOfFurniture.MaximumValue + " of pieces of furniture");
+                        ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + piecesOfFurniture.CurrentValue + " / " + piecesOfFurniture.MaximumValue + " of pieces of furniture");
                 }
                 else
-                    Debug.Log("You already build " + minimumMaximumBuilding.CurrentValue + " / " + minimumMaximumBuilding.MaximumValue + " of this type of building");
+                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You already build " + minimumMaximumBuilding.CurrentValue + " / " + minimumMaximumBuilding.MaximumValue + " of this type of building");
             }
             else
-                Debug.Log("There is already a building here");
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("There is already a building here");
         }
         else
-            Debug.Log("Cant Add Building on the grid because you are not over it ");
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("Cant Add Building on the grid because you are not over it ");
 
 
         return false;
@@ -203,7 +203,7 @@ public class PlayerBuildingsManager : ABuildingManager
             ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
             building.ConstructionSquareReference = this.constructionSquare;
-            Debug.Log("remised ? " + this.findObjectInRemise);
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("remised ? " + this.findObjectInRemise);
 
             // Permet la génération de resources, au destroy il faudra penser à faire l'inverse
             if (EBuildingCategory.ResourceConstruction == building.BuildingCategory)
@@ -213,7 +213,7 @@ public class PlayerBuildingsManager : ABuildingManager
                 else
                 {
                     (building as IndustryBuilding).GenerateteAllResources();
-                    Debug.Log("Add building from remise");
+                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("Add building from remise");
                 }
             }
             // Pas besoin ici de faire un objectPool.RemoveInPool
@@ -246,7 +246,7 @@ public class PlayerBuildingsManager : ABuildingManager
         {
             raycastWorked = (this.hit.collider.gameObject.layer == LayerMask.NameToLayer("ConstructionSquare"));
 
-            //Debug.Log("raycast worked : " + raycastWorked);
+            //ServiceContainer.Instance.TextInformationManager.AddTextInformation("raycast worked : " + raycastWorked);
             if (raycastWorked)
             {
                 Transform colliderTransform = this.hit.collider.transform;
@@ -259,7 +259,7 @@ public class PlayerBuildingsManager : ABuildingManager
                 this.buildingGameObject.transform.position = base.GetNewBuildingPosition(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition, this.buildingConfiguration); ;
 
                 base.EnableBuildingOutline(base.GetSquare(buildingGridPosition.HorizontalGridPosition, buildingGridPosition.VerticalGridPosition), this.buildingConfiguration);
-                // Debug.LogFormat("Line : {0}, Column {1}", vertical, horizontal);
+                // ServiceContainer.Instance.TextInformationManager.AddTextInformationFormat("Line : {0}, Column {1}", vertical, horizontal);
             }
             else
             {
@@ -376,9 +376,9 @@ public class PlayerBuildingsManager : ABuildingManager
         bool canLevelUp = (building as IndustryBuilding).LevelUpIfPossible();
 
         if (canLevelUp) // Dangereux
-            Debug.Log("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
         else
-            Debug.Log("This building is already to max level");
+            ServiceContainer.Instance.TextInformationManager.AddTextInformation("This building is already to max level");
     }
 
     public void RemoveSelectedBuilding(bool canRemove = true)
