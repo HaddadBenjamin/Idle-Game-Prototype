@@ -6,6 +6,9 @@ Sites web :
 - Site dédié : http://haddadbpro.wix.com/portfolio#!jeu-passif/se9ch
 - Linkedin : https://www.linkedin.com/in/haddadbenjamin
 
+Vidéo de l'application (cliquer)  : 
+[![ScreenShot](http://i.imgur.com/WqNXcOJ.jpg)](https://www.youtube.com/watch?v=_2Nx2YNqQiE)
+
 Points intéressants :
 - Mon architecture permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
 - Tous les points importants gameplay et qui doivent être unique du  sont configurables à travers l'inspecteur d'Unity, ceci me permet aussi d'éviter des doublons de données.
