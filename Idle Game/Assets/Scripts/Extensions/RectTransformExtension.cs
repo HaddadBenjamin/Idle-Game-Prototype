@@ -27,4 +27,24 @@ public static class RectTransformExtension
     {
         rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, height);
     }
+
+    public static float GetWidth(this RectTransform rectTransform)
+    {
+        return rectTransform.sizeDelta.x;
+    }
+
+    public static float GetHeight(this RectTransform rectTransform)
+    {
+        return rectTransform.sizeDelta.y;
+    }
+
+    public static float GetOffsetPivotX(this RectTransform rectTransform)
+    {
+        return -(rectTransform.pivot.x * rectTransform.GetWidth());
+    }
+
+    public static float GetOffsetPivotY(this RectTransform rectTransform)
+    {
+        return -(rectTransform.pivot.y * rectTransform.GetHeight());
+    }
 }

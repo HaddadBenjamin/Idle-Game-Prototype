@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelUpButtonTooltip : MonoBehaviour
 {
@@ -20,8 +21,8 @@ public class LevelUpButtonTooltip : MonoBehaviour
     private RectTransform rectTransform;
     #endregion
 
-    #region Unity Methods
-    void Awake()
+    #region Initializer
+    public GameObject Initialize(RectTransform parentRectTransform)
     {
         Transform myTransform = transform;
         this.rectTransform = GetComponent<RectTransform>();
@@ -32,7 +33,7 @@ public class LevelUpButtonTooltip : MonoBehaviour
         {
             this.resourcePrerequisGameObject[resourcePrerequisiteIndex] = ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(
                 "Resource Equipment Prerequisite UI",
-                new Vector3(
+                    new Vector3(
                     this.grid.GetHorizontalPositionThanksAnIndex(resourcePrerequisiteIndex),
                     this.grid.GetVerticalPositionThanksAnIndex(resourcePrerequisiteIndex),
                     0.0f),
@@ -43,6 +44,8 @@ public class LevelUpButtonTooltip : MonoBehaviour
 
             this.resourcePrerequisGameObject[resourcePrerequisiteIndex].SetActive(false);
         }
+
+        return gameObject;
     }
     #endregion
 
@@ -54,11 +57,11 @@ public class LevelUpButtonTooltip : MonoBehaviour
 
         this.EnableTheUsedResourcePrerequisite();
 
-        this.rectTransform.SetHeight(100.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1));
-        //Tableau de resourcPrerequisiteGameObject, resourcePrerequisite content
+        this.rectTransform.SetHeight(140.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1 + this.grid.NumberOfElementsPerLine));
+
+        ResourcePrerequisiteHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite);
         //Tableau de resourcPrerequisiteGameObject, resourcePrerequisite content, differenceFromPlayerResource
         // Les abonné à un resource changer ?
-        // Set Text via un helper (resourcePrerequisiteHelper ?)
     }
 
     private void EnableTheUsedResourcePrerequisite()

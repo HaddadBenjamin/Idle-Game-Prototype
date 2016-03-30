@@ -22,6 +22,8 @@ public class UIGrid
     /// </summary>
     [SerializeField]
     private Vector2 offset;
+    [SerializeField]
+    private RectTransform rectTransform;
     #endregion
 
     #region Properties
@@ -41,6 +43,13 @@ public class UIGrid
     {
         get { return offset; }
         private set { offset = value; }
+    }
+    #endregion
+
+    #region Initializer
+    private void Initialize(RectTransform rectTransform)
+    {
+        this.rectTransform = rectTransform;
     }
     #endregion
 
@@ -72,7 +81,7 @@ public class UIGrid
     /// <returns></returns>
     public float GetHorizontalPosition(int column)
     {
-        return this.startPosition.x + this.offset.x * column;
+        return (this.startPosition.x + this.offset.x * column) + this.rectTransform.GetOffsetPivotX();
     }
 
     /// <summary>
@@ -82,7 +91,7 @@ public class UIGrid
     /// <returns></returns>
     public float GetVerticalPosition(int line)
     {
-        return this.startPosition.y + this.offset.y * line;
+        return (this.startPosition.y + this.offset.y * line) + this.rectTransform.GetOffsetPivotY() + this.rectTransform.GetHeight();
     }
 
     /// <summary>
@@ -92,7 +101,7 @@ public class UIGrid
     /// <returns></returns>
     public float GetHorizontalPositionThanksAnIndex(int index)
     {
-        return this.startPosition.x + this.offset.x * this.GetColumn(index);
+        return this.startPosition.x + this.offset.x * this.GetColumn(index) + this.rectTransform.GetOffsetPivotX();
     }
 
     /// <summary>
@@ -102,7 +111,7 @@ public class UIGrid
     /// <returns></returns>
     public float GetVerticalPositionThanksAnIndex(int index)
     {
-        return this.startPosition.y + this.offset.y * this.GetLine(index);
+        return (this.startPosition.y + this.offset.y * this.GetLine(index)) + this.rectTransform.GetOffsetPivotY() + this.rectTransform.GetHeight();
     }
 
     /// <summary>
@@ -133,7 +142,7 @@ public class UIGrid
     /// <returns></returns>
     public float GetWidth(int index)
     {
-        return this.offset.x * this.GetLine(index);
+        return Mathf.Abs(this.offset.x) * this.GetLine(index);
     }
 
     /// <summary>
@@ -143,7 +152,36 @@ public class UIGrid
     /// <returns></returns>
     public float GetHeight(int index)
     {
-        return this.offset.y * this.GetLine(index);
+        return Mathf.Abs(this.offset.y) * this.GetLine(index);
     }
     #endregion
 }
+
+/* Exemple d'utilisation : 
+ 
+  public GameObject Initialize(RectTransform parentRectTransform)
+    {
+        Transform myTransform = transform;
+        this.rectTransform = GetComponent<RectTransform>();
+        this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        this.resourcePrerequisGameObject = new GameObject[this.numberOfElementsDisplayed];
+
+        for (int resourcePrerequisiteIndex = 0; resourcePrerequisiteIndex < this.resourcePrerequisGameObject.Length; resourcePrerequisiteIndex++)
+        {
+            this.resourcePrerequisGameObject[resourcePrerequisiteIndex] = ServiceContainer.Instance.GameObjectReferencesArrays.Instantiate(
+                "Resource Equipment Prerequisite UI",
+                    new Vector3(
+                    this.grid.GetHorizontalPositionThanksAnIndex(resourcePrerequisiteIndex) + parentRectTransform.GetOffsetPivotX(),
+                    this.grid.GetVerticalPositionThanksAnIndex(resourcePrerequisiteIndex) + parentRectTransform.GetOffsetPivotY(),
+                    0.0f),
+                Vector3.zero,
+                Vector3.one,
+                myTransform,
+                EGameObjectReferences.UI);
+
+            this.resourcePrerequisGameObject[resourcePrerequisiteIndex].SetActive(false);
+        }
+
+        return gameObject;
+    }
+*/
