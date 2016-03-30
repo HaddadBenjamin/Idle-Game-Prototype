@@ -68,12 +68,7 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
     {
         if (null != this.alarm)
         {
-            System.TimeSpan timespan = System.TimeSpan.FromSeconds(this.alarm.GetTimeToWait());
-
-            this.text.text = 
-                timespan.Hours > 0      ? string.Format("{0}h {1:D2}m", timespan.Hours, timespan.Minutes) :
-                timespan.Minutes > 0    ? string.Format("{0}m {1:D2}s", timespan.Minutes, timespan.Seconds) :
-                                          string.Format("{0}s",timespan.Seconds);
+            this.text.text = StringHelper.TimeToString(this.alarm.GetTimeToWait());
 
             this.progressBarCraftingEquipment.fillAmount = this.alarm.Ratio();
 

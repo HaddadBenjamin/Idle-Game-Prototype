@@ -43,6 +43,11 @@ public class IndustryBuilding : ABuilding
         //this.LevelUp();
     }
 
+    public ResourcePrerequisite[] GetPriceToLevelUp()
+    {
+        return this.LevelsConfiguration.Price;
+    }
+
     public bool CanLevelup()
     {
         if (this.BuildingLevel < ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)

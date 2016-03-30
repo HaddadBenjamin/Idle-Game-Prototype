@@ -365,6 +365,11 @@ public class PlayerBuildingsManager : ABuildingManager
 
         this.PlaceBuildingAfterMoveOrRotate();
     }
+
+    public ABuilding GetSelectedBuilding()
+    {
+        return this.buildingGameObject.GetComponent<ABuilding>();
+    }
     
     public void LevelUpSelectedBuilding()
     {
