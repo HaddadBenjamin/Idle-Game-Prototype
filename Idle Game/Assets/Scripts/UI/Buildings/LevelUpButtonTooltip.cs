@@ -57,7 +57,7 @@ public class LevelUpButtonTooltip : MonoBehaviour
         
         this.EnableTheUsedResourcePrerequisite();
 
-        ResourcePrerequisiteHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite, this.playerResources);
+        ResourceHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite, this.playerResources);
     }
 
     private void EnableTheUsedResourcePrerequisite()

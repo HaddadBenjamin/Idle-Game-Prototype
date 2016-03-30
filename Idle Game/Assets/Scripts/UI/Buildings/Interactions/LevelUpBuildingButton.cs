@@ -3,34 +3,26 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class LevelUpBuildingButton : MonoBehaviour
+public class LevelUpBuildingButton : ATooltilpHolder
 {
     #region Fields
     private LevelUpButtonTooltip tooltip;
-    private GameObject tooltilGameObject;
-    private Transform tooltilTransform;
-
     private PlayerBuildingsManager playerBuildings;
-    private bool onPointerEnter;
     #endregion
 
     #region Unity Methods
     void Start()
     {
-        this.tooltilGameObject = transform.Find("Tooltip").gameObject;
-        this.tooltip = this.tooltilGameObject.GetComponent<LevelUpButtonTooltip>();
-        this.tooltilTransform = this.tooltilGameObject.transform;
-
-        this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
-
-        UICallbackHelper.AddCallbacksToEventTrigger(
-            GetComponent<EventTrigger>(),
+        base.Initialize(
             new UICallbackData[]
             {
                 new UICallbackData(EventTriggerType.PointerClick, this.ClickButtonAction),
-                new UICallbackData(EventTriggerType.PointerEnter, this.EnterPointerButtonAction),
-                new UICallbackData(EventTriggerType.PointerExit, this.ExitPointerButtonAction),
+                new UICallbackData(EventTriggerType.PointerEnter, base.EnterPointerButtonAction),
+                new UICallbackData(EventTriggerType.PointerExit, base.ExitPointerButtonAction),
             });
+
+        this.tooltip = base.tooltilpGameObject.GetComponent<LevelUpButtonTooltip>();
+        this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
 
         this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
     }
@@ -39,10 +31,7 @@ public class LevelUpBuildingButton : MonoBehaviour
     #region Unity Methods
     void Update()
     {
-        if (this.onPointerEnter)
-        {
-            this.tooltilTransform.position = Input.mousePosition;
-        }
+        base.UpdateTooltipPosition();
     }
     #endregion
 
@@ -54,23 +43,7 @@ public class LevelUpBuildingButton : MonoBehaviour
         this.SetTooltilContent();
     }
 
-    private void EnterPointerButtonAction(BaseEventData data)
-    {
-        this.tooltilGameObject.SetActive(true);
-
-        this.SetTooltilContent();
-        
-        this.onPointerEnter = true;
-    }
-
-    private void ExitPointerButtonAction(BaseEventData data)
-    {
-        this.tooltilGameObject.SetActive(false);
-
-        this.onPointerEnter = false;
-    }
-
-    private void SetTooltilContent()
+    protected override void SetTooltilContent()
     {
         IndustryBuilding industry = (this.playerBuildings.GetSelectedBuilding() as IndustryBuilding);
         this.tooltip.SetContent(industry.GetPriceToLevelUp());

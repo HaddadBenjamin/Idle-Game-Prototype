@@ -1,8 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
-public static class ResourcePrerequisiteHelper
+public static class ResourceHelper
 {
+    public static ResourcePrerequisite[] Add(ResourcePrerequisite[] A, ResourcePrerequisite[] B)
+    {
+        bool[] containResources = new bool[EnumHelper.Count<EResourceCategory>()];
+
+        for (int i = 0; i < A.Length; i++)
+            containResources[EnumHelper.GetIndex<EResourceCategory>(A[i].ResourceCategory)] = true;
+        for (int i = 0; i < B.Length; i++)
+            containResources[EnumHelper.GetIndex<EResourceCategory>(B[i].ResourceCategory)] = true;
+
+        int lengthOfC = 0;
+        for (int i = 0; i < containResources.Length; i++)
+        {
+            if (containResources[i])
+                ++lengthOfC;
+        }
+
+        ResourcePrerequisite[] C = new ResourcePrerequisite[lengthOfC];
+        for (int i = 0; i < A.Length; i++)
+            C[i] = new ResourcePrerequisite(A[i].ResourceNumber, A[i].ResourceCategory);
+         
+        int cIndex = A.Length;
+        for (int i = 0; i < B.Length; i++)
+        {
+            int findIndex = Array.FindIndex(C, c => c.ResourceCategory == B[i].ResourceCategory);
+
+            if (-1 == findIndex)
+            {
+                C[cIndex] = new ResourcePrerequisite(B[i].ResourceNumber, B[i].ResourceCategory);
+                ++cIndex;
+            }
+            else
+                C[findIndex].AddResource(B[i].ResourceNumber);
+        }
+
+        return C;
+    }
+
     public static void SetResourcePrerequisiteUIGameObject(GameObject[] resourcePrerequisUIGameObjects, ResourcePrerequisite[] resourcePrerequisite, PlayerResources playerResources = null)
     {
         for (int resourcePrerequisiteIndex = 0;
