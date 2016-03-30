@@ -52,22 +52,20 @@ public class LevelUpButtonTooltip : MonoBehaviour
     #region Behaviour Methods
     public void SetContent(ResourcePrerequisite[] content)
     {
-        // désabonné si il l'était
         this.resourcePrerequisite = content;
-
+        this.rectTransform.SetHeight(140.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1 + this.grid.NumberOfElementsPerLine));
+        
         this.EnableTheUsedResourcePrerequisite();
 
-        this.rectTransform.SetHeight(140.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1 + this.grid.NumberOfElementsPerLine));
-
-        ResourcePrerequisiteHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite);
-        //Tableau de resourcPrerequisiteGameObject, resourcePrerequisite content, differenceFromPlayerResource
-        // Les abonné à un resource changer ?
+        ResourcePrerequisiteHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite, this.playerResources);
     }
 
     private void EnableTheUsedResourcePrerequisite()
     {
         for (int resourcePrerequisiteIndex = 0; resourcePrerequisiteIndex < this.numberOfElementsDisplayed; resourcePrerequisiteIndex++)
-            this.resourcePrerequisGameObject[resourcePrerequisiteIndex].SetActive(resourcePrerequisiteIndex < this.resourcePrerequisite.Length);
+            this.resourcePrerequisGameObject[resourcePrerequisiteIndex].SetActive(
+                null == this.resourcePrerequisite ? false :
+                resourcePrerequisiteIndex < this.resourcePrerequisite.Length);
     }
     #endregion
 }

@@ -48,6 +48,11 @@ public class IndustryBuilding : ABuilding
         return this.LevelsConfiguration.Price;
     }
 
+    public bool IsMaxedLevel()
+    {
+        return this.BuildingLevel >= ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel;
+    }
+
     public bool CanLevelup()
     {
         if (this.BuildingLevel < ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(base.BuildingName).MaximumLevel)

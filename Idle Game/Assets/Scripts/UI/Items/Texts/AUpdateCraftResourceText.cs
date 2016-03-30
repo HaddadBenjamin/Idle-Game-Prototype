@@ -12,7 +12,6 @@ public class AUpdateCraftEquipmentResourceText : MonoBehaviour
     void Awake()
     {
         this.text = GetComponent<Text>();
-        this.requieredResource = System.Int32.Parse(this.text.text);
     }
     #endregion
 

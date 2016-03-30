@@ -50,12 +50,15 @@ public class LevelUpBuildingButton : MonoBehaviour
     private void ClickButtonAction(BaseEventData data)
     {
         this.playerBuildings.LevelUpSelectedBuilding();
+
+        this.SetTooltilContent();
     }
 
     private void EnterPointerButtonAction(BaseEventData data)
     {
         this.tooltilGameObject.SetActive(true);
-        this.tooltip.SetContent((this.playerBuildings.GetSelectedBuilding() as IndustryBuilding).GetPriceToLevelUp());
+
+        this.SetTooltilContent();
         
         this.onPointerEnter = true;
     }
@@ -65,6 +68,12 @@ public class LevelUpBuildingButton : MonoBehaviour
         this.tooltilGameObject.SetActive(false);
 
         this.onPointerEnter = false;
+    }
+
+    private void SetTooltilContent()
+    {
+        IndustryBuilding industry = (this.playerBuildings.GetSelectedBuilding() as IndustryBuilding);
+        this.tooltip.SetContent(industry.GetPriceToLevelUp());
     }
     #endregion
 }
