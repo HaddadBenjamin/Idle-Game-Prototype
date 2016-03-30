@@ -2,6 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(EventTrigger))]
 public class ATooltilpHolder : MonoBehaviour
 {
     #region Fields
@@ -11,7 +12,7 @@ public class ATooltilpHolder : MonoBehaviour
     protected bool onPointerEnter;
     #endregion
 
-    #region Unity Methods
+    #region Initialize
     public void Initialize(UICallbackData[] UICallbacksData)
     {
         this.tooltilpGameObject = transform.Find("Tooltip").gameObject;

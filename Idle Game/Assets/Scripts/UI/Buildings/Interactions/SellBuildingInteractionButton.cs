@@ -2,30 +2,17 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SellBuildingInteractionButton : MonoBehaviour
+public class SellBuildingInteractionButton : ATooltilpHolder
 {
     #region Fields
-    private GameObject tooltilpGameObject;
-    private Transform tooltilpTransform;
-
     private PlayerBuildingsManager playerBuildings;
-    private bool onPointerEnter;
+    private SellBuildingButtonTooltip tooltip;
     #endregion
 
     #region Unity Methods
     void Start()
     {
-        this.tooltilpGameObject = transform.Find("Tooltip").gameObject;
-        this.tooltilpTransform = this.tooltilpGameObject.transform;
-        this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
-
-        GetComponent<Button>().onClick.AddListener(() =>
-        {
-            this.playerBuildings.SellSelectedBuilding();
-        });
-
-        UICallbackHelper.AddCallbacksToEventTrigger(
-            GetComponent<EventTrigger>(),
+        base.Initialize(
             new UICallbackData[]
             {
                 new UICallbackData(EventTriggerType.PointerClick, this.ClickButtonAction),
@@ -33,6 +20,9 @@ public class SellBuildingInteractionButton : MonoBehaviour
                 new UICallbackData(EventTriggerType.PointerExit, this.ExitPointerButtonAction),
             });
 
+        this.tooltip = base.tooltilpGameObject.GetComponent<SellBuildingButtonTooltip>();
+        this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
+        this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
         //this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
     }
     #endregion
@@ -40,41 +30,26 @@ public class SellBuildingInteractionButton : MonoBehaviour
     #region Unity Methods
     void Update()
     {
-        if (this.onPointerEnter)
-        {
-            this.tooltilpTransform.position = Input.mousePosition;
-        }
+        base.UpdateTooltipPosition();
     }
     #endregion
 
     #region Behaviour Methods
     private void ClickButtonAction(BaseEventData data)
     {
-        this.playerBuildings.LevelUpSelectedBuilding();
+        this.playerBuildings.SellSelectedBuilding();
 
         this.SetTooltilContent();
     }
 
-    private void EnterPointerButtonAction(BaseEventData data)
+    protected override void SetTooltilContent()
     {
-        this.tooltilpGameObject.SetActive(true);
+        IndustryBuilding industry = (this.playerBuildings.GetSelectedBuilding() as IndustryBuilding);
 
-        this.SetTooltilContent();
-        
-        this.onPointerEnter = true;
-    }
-
-    private void ExitPointerButtonAction(BaseEventData data)
-    {
-        this.tooltilpGameObject.SetActive(false);
-
-        this.onPointerEnter = false;
-    }
-
-    private void SetTooltilContent()
-    {
-        //IndustryBuilding industry = (this.playerBuildings.GetSelectedBuilding() as IndustryBuilding);
-        //this.tooltip.SetContent(industry.GetPriceToLevelUp());
+        if (null == industry)
+            this.tooltilpGameObject.SetActive(false);
+        else
+            this.tooltip.SetContent(industry.GetSellPrice());
     }
     #endregion
 }

@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
+
+using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpButtonTooltip : MonoBehaviour
+public abstract class AResourcePrerequisiteTooltip : MonoBehaviour
 {
     #region Fields
     /// <summary>
     /// Ma classe utilitaire pour placer simplement des éléments dans une grille.
     /// </summary>
     [SerializeField]
-    private UIGrid grid;
+    protected UIGrid grid;
     /// <summary>
     /// Nombre d'élements dans la grille, 
     /// </summary>
     [SerializeField]
     public int numberOfElementsDisplayed = 6;
-    private GameObject[] resourcePrerequisGameObject;
-    private ResourcePrerequisite[] resourcePrerequisite;
-    
-    private PlayerResources playerResources;
-    private RectTransform rectTransform;
+    protected GameObject[] resourcePrerequisGameObject;
+    protected ResourcePrerequisite[] resourcePrerequisite;
+
+    protected PlayerResources playerResources;
+    protected RectTransform rectTransform;
     #endregion
 
     #region Initializer
@@ -50,17 +52,9 @@ public class LevelUpButtonTooltip : MonoBehaviour
     #endregion
 
     #region Behaviour Methods
-    public void SetContent(ResourcePrerequisite[] content)
-    {
-        this.resourcePrerequisite = content;
-        this.rectTransform.SetHeight(140.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1 + this.grid.NumberOfElementsPerLine));
-        
-        this.EnableTheUsedResourcePrerequisite();
+    public abstract void SetContent(ResourcePrerequisite[] content);
 
-        ResourceHelper.SetResourcePrerequisiteUIGameObject(this.resourcePrerequisGameObject, this.resourcePrerequisite, this.playerResources);
-    }
-
-    private void EnableTheUsedResourcePrerequisite()
+    protected void EnableTheUsedResourcePrerequisite()
     {
         for (int resourcePrerequisiteIndex = 0; resourcePrerequisiteIndex < this.numberOfElementsDisplayed; resourcePrerequisiteIndex++)
             this.resourcePrerequisGameObject[resourcePrerequisiteIndex].SetActive(

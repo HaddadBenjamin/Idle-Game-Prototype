@@ -51,5 +51,24 @@ public abstract class ABuilding : MonoBehaviour
         for (int buildingLevelIndex = 1; buildingLevelIndex <= this.BuildingLevel; buildingLevelIndex++)
             playerResources.Unpay(buildingConfiguration.GetLevelConfigurationIfPossible(buildingLevelIndex).Price);
     }
+
+    public ResourcePrerequisite[] GetSellPrice()
+    {
+        ResourcePrerequisite[] price = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName).GetLevelConfigurationIfPossible(1).Price;
+
+        for (int level = 1; level < this.BuildingLevel; level++)
+            price = ResourceHelper.Add(price, ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName).GetLevelConfigurationIfPossible(level + 1).Price);
+
+        return price;
+    }
+
+    public ResourcePrerequisite[] GetPriceToLevelUp()
+    {
+        BuildingLevelsConfiguration levelConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName).GetLevelConfigurationIfPossible(this.BuildingLevel + 1);
+
+        return (null != levelConfiguration) ?
+                levelConfiguration.Price :
+                null;
+    }
     #endregion
 }

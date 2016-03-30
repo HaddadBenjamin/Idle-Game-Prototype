@@ -368,7 +368,9 @@ public class PlayerBuildingsManager : ABuildingManager
 
     public ABuilding GetSelectedBuilding()
     {
-        return this.buildingGameObject.GetComponent<ABuilding>();
+        return  null != this.buildingGameObject ?
+                this.buildingGameObject.GetComponent<ABuilding>() :
+                null;
     }
     
     public void LevelUpSelectedBuilding()

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelUpBuildingButton : ATooltilpHolder
 {
     #region Fields
-    private LevelUpButtonTooltip tooltip;
+    private LevelUpBuildingButtonTooltip tooltip;
     private PlayerBuildingsManager playerBuildings;
     #endregion
 
@@ -21,7 +21,7 @@ public class LevelUpBuildingButton : ATooltilpHolder
                 new UICallbackData(EventTriggerType.PointerExit, base.ExitPointerButtonAction),
             });
 
-        this.tooltip = base.tooltilpGameObject.GetComponent<LevelUpButtonTooltip>();
+        this.tooltip = base.tooltilpGameObject.GetComponent<LevelUpBuildingButtonTooltip>();
         this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
 
         this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
@@ -46,7 +46,15 @@ public class LevelUpBuildingButton : ATooltilpHolder
     protected override void SetTooltilContent()
     {
         IndustryBuilding industry = (this.playerBuildings.GetSelectedBuilding() as IndustryBuilding);
-        this.tooltip.SetContent(industry.GetPriceToLevelUp());
+
+        if (industry == null)
+            base.tooltilpGameObject.SetActive(false);
+        else
+        {
+            ResourcePrerequisite[] priceToLevelUp = industry.GetPriceToLevelUp();
+
+            this.tooltip.SetContent(null != priceToLevelUp ? priceToLevelUp : new ResourcePrerequisite[0]);
+        }
     }
     #endregion
 }

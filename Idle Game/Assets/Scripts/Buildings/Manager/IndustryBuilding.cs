@@ -43,10 +43,6 @@ public class IndustryBuilding : ABuilding
         //this.LevelUp();
     }
 
-    public ResourcePrerequisite[] GetPriceToLevelUp()
-    {
-        return this.LevelsConfiguration.Price;
-    }
 
     public bool IsMaxedLevel()
     {
