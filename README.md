@@ -23,7 +23,7 @@ Points intéressants :
 ![Alt text](http://i.imgur.com/U7lpP7W.jpg "Menu de création d'équipement, on peut sélectionner le filtre que l'on souhaite et configurer entièrement la partie recette ainsi que la configuration des objets qu'il génère.")
 ![Alt text](http://i.imgur.com/V8JBkZ0.jpg "Boutons d'intéractions d'un bâtiment.")
 ![Alt text](http://i.imgur.com/2OX9oRM.jpg "Boutons permettant de naviguer sur les menus de construction d'équipements et de création de bâtiment générant des ressources.")
-![Alt text](http://i.imgur.com/E7MWuQ5.png "Architecture du jeu. (~100 fichiers en 7-10 jours en temps plein)")
+![Alt text](http://i.imgur.com/oQt0BcF.png "Architecture du jeu. (133 fichiers en ~10 jours en temps plein)")
 ![Alt text](http://i.imgur.com/zx10bbK.jpg "Configuration des bâtiments générant des ressources.")
 ![Alt text](http://i.imgur.com/Znyq5tb.jpg "Configuration des recettes ainsi que des objets générer, les données qui peuvent changées ne peuvent pas être modifiées d'ici cette interface. (ceci me permet d'éviter des doublons de données).")
 ![Alt text](http://i.imgur.com/2fiBgcz.jpg "Présentation d'une partie des services de cette application.")
