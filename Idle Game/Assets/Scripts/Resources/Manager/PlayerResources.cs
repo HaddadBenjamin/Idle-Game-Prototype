@@ -27,7 +27,7 @@ public class PlayerResources : MonoBehaviour
             }
             else
             {
-                this.resources[resourceIndex] = new PlayerResourcePrerequisite(0, (EResourceCategory)resourceIndex);
+                this.resources[resourceIndex] = new PlayerResourcePrerequisite(500, (EResourceCategory)resourceIndex);
                 this.resourcesGeneration[resourceIndex] = new PlayerResourcesGeneration((EResourceCategory)resourceIndex);
             }
         }

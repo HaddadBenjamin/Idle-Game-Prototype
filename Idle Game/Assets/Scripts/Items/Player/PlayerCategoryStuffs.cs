@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerCategoryStuffs
 {
@@ -64,7 +65,6 @@ public class PlayerCategoryStuffs
 
         if (haveEnoughtStuffToPay)
             this.Get(stuff.Quality, stuff.Name).RemoveStuff(stuff.Number);
-
         return haveEnoughtStuffToPay;
     }
 

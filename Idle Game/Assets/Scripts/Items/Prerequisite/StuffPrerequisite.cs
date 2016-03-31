@@ -5,16 +5,16 @@ public class StuffPrerequisite
 {
     #region Fields
     [SerializeField]
-    private string name;
+    protected string name;
     [SerializeField]
-    private int number;
+    protected int number;
     [SerializeField]
-    private EStuffCategory stuffCategory;
+    protected EStuffCategory stuffCategory;
     [SerializeField]
-    private EStuffQuality quality;
+    protected EStuffQuality quality;
     #endregion
 
-     #region Constructor
+    #region Constructor
     public StuffPrerequisite(string name, int number, EStuffCategory stuffCategory, EStuffQuality quality)
     {
         this.name = name;
@@ -65,11 +65,13 @@ public class StuffPrerequisite
     public void AddStuff(int stuffAdded)
     {
         this.Number += stuffAdded;
+        //this.StuffNumberHaveBeenUpdated();
     }
 
     public void RemoveStuff(int stuffRemoved)
     {
         this.Number -= stuffRemoved;
+        //this.StuffNumberHaveBeenUpdated();
     }
     #endregion
 }

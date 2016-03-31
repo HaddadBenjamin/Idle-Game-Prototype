@@ -3,9 +3,10 @@
 public class UpdateCraftEquipmentRawPrerequisiteText : AUpdateCraftEquipmentResourceText
 {
     #region Initializer
-    public void Initialize(ERaw rawCategory)
+    public void Initialize(RawPrerequisite rawPrerequisite)
     {
-        ServiceContainer.Instance.EventManagerRawNumberHaveBeenUpdated.SubcribeToEvent(rawCategory, base.UpdateColorText);
+        this.requieredResource = rawPrerequisite.Number;
+        ServiceContainer.Instance.EventManagerRawNumberHaveBeenUpdated.SubcribeToEvent(rawPrerequisite.RawCategory, base.UpdateColorText);
     }
     #endregion
 }

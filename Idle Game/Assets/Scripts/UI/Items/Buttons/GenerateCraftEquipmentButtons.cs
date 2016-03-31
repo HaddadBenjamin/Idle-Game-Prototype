@@ -85,7 +85,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     resourceUITransform.Find("Resource Image").GetComponent<Image>().sprite =
                         ServiceContainer.Instance.SpriteReferencesArrays.GetRawSprite(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
                     resourceText.text = rawsPrerequisite[rawPrerequisiteIndex].Number.ToString();
-                    resourceText.gameObject.AddComponent<UpdateCraftEquipmentRawPrerequisiteText>().Initialize(rawsPrerequisite[rawPrerequisiteIndex].RawCategory);
+                    resourceText.gameObject.AddComponent<UpdateCraftEquipmentRawPrerequisiteText>().Initialize(rawsPrerequisite[rawPrerequisiteIndex]);
 
                     ++prerequisiteIndex;
                 }

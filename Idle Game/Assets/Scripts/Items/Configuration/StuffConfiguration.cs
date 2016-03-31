@@ -6,7 +6,6 @@ public class StuffConfiguration
     #region Fields
     [SerializeField]
     private string stuffName;
-    [SerializeField]
     private EStuffCategory stuffCategory;
     [SerializeField]
     private int stuffLevel;
@@ -73,6 +72,13 @@ public class StuffConfiguration
     {
         get { return timeToCraft; }
         private set { timeToCraft = value; }
+    }
+    #endregion
+
+    #region Behaviour Methods
+    public void InitializeStuffCategory(EStuffCategory stuffCategory)
+    {
+        this.stuffCategory = stuffCategory;
     }
     #endregion
 }

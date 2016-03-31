@@ -97,6 +97,9 @@ public class StuffsConfiguration : MonoBehaviour
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Staff)]           = this.staves;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Sword)]           = this.swords;
         this.allStuffs[EnumHelper.GetIndex<EStuffCategory>(EStuffCategory.Vest)]            = this.vests;
+
+        for (int stuffCategoryIndex = 0; stuffCategoryIndex < this.allStuffs.Length; stuffCategoryIndex++)
+            Array.ForEach(this.allStuffs[stuffCategoryIndex], stuff => stuff.InitializeStuffCategory((EStuffCategory)stuffCategoryIndex));
     }
     #endregion
 

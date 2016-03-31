@@ -17,7 +17,7 @@ public class AUpdateCraftEquipmentResourceText : MonoBehaviour
     #endregion
 
     #region Behaviour Methods
-    public void UpdateColorText(int playerResource)
+    public virtual void UpdateColorText(int playerResource)
     {
         this.text.color =   positiveColor ? ColorHelper.LightGreen :
                             playerResource >= this.requieredResource ? ColorHelper.LightGreen :
