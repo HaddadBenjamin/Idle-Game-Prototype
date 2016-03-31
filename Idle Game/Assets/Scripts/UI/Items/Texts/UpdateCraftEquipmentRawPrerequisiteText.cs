@@ -7,12 +7,16 @@ public class UpdateCraftEquipmentResourcePrerequisiteText : AUpdateCraftEquipmen
     #endregion
 
     #region Initializer
-    public void Initialize(EResourceCategory resourceCategory, int requieredResource)
+    public void Initialize(EResourceCategory resourceCategory, int requieredResource, bool positiveColor = false)
     {
         this.resourceCategory = resourceCategory;
         this.requieredResource = requieredResource;
+        this.positiveColor = positiveColor;
 
-        this.SubscribeToEvent();
+        if (!positiveColor)
+            this.SubscribeToEvent();
+        else
+            this.text.color = ColorHelper.LightGreen;
     }
     #endregion
 

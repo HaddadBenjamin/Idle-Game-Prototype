@@ -52,7 +52,7 @@ public abstract class AResourcePrerequisiteTooltip : MonoBehaviour
     #endregion
 
     #region Behaviour Methods
-    public abstract void SetContent(ResourcePrerequisite[] content);
+    public abstract void SetContent(ResourcePrerequisite[] content, bool positiveColor = false);
 
     protected void EnableTheUsedResourcePrerequisite()
     {

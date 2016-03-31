@@ -2,12 +2,15 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[System.Serializable]
 [RequireComponent(typeof(EventTrigger))]
 public class ATooltilpHolder : MonoBehaviour
 {
     #region Fields
     protected GameObject tooltilpGameObject;
     protected Transform tooltilpTransform;
+    [SerializeField]
+    private string tooltipGameObjectName;
 
     protected bool onPointerEnter;
     #endregion
@@ -15,7 +18,7 @@ public class ATooltilpHolder : MonoBehaviour
     #region Initialize
     public void Initialize(UICallbackData[] UICallbacksData)
     {
-        this.tooltilpGameObject = transform.Find("Tooltip").gameObject;
+        this.tooltilpGameObject = ServiceContainer.Instance.GameObjectReferenceManager.Get(this.tooltipGameObjectName).gameObject;
         this.tooltilpTransform = this.tooltilpGameObject.transform;
 
         UICallbackHelper.AddCallbacksToEventTrigger(GetComponent<EventTrigger>(), UICallbacksData);

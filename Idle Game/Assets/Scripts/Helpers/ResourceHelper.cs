@@ -41,7 +41,7 @@ public static class ResourceHelper
         return C;
     }
 
-    public static void SetResourcePrerequisiteUIGameObject(GameObject[] resourcePrerequisUIGameObjects, ResourcePrerequisite[] resourcePrerequisite, PlayerResources playerResources = null)
+    public static void SetResourcePrerequisiteUIGameObject(GameObject[] resourcePrerequisUIGameObjects, ResourcePrerequisite[] resourcePrerequisite, PlayerResources playerResources = null, bool positiveColor = false)
     {
         for (int resourcePrerequisiteIndex = 0;
                 resourcePrerequisiteIndex < resourcePrerequisite.Length && 
@@ -65,11 +65,12 @@ public static class ResourceHelper
             // Permet de mettre à jour la couleur des textes.
             UpdateCraftEquipmentResourcePrerequisiteText updateCraftResource = text.gameObject.GetComponent<UpdateCraftEquipmentResourcePrerequisiteText>();
             if (null == updateCraftResource)
-                text.gameObject.AddComponent<UpdateCraftEquipmentResourcePrerequisiteText>().Initialize(resourcePrerequisiteCategory, resourcePrerequisiteNumber);
+                text.gameObject.AddComponent<UpdateCraftEquipmentResourcePrerequisiteText>().Initialize(resourcePrerequisiteCategory, resourcePrerequisiteNumber, positiveColor);
             else
             {
-                updateCraftResource.UnsubscribeToEvent();
-                updateCraftResource.Initialize(resourcePrerequisiteCategory, resourcePrerequisiteNumber);
+                if (!positiveColor)
+                    updateCraftResource.UnsubscribeToEvent();
+                updateCraftResource.Initialize(resourcePrerequisiteCategory, resourcePrerequisiteNumber, positiveColor);
             }
         }
     }

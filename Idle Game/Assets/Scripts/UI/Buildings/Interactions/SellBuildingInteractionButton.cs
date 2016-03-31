@@ -49,7 +49,7 @@ public class SellBuildingInteractionButton : ATooltilpHolder
         if (null == industry)
             this.tooltilpGameObject.SetActive(false);
         else
-            this.tooltip.SetContent(industry.GetSellPrice());
+            this.tooltip.SetContent(industry.GetSellPrice(), true);
     }
     #endregion
 }

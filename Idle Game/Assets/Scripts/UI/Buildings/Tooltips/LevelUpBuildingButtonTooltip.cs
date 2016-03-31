@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class LevelUpBuildingButtonTooltip : AResourcePrerequisiteTooltip
 {
     #region Fields
-    public override void SetContent(ResourcePrerequisite[] content)
+    public override void SetContent(ResourcePrerequisite[] content, bool inverseColor = false)
     {
         this.resourcePrerequisite = content;
         this.rectTransform.SetHeight(140.0f + this.grid.GetHeight(this.resourcePrerequisite.Length - 1 + this.grid.NumberOfElementsPerLine));
