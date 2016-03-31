@@ -19,7 +19,7 @@ Points intéressants :
 - On peut configurer chacune des recettes à travers l'interface par type d'équipement et leur spécifier des ressources pré requises, des matériaux pré requis, prix de l'objet de base, niveau de l'objet de base, etc... Ceci permet de changer le gameplay sans devoir coder.
 - Ce projet a été réalisé en 7 à 10 jours en temps plein si l'on ne compte pas les pauses et il est constitué de ~100 différents fichiers.
 
-
+[align=center]
 ![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
 ![Alt text](http://i.imgur.com/5u6BRrf.jpg "Fabrication d'équipements en cours.")
 ![Alt text](http://i.imgur.com/xfmqMOx.jpg "Amélioration d'un bâtiment.")
