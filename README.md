@@ -21,7 +21,7 @@ Points intéressants :
 
 
 ![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/xfmqMOx.jpg "Fabrication d'équipements en cours.")
+![Alt text](http://i.imgur.com/5u6BRrf.jpg "Fabrication d'équipements en cours.")
 ![Alt text](http://i.imgur.com/xfmqMOx.jpg "Amélioration d'un bâtiment.")
 ![Alt text](http://i.imgur.com/JogB4VU.jpg "Vente d'un bâtiment.")
 ![Alt text](http://i.imgur.com/WqNXcOJ.jpg "Menu de création de bâtiment qui génère de la ressource puis placement de ce bâtiment.")
