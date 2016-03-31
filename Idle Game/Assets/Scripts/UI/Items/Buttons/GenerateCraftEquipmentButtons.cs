@@ -31,8 +31,6 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
 
         this.InitializeAndGenerateCraftCategoryEquipmentButtonsContainer();
 
-        PlayerResources playerResources = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerResources>();
-        
         // Parcours de tous les types de catégorie d'équipement de sorte à générer chaque recettes de chaque types d'équipements.
         for (int stuffCategoryIndex = 0; stuffCategoryIndex < EnumHelper.Count<EStuffCategory>(); stuffCategoryIndex++)
         {

@@ -6,8 +6,8 @@ public class RTSCamera : MonoBehaviour
 {
     [SerializeField]
     private float ScrollSpeed = 15;
-    [SerializeField]
-    private float ScrollEdge = 0.01f;
+    //[SerializeField]
+    //private float ScrollEdge = 0.01f;
 
     [SerializeField]
     private float PanSpeed = 10;

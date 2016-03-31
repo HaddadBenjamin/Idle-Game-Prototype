@@ -167,7 +167,7 @@ public class PlayerBuildingsManager : ABuildingManager
                     {
                         if (this.playerResources.HaveEnoughtResource(this.buildingConfiguration.GetLevelConfiguration(1).Price))
                         {
-                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("A new building have been created");
+                            ServiceContainer.Instance.TextInformationManager.AddTextInformation("A new " + this.buildingConfiguration.PrefabName + " have been build");
 
                             return true;
                         }
@@ -203,7 +203,7 @@ public class PlayerBuildingsManager : ABuildingManager
             ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
             building.ConstructionSquareReference = this.constructionSquare;
-            ServiceContainer.Instance.TextInformationManager.AddTextInformation("remised ? " + this.findObjectInRemise);
+            //ServiceContainer.Instance.TextInformationManager.AddTextInformation("remised ? " + this.findObjectInRemise);
 
             // Permet la génération de resources, au destroy il faudra penser à faire l'inverse
             if (EBuildingCategory.ResourceConstruction == building.BuildingCategory)

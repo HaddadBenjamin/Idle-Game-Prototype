@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-
-using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class AResourcePrerequisiteTooltip : MonoBehaviour
