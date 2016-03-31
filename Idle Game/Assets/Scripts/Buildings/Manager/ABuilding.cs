@@ -44,7 +44,7 @@ public abstract class ABuilding : MonoBehaviour
     public void Sell()
     {
         PlayerResources         playerResources =  ServiceContainer.Instance.
-                                GameObjectReferenceManager.Get("[PLAYER]").
+                                GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).
                                 GetComponent<PlayerResources>();
         BuildingConfiguration   buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.BuildingName);
 

@@ -42,9 +42,9 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
         this.craftImage = this.myTransform.Find("Craft Image").gameObject.GetComponent<Image>();
         this.progressBarCraftingEquipment = this.myTransform.Find("Progress Bar").gameObject.GetComponent<Image>();
 
-        this.playerStuffs = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerStuffs>();
-        this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
-        this.playerRaws = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerRaws>();
+        this.playerStuffs = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerStuffs>();
+        this.playerResources = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerResources>();
+        this.playerRaws = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerRaws>();
     }
 
     void Start()

@@ -12,7 +12,7 @@ public abstract class AMenuAnimationButton : MonoBehaviour
     protected void BaseStart()
     {
         this.Button = GetComponent<Button>();
-        this.MenusAnimations = ServiceContainer.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
+        this.MenusAnimations = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("Canvas", EGameObjectReferences.UI).GetComponent<MenusAnimations>();
     }
     #endregion
 }

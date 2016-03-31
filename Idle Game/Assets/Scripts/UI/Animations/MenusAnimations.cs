@@ -50,9 +50,9 @@ public class MenusAnimations : MonoBehaviour
 
         this.RTSCamera = Camera.main.GetComponent<RTSCamera>();
 
-        this.buttonBuildingContainerGameObject = this.serviceContainer.GameObjectReferenceManager.Get("Button Building Container");
-        this.buildingContainerScrollRectMask = this.serviceContainer.GameObjectReferenceManager.Get("Mask Button Building Container").GetComponent<ScrollRect>();
-        this.generateCraftEquipmentButtons = ServiceContainer.Instance.GameObjectReferenceManager.Get("Craft Equipment Button Container").GetComponent<GenerateCraftEquipmentButtons>();
+        this.buttonBuildingContainerGameObject = this.serviceContainer.GameObjectReferencesArrayInScene.Get("Button Building Container", EGameObjectReferences.UI);
+        this.buildingContainerScrollRectMask = this.serviceContainer.GameObjectReferencesArrayInScene.Get("Mask Button Building Container", EGameObjectReferences.UI).GetComponent<ScrollRect>();
+        this.generateCraftEquipmentButtons = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("Craft Equipment Button Container", EGameObjectReferences.UI).GetComponent<GenerateCraftEquipmentButtons>();
     }
     #endregion
 

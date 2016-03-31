@@ -18,7 +18,7 @@ public class ATooltilpHolder : MonoBehaviour
     #region Initialize
     public void Initialize(UICallbackData[] UICallbacksData)
     {
-        this.tooltilpGameObject = ServiceContainer.Instance.GameObjectReferenceManager.Get(this.tooltipGameObjectName).gameObject;
+        this.tooltilpGameObject = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get(this.tooltipGameObjectName, EGameObjectReferences.UI).gameObject;
         this.tooltilpTransform = this.tooltilpGameObject.transform;
 
         UICallbackHelper.AddCallbacksToEventTrigger(GetComponent<EventTrigger>(), UICallbacksData);

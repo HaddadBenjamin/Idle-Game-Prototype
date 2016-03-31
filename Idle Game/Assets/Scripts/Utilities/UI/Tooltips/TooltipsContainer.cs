@@ -18,7 +18,7 @@ public class TooltipsContainer : MonoBehaviour
         name = "Tooltips Container";
 
         // Permet de placer cette objet tout en haut de la hiérarchie de la scène.
-        myTransform.SetParent(null);
+        //myTransform.SetParent(null);
     }
     #endregion
 

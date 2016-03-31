@@ -28,7 +28,7 @@ public abstract class AResourcePrerequisiteTooltip : MonoBehaviour
     {
         Transform myTransform = transform;
         this.rectTransform = GetComponent<RectTransform>();
-        this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        this.playerResources = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerResources>();
         this.resourcePrerequisGameObject = new GameObject[this.numberOfElementsDisplayed];
 
         for (int resourcePrerequisiteIndex = 0; resourcePrerequisiteIndex < this.resourcePrerequisGameObject.Length; resourcePrerequisiteIndex++)

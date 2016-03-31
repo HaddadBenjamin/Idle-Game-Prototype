@@ -10,7 +10,7 @@ public class ServiceContainer : MonoBehaviour
     public SpriteReferencesArrays SpriteReferencesArrays { get; private set; }
 
     public ObjectsPoolManager ObjectsPoolManager { get; private set; }
-    public GameObjectReferenceManager GameObjectReferenceManager { get; private set; }
+    public GameObjectReferencesArrayInScene GameObjectReferencesArrayInScene { get; private set; }
 
     public StuffsConfiguration StuffsConfiguration { get; private set; }
     public BuildingsConfiguration BuildingsConfiguration { get; private set; }
@@ -68,7 +68,7 @@ public class ServiceContainer : MonoBehaviour
         {
             (this.ObjectsPoolManager = gameObject.GetComponent<ObjectsPoolManager>()),
             (this.MaterialReferences = gameObject.GetComponent<MaterialReferences>()),
-            (this.GameObjectReferenceManager = gameObject.GetComponent<GameObjectReferenceManager>()),
+            (this.GameObjectReferencesArrayInScene = gameObject.GetComponent<GameObjectReferencesArrayInScene>()),
             (this.GameObjectReferencesArrays = gameObject.GetComponent<GameObjectReferencesArrays>()),
             (this.TextInformationManager = gameObject.GetComponent<TextInformationManager>()),
             (this.SpriteReferencesArrays = gameObject.GetComponent<SpriteReferencesArrays>()),

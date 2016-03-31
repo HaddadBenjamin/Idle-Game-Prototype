@@ -35,7 +35,7 @@ public class IndustryBuilding : ABuilding
         this.LevelsConfiguration = this.GetLevelsConfiguration(this.BuildingLevel);
 
         this.playerResources =  ServiceContainer.Instance.
-                                GameObjectReferenceManager.Get("[PLAYER]").
+                                GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).
                                 GetComponent<PlayerResources>();
 
         this.playerResources.GenerateResource(this.LevelsConfiguration.ResourceGeneration);

@@ -16,7 +16,7 @@ public class TextInformationManager : AServiceComponent
     #region Abstract Initializer
     public override void InitializeByserviceContainer()
     {
-        this.parentTransform = ServiceContainer.Instance.GameObjectReferenceManager.Get("Screen Center").transform;
+        this.parentTransform = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("Screen Center", EGameObjectReferences.UI).transform;
 
         this.textInformations = new Queue<Text>();
         this.textInformationsRectTranform = new List<RectTransform>();

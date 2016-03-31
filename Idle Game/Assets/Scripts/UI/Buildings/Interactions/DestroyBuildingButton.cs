@@ -8,7 +8,7 @@ public class DestroyBuildingButton : MonoBehaviour
     {
         GetComponent<Button>().onClick.AddListener(() =>
         {
-            ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>().RemoveSelectedBuilding();
+            ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerBuildingsManager>().RemoveSelectedBuilding();
         });
     }
     #endregion

@@ -19,7 +19,7 @@ public class ResourcesDisplay : MonoBehaviour
         SpriteReferencesArrays spriteManager = ServiceContainer.Instance.SpriteReferencesArrays;
         Transform myTransform = transform;
 
-        this.playerResources = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerResources>();
+        this.playerResources = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerResources>();
         ServiceContainer.Instance.EventManager.SubcribeToEvent(EEvent.PlayerPayResources, this.UpdateResourceNumber);
 
         for (int resourceCategoryIndex = 0; resourceCategoryIndex < EnumHelper.Count<EResourceCategory>(); resourceCategoryIndex++)

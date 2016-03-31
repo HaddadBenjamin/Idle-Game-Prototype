@@ -84,7 +84,7 @@ public class PlayerBuildingsManager : ABuildingManager
         this.buildingsAnalytic.AtStartUpdateAllMembersSubscribeToDelegateAfterInitialization();
 
         ServiceContainer.Instance.EventManager.SubcribeToEvent(EEvent.DestroyBuildingToBuild, this.DestroyBuildingToBuild);
-        this.menusAnimations = ServiceContainer.Instance.GameObjectReferenceManager.Get("Canvas").GetComponent<MenusAnimations>();
+        this.menusAnimations = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("Canvas", EGameObjectReferences.UI).GetComponent<MenusAnimations>();
     }
 
     void Update()
@@ -375,17 +375,20 @@ public class PlayerBuildingsManager : ABuildingManager
     
     public void LevelUpSelectedBuilding()
     {
-        this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
+        if (null != this.buildingGameObject)
+        {
+            this.SetBuildingGameObjecToMoveReferenceIBuildingGameObjectEqualNull();
 
-        ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
+            ABuilding building = this.buildingGameObject.GetComponent<ABuilding>();
 
-        // Dangereux.
-        bool canLevelUp = (building as IndustryBuilding).LevelUpIfPossible();
+            // Dangereux.
+            bool canLevelUp = (building as IndustryBuilding).LevelUpIfPossible();
 
-        if (canLevelUp) // Dangereux
-            ServiceContainer.Instance.TextInformationManager.AddTextInformation("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
-        else
-            ServiceContainer.Instance.TextInformationManager.AddTextInformation("This building is already to max level");
+            if (canLevelUp) // Dangereux
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("Building " + (building as IndustryBuilding).ConstructionBuildingCategory + " is now level " + (building as IndustryBuilding).BuildingLevel);
+            else
+                ServiceContainer.Instance.TextInformationManager.AddTextInformation("This building is already to max level");
+        }
     }
 
     public void RemoveSelectedBuilding(bool canRemove = true)

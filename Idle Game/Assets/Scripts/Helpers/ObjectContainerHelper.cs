@@ -9,7 +9,12 @@ public static class ObjectContainerHelper
         hashIDs = new int[names.Length];
 
         for (ushort index = 0; index < names.Length; index++)
-            hashIDs[index] = names[index].GetHashCode();
+        {
+            if (null == names[index])
+                Debug.LogErrorFormat("ObjectContainerHelper : Index {0} is null", names[index]);
+            else
+                hashIDs[index] = names[index].GetHashCode();
+        }
     }
 
     public static int GetHashCodeIndex(string name, ref int[] hashIDs)
@@ -18,7 +23,7 @@ public static class ObjectContainerHelper
         int hashIndex = Array.FindIndex(hashIDs, hashId => hashId == hashCodeID);
 
         if (-1 == hashIndex)
-            Debug.LogError("hash code : " + name + " don't exist");
+            Debug.LogError("ObjectContainerHelper:  The reference of name \"" + name + "\" don't exist");
 
         return hashIndex;
     }

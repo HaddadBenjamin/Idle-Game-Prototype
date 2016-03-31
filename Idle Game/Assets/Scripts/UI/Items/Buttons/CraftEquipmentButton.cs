@@ -15,7 +15,7 @@ public class CraftEquipmentButton : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() =>
         {
             CraftEquipmentCaseButton equipmentCase = ServiceContainer.Instance.
-                GameObjectReferenceManager.Get("Craft Equipment Case Menu").
+                GameObjectReferencesArrayInScene.Get("Craft Equipment Case Menu", EGameObjectReferences.UI).
                 GetComponent<GenerateCraftEquipmentCaseButtons>().GetAvailableCase();
 
             if (null != equipmentCase)

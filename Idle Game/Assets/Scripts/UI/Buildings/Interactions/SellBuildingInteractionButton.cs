@@ -21,7 +21,7 @@ public class SellBuildingInteractionButton : ATooltilpHolder
             });
 
         this.tooltip = base.tooltilpGameObject.GetComponent<SellBuildingButtonTooltip>();
-        this.playerBuildings = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]").GetComponent<PlayerBuildingsManager>();
+        this.playerBuildings = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerBuildingsManager>();
         this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
         //this.tooltip.Initialize(GetComponent<RectTransform>()).SetActive(false);
     }

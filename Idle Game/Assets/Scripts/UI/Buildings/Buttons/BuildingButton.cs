@@ -21,7 +21,7 @@ public class BuildingButton : MonoBehaviour
         Transform myTransform = transform;
         BuildingConfiguration buildingConfiguration = ServiceContainer.Instance.BuildingsConfiguration.GetConfiguration(this.prefabName);
         SpriteReferencesArrays spriteManager = ServiceContainer.Instance.SpriteReferencesArrays;
-        GameObject playerGameObject = ServiceContainer.Instance.GameObjectReferenceManager.Get("[PLAYER]");
+        GameObject playerGameObject = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest);
 
         PlayerResources playerResource = playerGameObject.GetComponent<PlayerResources>();
         PlayerBuildingsManager playerBuildingCreation = playerGameObject.GetComponent<PlayerBuildingsManager>();
