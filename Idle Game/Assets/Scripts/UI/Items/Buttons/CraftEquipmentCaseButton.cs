@@ -18,8 +18,6 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
     private StuffConfiguration stuffConfiguration;
 
     private PlayerStuffs playerStuffs;
-    private PlayerResources playerResources;
-    private PlayerRaws playerRaws;
     #endregion
 
     #region Properties
@@ -43,8 +41,6 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
         this.progressBarCraftingEquipment = this.myTransform.Find("Progress Bar").gameObject.GetComponent<Image>();
 
         this.playerStuffs = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerStuffs>();
-        this.playerResources = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerResources>();
-        this.playerRaws = ServiceContainer.Instance.GameObjectReferencesArrayInScene.Get("[PLAYER]", EGameObjectReferences.Rest).GetComponent<PlayerRaws>();
     }
 
     void Start()
@@ -108,35 +104,16 @@ public class CraftEquipmentCaseButton : AMenuAnimationButton
     {
         this.craftEquipmentMode = ECraftEquipmentMode.Waiting;
 
-         if (!this.playerResources.HaveEnoughtResource(this.stuffConfiguration.ResourcesPrerequisite))
-                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You dont have enough resources to craft this " + this.stuffConfiguration.StuffCategory, ETextInformation.Warning);
-         else
-         {
-            if (!this.playerRaws.HaveEnoughtRaw(this.stuffConfiguration.RawsPrerequisite))
-                ServiceContainer.Instance.TextInformationManager.AddTextInformation("You dont have enough raws to craft this " + this.stuffConfiguration.StuffCategory, ETextInformation.Warning);
-            else
-            {
-                if (!this.playerStuffs.HaveEnoughtStuff(this.stuffConfiguration.StuffsPrerequisite))
-                    ServiceContainer.Instance.TextInformationManager.AddTextInformation("You dont have enough stuffs to craft this " + this.stuffConfiguration.StuffCategory, ETextInformation.Warning);
-                else
-                {
-                    this.playerResources.Pay(this.stuffConfiguration.ResourcesPrerequisite);
-                    this.playerRaws.Pay(this.stuffConfiguration.RawsPrerequisite);
-                    this.playerStuffs.Pay(this.stuffConfiguration.StuffsPrerequisite);
-
-                    EStuffQuality quality = StuffHelper.GenerateStuffQuality();
+        EStuffQuality quality = StuffHelper.GenerateStuffQuality();
                
-                    // L'équipement broadsword de type épée et de qualité common have been created
-                    ServiceContainer.Instance.TextInformationManager.AddTextInformation(
-                        "The stuff " + this.stuffConfiguration.StuffName + 
-                        " of type " + this.stuffConfiguration.StuffCategory + 
-                        " and quality " + quality +
-                        " haveebeenCreated");
+        // L'équipement broadsword de type épée et de qualité common have been created
+        ServiceContainer.Instance.TextInformationManager.AddTextInformation(
+            "The stuff " + this.stuffConfiguration.StuffName + 
+            " of type " + this.stuffConfiguration.StuffCategory + 
+            " and quality " + quality +
+            " haveebeenCreated");
 
-                    this.playerStuffs.AddStuff(this.stuffConfiguration.StuffName, this.stuffConfiguration.StuffCategory, quality, 1);
-                }
-            }
-         }
+        this.playerStuffs.AddStuff(this.stuffConfiguration.StuffName, this.stuffConfiguration.StuffCategory, quality, 1);
 
          this.text.text = "Craft!";
          this.craftImage.enabled = true;
