@@ -7,7 +7,7 @@ Sites web :
 - Linkedin : https://www.linkedin.com/in/haddadbenjamin
 
 Vidéo de l'application (cliquer)  : 
-[![ScreenShot](http://i.imgur.com/WqNXcOJ.jpg)](https://www.youtube.com/watch?v=_2Nx2YNqQiE)
+[![ScreenShot](http://i.imgur.com/Oj5SNxX.jpg)](https://www.youtube.com/watch?v=_2Nx2YNqQiE)
 
 Points intéressants :
 - Mon architecture permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
@@ -20,36 +20,10 @@ Points intéressants :
 - Ce projet a été réalisé en 7 à 10 jours en temps plein si l'on ne compte pas les pauses et il est constitué de ~100 différents fichiers.
 
 
-[align=center]Recettes d'armures.
-[img]http://i.imgur.com/3Own1bK.jpg[/img]
-
-Recettes d'arcs.
-[img]http://i.imgur.com/5Tk6mT2.jpg[/img]
-
-Recettes de dagues.
-[img]http://i.imgur.com/FTkMxaP.jpg[/img]
-
-Fabrication d'équipements en cours.
-[img]http://i.imgur.com/5u6BRrf.jpg[/img]
-
-Amélioration d'un bâtiment.
-[img]http://i.imgur.com/xfmqMOx.jpg[/img]
-
-Fabrication d'équipements en cours.
-[img]http://i.imgur.com/5u6BRrf.jpg[/img]
-
-Vente d'un bâtiment.
-[img]http://i.imgur.com/JogB4VU.jpg[/img]
-
-Recettes de baguettes.
-[img]http://i.imgur.com/Oj5SNxX.jpg[/img]
-
-Recettes de vestes.
-[img]http://i.imgur.com/e22GVIn.jpg[/img][/align]
-
 ![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+![Alt text](http://i.imgur.com/xfmqMOx.jpg "Fabrication d'équipements en cours.")
+![Alt text](http://i.imgur.com/xfmqMOx.jpg "Amélioration d'un bâtiment.")
+![Alt text](http://i.imgur.com/JogB4VU.jpg "Vente d'un bâtiment.")
 ![Alt text](http://i.imgur.com/WqNXcOJ.jpg "Menu de création de bâtiment qui génère de la ressource puis placement de ce bâtiment.")
 ![Alt text](http://i.imgur.com/U7lpP7W.jpg "Menu de création d'équipement, on peut sélectionner le filtre que l'on souhaite et configurer entièrement la partie recette ainsi que la configuration des objets qu'il génère.")
 ![Alt text](http://i.imgur.com/V8JBkZ0.jpg "Boutons d'intéractions d'un bâtiment.")
@@ -59,22 +33,9 @@ Recettes de vestes.
 ![Alt text](http://i.imgur.com/Znyq5tb.jpg "Configuration des recettes ainsi que des objets générer, les données qui peuvent changées ne peuvent pas être modifiées d'ici cette interface. (ceci me permet d'éviter des doublons de données).")
 ![Alt text](http://i.imgur.com/2fiBgcz.jpg "Présentation d'une partie des services de cette application.")
 ![Alt text](http://i.imgur.com/GDUWymp.jpg "Animations de mes menus.")
-
-Fabrication d'équipements en cours.
-[img]http://i.imgur.com/5u6BRrf.jpg[/img]
-Recettes d'arcs.
-[img]http://i.imgur.com/5Tk6mT2.jpg[/img]
-
-Recettes de dagues.
-[img]http://i.imgur.com/FTkMxaP.jpg[/img]
-
-
-
-Vente d'un bâtiment.
-[img]http://i.imgur.com/JogB4VU.jpg[/img]
-
-Recettes de baguettes.
-[img]http://i.imgur.com/Oj5SNxX.jpg[/img]
-
-Recettes de vestes.
-[img]http://i.imgur.com/e22GVIn.jpg[/img][/align]
+![Alt text](http://i.imgur.com/5Tk6mT2.jpg "Recettes d'arcs.")
+![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+![Alt text](http://i.imgur.com/FTkMxaP.jpg "Recettes de dagues.")
+![Alt text](http://i.imgur.com/e22GVIn.jpg "Recettes de vestes.")
+![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+[/align]
