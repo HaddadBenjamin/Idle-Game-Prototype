@@ -50,6 +50,7 @@ public class GenerateCraftEquipmentButtons : MonoBehaviour
                     EGameObjectReferences.UI);
                 Transform craftEquipmentButtonTransform = craftEquipmentButton.transform;
 
+                Debug.Log(stuffsConfiguration[stuffConfigurationIndex].StuffName + " " + stuffsConfiguration[stuffConfigurationIndex].StuffCategory);
                 // Set de son image et de son texte.
                 craftEquipmentButtonTransform.Find("Equipment Image").GetComponent<Image>().sprite = ServiceContainer.Instance.SpriteReferencesArrays.Get(
                     stuffsConfiguration[stuffConfigurationIndex].StuffName,
