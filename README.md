@@ -19,10 +19,37 @@ Points intéressants :
 - On peut configurer chacune des recettes à travers l'interface par type d'équipement et leur spécifier des ressources pré requises, des matériaux pré requis, prix de l'objet de base, niveau de l'objet de base, etc... Ceci permet de changer le gameplay sans devoir coder.
 - Ce projet a été réalisé en 7 à 10 jours en temps plein si l'on ne compte pas les pauses et il est constitué de ~100 différents fichiers.
 
-![Alt text](http://i.imgur.com/5Tk6mT2.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/5Tk6mT2.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/5Tk6mT2.jpg "Recettes d'armures.")
-![Alt text](http://i.imgur.com/5u6BRrf.jpg "Fabrication d'équipements en cours.")
+
+[align=center]Recettes d'armures.
+[img]http://i.imgur.com/3Own1bK.jpg[/img]
+
+Recettes d'arcs.
+[img]http://i.imgur.com/5Tk6mT2.jpg[/img]
+
+Recettes de dagues.
+[img]http://i.imgur.com/FTkMxaP.jpg[/img]
+
+Fabrication d'équipements en cours.
+[img]http://i.imgur.com/5u6BRrf.jpg[/img]
+
+Amélioration d'un bâtiment.
+[img]http://i.imgur.com/xfmqMOx.jpg[/img]
+
+Fabrication d'équipements en cours.
+[img]http://i.imgur.com/5u6BRrf.jpg[/img]
+
+Vente d'un bâtiment.
+[img]http://i.imgur.com/JogB4VU.jpg[/img]
+
+Recettes de baguettes.
+[img]http://i.imgur.com/Oj5SNxX.jpg[/img]
+
+Recettes de vestes.
+[img]http://i.imgur.com/e22GVIn.jpg[/img][/align]
+
+![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
 ![Alt text](http://i.imgur.com/WqNXcOJ.jpg "Menu de création de bâtiment qui génère de la ressource puis placement de ce bâtiment.")
 ![Alt text](http://i.imgur.com/U7lpP7W.jpg "Menu de création d'équipement, on peut sélectionner le filtre que l'on souhaite et configurer entièrement la partie recette ainsi que la configuration des objets qu'il génère.")
 ![Alt text](http://i.imgur.com/V8JBkZ0.jpg "Boutons d'intéractions d'un bâtiment.")
@@ -42,12 +69,6 @@ Recettes de dagues.
 [img]http://i.imgur.com/FTkMxaP.jpg[/img]
 
 
-
-Amélioration d'un bâtiment.
-[img]http://i.imgur.com/xfmqMOx.jpg[/img]
-
-Fabrication d'équipements en cours.
-[img]http://i.imgur.com/5u6BRrf.jpg[/img]
 
 Vente d'un bâtiment.
 [img]http://i.imgur.com/JogB4VU.jpg[/img]
