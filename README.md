@@ -37,3 +37,6 @@ Points intéressants :
 ![Alt text](http://i.imgur.com/FTkMxaP.jpg "Recettes de dagues.")
 ![Alt text](http://i.imgur.com/e22GVIn.jpg "Recettes de vestes.")
 ![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
+
+
+![Alt text](http://i.imgur.com/ptDdurf.png "Classes réutilisable.")
