@@ -10,8 +10,7 @@ Sites web :
 - Site dédié : http://haddadbpro.wix.com/portfolio#!jeu-passif/se9ch
 - Linkedin : https://www.linkedin.com/in/haddadbenjamin
 
-Vidéo de l'application (cliquer)  : 
-[![ScreenShot](http://i.imgur.com/Oj5SNxX.jpg)](https://www.youtube.com/watch?v=_2Nx2YNqQiE)
+[![ScreenShot](http://i.imgur.com/Oj5SNxX.jpg)]
 
 Points intéressants :
 - Mon architecture permet de respecter l'encapsulation de mes classes grâce à mes gestionnaires d'évènements.
