@@ -1,6 +1,6 @@
 # Jeu Passif Prototype
 **Langage de programmation :** C#.</br>
-**Année du développement de ce projet :** 2016.</br>
+**Année de développement :** 2016.</br>
 **Année d'étude :** 3ème année.
 
 Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui permettent de générer des ressources de sorte à pouvoir fabriquer des équipements pour les revendre.
