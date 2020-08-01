@@ -1,4 +1,4 @@
-# Jeu-Passif-Prototype-Unity3D
+# Jeu Passif Prototype
 **Langage de programmation :** C#.</br>
 **Année du développement de ce projet :** 2016.</br>
 **Année d'étude :** 3ème année.
