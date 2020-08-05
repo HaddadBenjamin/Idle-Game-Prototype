@@ -2,10 +2,10 @@
 **Langage de programmation :** C#.</br>
 **Année de développement :** 2016.</br>
 **Année d'étude :** 3ème année.
+**Plus d'informations :** https://haddadbpro.wixsite.com/portfolio/jeu-passif
 
 Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui permettent de générer des ressources de sorte à pouvoir fabriquer des équipements pour les revendre.
 
-**Site dédié :** https://haddadbpro.wixsite.com/portfolio/jeu-passif
 ![ScreenShot](http://i.imgur.com/Oj5SNxX.jpg)]
 ![Alt text](http://i.imgur.com/3Own1bK.jpg "Recettes d'armures.")
 ![Alt text](http://i.imgur.com/5u6BRrf.jpg "Fabrication d'équipements en cours.")
