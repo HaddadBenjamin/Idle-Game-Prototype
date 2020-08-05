@@ -1,8 +1,8 @@
 # Jeu Passif Prototype
 **Langage de programmation :** C#.</br>
 **Année de développement :** 2016.</br>
-**Année d'étude :** 3ème année.
-
+**Année d'étude :** 3ème année.</br>
+**Temps de réalisation :** 10 jours.</br>
 **Plus d'informations :** https://haddadbpro.wixsite.com/portfolio/jeu-passif
 
 Création d'un petit jeu passif dans lequel le joueur peut créer et placer des bâtiments qui permettent de générer des ressources de sorte à pouvoir fabriquer des équipements pour les revendre.
